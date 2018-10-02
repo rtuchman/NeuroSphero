@@ -27,16 +27,15 @@ class NeuroSphero:
         try:
             print "connecting to sphero ball..."
             self.sphero_ball.connect()
-            for i in range(5):
+            for i in range(10):
                 self.sphero_ball.set_color(255, 255, 0)  #yello
-                sleep(0.5)
+                sleep(0.2)
                 self.sphero_ball.set_color(148, 0, 211)  #purple
-                sleep(0.5)
+                sleep(0.2)
                 self.sphero_ball.set_color(255, 0, 0)    #red
-                sleep(0.5)
+                sleep(0.2)
             if self.sphero_ball.ping()[0]:
                 print "sphero ball connected!"
-                self.sphero_ball.set_color(0, 255, 0)
         except ValueError:
             print "Could not connect to sphero ball"
             print "please make sure sphero is on and bluetooth is on"

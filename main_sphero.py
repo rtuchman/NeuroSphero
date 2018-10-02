@@ -92,6 +92,8 @@ class NeuroSpheroManager(object):
             self.run()
 
     def on_message(self, ws, message):
+        if self.running == False:
+            self.neurosphero.sphero_ball.set_color(255, 255, 255)
         print 'message received'
         self.neurosphero.data = json.loads(message)
         features = self.neurosphero.data[u'features']
