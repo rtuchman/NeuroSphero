@@ -112,7 +112,7 @@ class NeuroSpheroManager(object):
             self.neurosphero.control_sphero(features)
 
     def login_neuro(self):
-        """Login to neurosteer API"""
+        """Login to neuro API"""
         login = NeuroLogin(email=self.email, password=self.password, sensor=self.sensor)
         login.get_token()
         return login
@@ -124,8 +124,8 @@ class NeuroSpheroManager(object):
         return neurosphero, is_connected
 
     def create_websocket_connection(self):
-        """Create websocket connection to neurosteer API based on the token from login_neuro."""
-        # C:\Users\owner\Anaconda2\Lib\site-packages\websocket\_logging.py
+        """Create websocket connection to neuro API based on the token from login_neuro."""
+        # site-packages\websocket\_logging.py
         # added null handler to avoid no handler error
         websocket.enableTrace(False)
         print "connecting to cloud..."
@@ -150,6 +150,10 @@ class NeuroSpheroManager(object):
     def disconnect(self):
         """Close the connection to neuro API and stop the recording."""
         self.running = False
+        self.neurosphero.sphero_ball.set_color(255, 255, 255)
+        self.neurosphero.buf = {feature: numpy.zeros([self.neurosphero.calibration_samples])
+                                for feature in self.neurosphero.features}
+        self.neurosphero.sample_number = 0
         self.ws.close()
 
 
