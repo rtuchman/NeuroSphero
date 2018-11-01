@@ -39,7 +39,7 @@ class NeuroLogin:
         return
 
     def update_description(self, description):
-        r = requests.put("https://api.neurosteer.com/api/v1/sensors/00a3b4d8a9a7/latest/description",
+        r = requests.put("https://api.neurosteer.com/api/v1/sensors/" + self._sensor + "/latest/description",
                      headers={'Authorization': 'Bearer ' + self.token,
                               "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"},
                      data={u'description': description})

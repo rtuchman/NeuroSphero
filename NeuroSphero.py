@@ -30,11 +30,11 @@ class NeuroSphero:
             self.sphero_ball.connect()
             for i in range(5):
                 self.sphero_ball.set_color(255, 255, 0)  #yello
-                sleep(0.2)
+                sleep(0.5)
                 self.sphero_ball.set_color(148, 0, 211)  #purple
-                sleep(0.2)
+                sleep(0.5)
                 self.sphero_ball.set_color(255, 0, 0)    #red
-                sleep(0.2)
+                sleep(0.5)
             if self.sphero_ball.ping()[0]:
                 print "sphero ball connected!"
                 self.sphero_ball.set_color(0, 255, 0)

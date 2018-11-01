@@ -42,11 +42,17 @@ import websocket
 
 from NeuroLogout import disconnect as disconnect_neuro
 
-EMAIL = 'runtuchman@gmail.com'
-PASSWORD = '1234Ran'
-SENSOR = '00a3b4d8a9a7'
-SPHERO_ID = '68:86:e7:04:4d:10'
+# EMAIL = 'runtuchman@gmail.com'
+# PASSWORD = '1234Ran'
 
+EMAIL = 'matanron3@gmail.com'
+PASSWORD = 'Matan1234'
+
+SENSOR = '00a3b4810811' #'b827eb0b7120' # ''810811' # new
+SPHERO_ID = '68:86:e7:01:fb:b2' #obr
+
+# SENSOR =  '00a3b4d8a9a7' # old
+# SPHERO_ID = '68:86:e7:04:4d:10' #ypr
 
 class NeuroSpheroManager(object):
     """Neuro sphero manager in charge of managing the connections of neuro sensor and sphero balls."""
@@ -112,7 +118,7 @@ class NeuroSpheroManager(object):
             self.neurosphero.control_sphero(features)
 
     def login_neuro(self):
-        """Login to neuro API"""
+        """Login to neurosteer API"""
         login = NeuroLogin(email=self.email, password=self.password, sensor=self.sensor)
         login.get_token()
         return login
@@ -124,8 +130,8 @@ class NeuroSpheroManager(object):
         return neurosphero, is_connected
 
     def create_websocket_connection(self):
-        """Create websocket connection to neuro API based on the token from login_neuro."""
-        # site-packages\websocket\_logging.py
+        """Create websocket connection to neurosteer API based on the token from login_neuro."""
+        # C:\Users\owner\Anaconda2\Lib\site-packages\websocket\_logging.py
         # added null handler to avoid no handler error
         websocket.enableTrace(False)
         print "connecting to cloud..."
@@ -150,10 +156,6 @@ class NeuroSpheroManager(object):
     def disconnect(self):
         """Close the connection to neuro API and stop the recording."""
         self.running = False
-        self.neurosphero.sphero_ball.set_color(255, 255, 255)
-        self.neurosphero.buf = {feature: numpy.zeros([self.neurosphero.calibration_samples])
-                                for feature in self.neurosphero.features}
-        self.neurosphero.sample_number = 0
         self.ws.close()
 
 
