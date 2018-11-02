@@ -157,19 +157,3 @@ class NeuroSpheroManager(object):
         """Close the connection to neuro API and stop the recording."""
         self.running = False
         self.ws.close()
-
-
-# if __name__ == "__main__":
-    # neuro_sphero_manager = NeuroSpheroManager()
-    # neuro_sphero_manager.run()
-
-
-
-    # email = sys.argv[1]
-    # password = sys.argv[2]
-    # sensor = sys.argv[3]
-    # sphero = sys.argv[4]
-    # features = sys.argv[5:]
-    #
-    # ws, _ = connect(email=email, password=password, sensor=sensor, sphero=sphero)
-    # ws.run_forever()
