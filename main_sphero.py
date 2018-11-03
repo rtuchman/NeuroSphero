@@ -113,7 +113,8 @@ class NeuroSpheroManager(object):
             print '\nCalibration is done'
         # controlling mode
         if self.neurosphero.sample_number > self.neurosphero.calibration_samples:
-            print 'preform control sphero.'
+            if self.neurosphero.sample_number == self.neurosphero.calibration_samples + 1:
+                print 'starting control sphero.'
             self.neurosphero.control_sphero(features)
 
     def login_neuro(self):
@@ -158,4 +159,7 @@ class NeuroSpheroManager(object):
                                 for feature in self.neurosphero.features}
         self.neurosphero.sample_number = 0
         self.running = False
-        self.ws.close()
+        #self.ws.close()
+        while not self.running:
+            pass
+
