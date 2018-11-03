@@ -98,7 +98,6 @@ class NeuroSpheroManager(object):
             self.run()
 
     def on_message(self, ws, message):
-        print 'message received'
         self.neurosphero.data = json.loads(message)
         features = self.neurosphero.data[u'features']
         # check if data is valid
@@ -157,5 +156,6 @@ class NeuroSpheroManager(object):
         """Close the connection to neuro API and stop the recording."""
         self.neurosphero.buf = {feature: numpy.zeros([self.neurosphero.calibration_samples])
                                 for feature in self.neurosphero.features}
+        self.neurosphero.sample_number = 0
         self.running = False
         self.ws.close()
