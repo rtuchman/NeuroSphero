@@ -71,10 +71,11 @@ class NeuroSpheroManager(object):
         print 'running neuro sphero'
         self.running = True
 
-        ws_thread = threading.Thread(target=self.ws.run_forever)
+        self.ws_thread = threading.Thread(target=self.ws.run_forever)
 
-        ws_thread.daemon = True
-        ws_thread.start()
+        self.ws_thread.daemon = True
+        self.ws_thread.start()
+
 
     def on_error(self, ws, error):
         print("ERROR: {0}".format(error))
@@ -146,6 +147,11 @@ class NeuroSpheroManager(object):
 
         return ws
 
+    def idle(self):
+        while not self.running:
+            pass
+        return
+
     def connect(self):
         """Loging to Neuro API using credentials and Sphero ball using the sphero id"""
         self.neuro = self.login_neuro()
@@ -153,12 +159,14 @@ class NeuroSpheroManager(object):
 
         return self.create_websocket_connection()
 
-    def disconnect(self):
+    def disconnect(self, first):
         """Close the connection to neuro API and stop the recording."""
         self.neurosphero.buf = {feature: numpy.zeros([self.neurosphero.calibration_samples])
                                 for feature in self.neurosphero.features}
         self.neurosphero.sample_number = 0
-        self.running = False
+        self.running = False+first
         #self.ws.close()
-        while not self.running:
-            pass
+        self.ws_thread = threading.Thread(target=self.idle())
+
+
+
