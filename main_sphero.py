@@ -159,5 +159,6 @@ class NeuroSpheroManager(object):
                                 for feature in self.neurosphero.features}
         self.neurosphero.sample_number = 0
         self.running = False
-        self.ws.close()
-        
+        #self.ws.close()
+        while not self.running:
+            pass
