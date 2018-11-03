@@ -153,12 +153,12 @@ class NeuroSpheroManager(object):
 
         return self.create_websocket_connection()
 
-    def disconnect(self):
+    def disconnect(self, first=False):
         """Close the connection to neuro API and stop the recording."""
         self.neurosphero.buf = {feature: numpy.zeros([self.neurosphero.calibration_samples])
                                 for feature in self.neurosphero.features}
         self.neurosphero.sample_number = 0
-        self.running = False
+        self.running = False+first
         #self.ws.close()
         while not self.running:
             pass

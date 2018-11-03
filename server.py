@@ -61,7 +61,7 @@ if __name__ == '__main__':
 
     print "Init state: Stopping recording"
     try:
-        neurosphero_manager.disconnect()
+        neurosphero_manager.disconnect(first=True)
     except Exception as e:
         print e
 
