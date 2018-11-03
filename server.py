@@ -60,9 +60,9 @@ if __name__ == '__main__':
     neurosphero_manager = NeuroSpheroManager()
 
     print "Init state: Stopping recording"
-    #try:
-    #    neurosphero_manager.disconnect()
-    #except Exception as e:
-    #    print e
+    try:
+        neurosphero_manager.disconnect()
+    except Exception as e:
+        print e
 
     app.run(host='127.0.0.1', port=8000, debug=False)

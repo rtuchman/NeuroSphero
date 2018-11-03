@@ -71,11 +71,10 @@ class NeuroSpheroManager(object):
         print 'running neuro sphero'
         self.running = True
 
-        self.ws_thread = threading.Thread(target=self.ws.run_forever)
+        ws_thread = threading.Thread(target=self.ws.run_forever)
 
-        self.ws_thread.daemon = True
-        self.ws_thread.start()
-
+        ws_thread.daemon = True
+        ws_thread.start()
 
     def on_error(self, ws, error):
         print("ERROR: {0}".format(error))
@@ -99,6 +98,7 @@ class NeuroSpheroManager(object):
             self.run()
 
     def on_message(self, ws, message):
+        print 'message received'
         self.neurosphero.data = json.loads(message)
         features = self.neurosphero.data[u'features']
         # check if data is valid
@@ -114,8 +114,7 @@ class NeuroSpheroManager(object):
             print '\nCalibration is done'
         # controlling mode
         if self.neurosphero.sample_number > self.neurosphero.calibration_samples:
-            if self.neurosphero.sample_number == self.neurosphero.calibration_samples + 1:
-                print 'starting control sphero.'
+            print 'preform control sphero.'
             self.neurosphero.control_sphero(features)
 
     def login_neuro(self):
@@ -147,11 +146,6 @@ class NeuroSpheroManager(object):
 
         return ws
 
-    def idle(self):
-        while not self.running:
-            pass
-        return
-
     def connect(self):
         """Loging to Neuro API using credentials and Sphero ball using the sphero id"""
         self.neuro = self.login_neuro()
@@ -161,12 +155,21 @@ class NeuroSpheroManager(object):
 
     def disconnect(self):
         """Close the connection to neuro API and stop the recording."""
-        self.neurosphero.buf = {feature: numpy.zeros([self.neurosphero.calibration_samples])
-                                for feature in self.neurosphero.features}
-        self.neurosphero.sample_number = 0
         self.running = False
-        #self.ws.close()
-        self.ws_thread = threading.Thread(target=self.idle())
+        self.ws.close()
+
+
+# if __name__ == "__main__":
+    # neuro_sphero_manager = NeuroSpheroManager()
+    # neuro_sphero_manager.run()
 
 
 
+    # email = sys.argv[1]
+    # password = sys.argv[2]
+    # sensor = sys.argv[3]
+    # sphero = sys.argv[4]
+    # features = sys.argv[5:]
+    #
+    # ws, _ = connect(email=email, password=password, sensor=sensor, sphero=sphero)
+    # ws.run_forever()
