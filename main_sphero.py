@@ -1,4 +1,5 @@
-"""
+"""to install tensorflow follow instructions from:
+    https://www.tensorflow.org/install/pip?lang=python2
    This module creates a NeuroLogin instance to get access to Neurosteer's api,
    then is creates a NeuroSphero instance that makes decisions and send commands
    to the sphero ball based on the measured data.
