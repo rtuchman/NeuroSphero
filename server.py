@@ -20,35 +20,44 @@ def index():
     return app.send_static_file(filename='index.html')
 
 
-@app.route('/start-recording/', methods=['POST']) # describes what will happen when someone will get to thios path:
+@app.route('/start-recording/', methods=['POST']) # describes what will happen when someone will get to this path:
 def start_recording():
-    print 'start recording'
+    print('start recording')
 
     neurosphero_manager.run()
 
     description = json.loads(request.data)['description']
+
+    neurosphero_manager.y_train = [1.0*(description == 'A STATE'),
+                                   1.0*(description == 'B STATE'),
+                                   1.0*(description == 'C STATE')]
+
     description = '{} {:%d/%m/%y %H:%M}'.format(description,
                                                 dt.datetime.today())
     neurosphero_manager.neuro.update_description(description=description)
+
+    if sum(neurosphero_manager.y_train) == 1:
+        neurosphero_manager.is_training = True
 
     return Response(status=200)
 
 
 @app.route('/stop-recording/')
 def stop_recording():
-    print 'stop recording'
+    print('stop recording')
 
     try:
+        neurosphero_manager.is_training = False
         neurosphero_manager.disconnect()
     except Exception as e:
-        print e
+        print(e)
 
     return Response(status=200)
 
 
 @app.route('/reconnect-sphero/')
 def reconnect_sphero():
-    print 're connect sphero'
+    print('re connect sphero')
     is_connected = neurosphero_manager.connect_sphero()
 
     if is_connected:
@@ -59,10 +68,10 @@ def reconnect_sphero():
 if __name__ == '__main__':
     neurosphero_manager = NeuroSpheroManager()
 
-    print "Init state: Stopping recording"
+    print("Init state: Stopping recording")
     try:
         neurosphero_manager.disconnect()
     except Exception as e:
-        print e
+        print(e)
 
     app.run(host='127.0.0.1', port=8000, debug=False)

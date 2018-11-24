@@ -1,7 +1,7 @@
 """Module for setting up connection with Neurosteer API"""
 
 import requests
-from urlparse import (urlparse, parse_qs)
+from urllib.parse import (urlparse, parse_qs)  #  pip install urllib3
 import json
 
 
@@ -28,13 +28,13 @@ class NeuroLogin:
             parsed = urlparse(response_url)
             access_token = parse_qs(parsed.query)['access_token'][0]
             self.token = access_token
-            print "token successfully retrieved"
+            print("token successfully retrieved")
         except KeyError:
-            print "Invalid email or password"
-            print "Please re-enter email:"
-            self.email = str(raw_input())
-            print "Please re-enter password:"
-            self.password = str(raw_input())
+            print("Invalid email or password")
+            print("Please re-enter email:")
+            self.email = str(input())
+            print("Please re-enter password:")
+            self.password = str(input())
             self.get_token()
         return
 
@@ -45,4 +45,4 @@ class NeuroLogin:
                      data={u'description': description})
 
         if r.status_code == 200:
-            print 'updated description'
+            print('updated description')

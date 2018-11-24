@@ -26,7 +26,7 @@ class NeuroSphero:
 
     def connect(self):
         try:
-            print "connecting to sphero ball..."
+            print("connecting to sphero ball...")
             self.sphero_ball.connect()
             for i in range(5):
                 self.sphero_ball.set_color(255, 255, 0)  #yello
@@ -36,11 +36,11 @@ class NeuroSphero:
                 self.sphero_ball.set_color(255, 0, 0)    #red
                 sleep(0.5)
             if self.sphero_ball.ping()[0]:
-                print "sphero ball connected!"
+                print("sphero ball connected!")()
                 self.sphero_ball.set_color(0, 255, 0)
         except ValueError:
-            print "Could not connect to sphero ball"
-            print "please make sure sphero is on and bluetooth is on"
+            print("Could not connect to sphero ball")
+            print("please make sure sphero is on and bluetooth is on")
             return False
 
         return True
@@ -81,7 +81,7 @@ class NeuroSphero:
                                                                                     (down_thresh[i] + 1) * 50)
             str_ = ''.join([str_, tmp])
         flag = self.sample_number % 2
-        print "\n{}".format(str_)
+        print("\n{}".format(str_))
         if len(self.features) >= 1:
             if features[self.features[0]] > up_thresh[0]:  # if c1 > up_thresh: move forward
                 self.sphero_ball.roll(30, 90 + 180 * flag)
