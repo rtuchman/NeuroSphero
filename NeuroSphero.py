@@ -18,7 +18,7 @@ class NeuroSphero:
 
     def __init__(self, sphero_id, features=(u'c1', u'h1')):
         self.sphero_ball = Sphero("NAME", sphero_id, response_time_out=2, number_tries=5)
-        self.calibration_samples = 30  # buffer size
+        self.calibration_samples = 10  # buffer size
         self.features = [x for x in features]
         self.buf = {feature: numpy.zeros([self.calibration_samples]) for feature in self.features}
         self.sample_number = 0
@@ -51,7 +51,7 @@ class NeuroSphero:
         Each feature (e.g c1 ,h1) is saved in it's own buffer.
         For each buffer it computes mean, std, min, max
         """
-        buf_iter = (self.sample_number) % self.calibration_samples
+        buf_iter = self.sample_number % self.calibration_samples
         for feature in self.features:
             self.buf[feature][buf_iter] = features[feature]
         if self.sample_number <= self.calibration_samples:
