@@ -36,7 +36,7 @@ class NeuroSphero:
                 self.sphero_ball.set_color(255, 0, 0)    #red
                 sleep(0.5)
             if self.sphero_ball.ping()[0]:
-                print("sphero ball connected!")()
+                print("sphero ball connected!")
                 self.sphero_ball.set_color(0, 255, 0)
         except ValueError:
             print("Could not connect to sphero ball")
@@ -64,7 +64,6 @@ class NeuroSphero:
             self.min = {feature: (numpy.min(self.buf[feature])) for feature in self.buf}
             self.max = {feature: (numpy.max(self.buf[feature])) for feature in self.buf}
             self.analytics = {'mean': self.mean, 'std': self.std, 'min': self.min, 'max': self.max}
-            #pp(self.analytics)
         self.sample_number += 1
 
     def control_sphero(self, features):

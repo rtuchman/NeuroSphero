@@ -17,7 +17,6 @@
    on_close: callable object which is called when closed the connection.
              this function has one argument. The argument is this class object.
 
-
    Args:
        email: user's email for api.neurosteer.com/signin.
        password: user's password for api.neurosteer.com/signin.
@@ -33,7 +32,6 @@
 """
 import threading
 from functools import partial
-
 import time
 
 from NeuroSphero import *
@@ -65,14 +63,12 @@ class NeuroSpheroManager(object):
 
         self.running = False  # indication whether we want tp read data from the sensor or not
         self.ws = self.connect()
-        print('created neuro sphero manager')
+        print('created neurosphero manager')
 
-        self.y_train = [0, 0, 0]
-        self.is_training = False
 
     def run(self):
         """Start to run the websocket server in thread and get messages from the sensor."""
-        print('running neuro sphero')
+        print('running neurosphero')
         self.running = True
 
         ws_thread = threading.Thread(target=self.ws.run_forever)
@@ -102,7 +98,6 @@ class NeuroSpheroManager(object):
             self.run()
 
     def on_message(self, ws, message):
-        print('message received')
         self.neurosphero.data = json.loads(message)
         features = self.neurosphero.data[u'features']
         # check if data is valid
@@ -147,7 +142,6 @@ class NeuroSpheroManager(object):
             on_error=self.on_error,
             on_close=self.on_close
         )
-
         return ws
 
     def connect(self):
@@ -161,19 +155,3 @@ class NeuroSpheroManager(object):
         """Close the connection to neuro API and stop the recording."""
         self.running = False
         self.ws.close()
-
-
-# if __name__ == "__main__":
-    # neuro_sphero_manager = NeuroSpheroManager()
-    # neuro_sphero_manager.run()
-
-
-
-    # email = sys.argv[1]
-    # password = sys.argv[2]
-    # sensor = sys.argv[3]
-    # sphero = sys.argv[4]
-    # features = sys.argv[5:]
-    #
-    # ws, _ = connect(email=email, password=password, sensor=sensor, sphero=sphero)
-    # ws.run_forever()
