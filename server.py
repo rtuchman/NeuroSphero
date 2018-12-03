@@ -22,7 +22,7 @@ def index():
 
 @app.route('/start-recording/', methods=['POST']) # describes what will happen when someone will get to thios path:
 def start_recording():
-    print 'start recording'
+    print('start recording')
 
     neurosphero_manager.run()
 
