@@ -17,7 +17,6 @@
    on_close: callable object which is called when closed the connection.
              this function has one argument. The argument is this class object.
 
-
    Args:
        email: user's email for api.neurosteer.com/signin.
        password: user's password for api.neurosteer.com/signin.
@@ -33,7 +32,6 @@
 """
 import threading
 from functools import partial
-
 import time
 
 from NeuroSphero import *
@@ -65,11 +63,12 @@ class NeuroSpheroManager(object):
 
         self.running = False  # indication whether we want tp read data from the sensor or not
         self.ws = self.connect()
-        print 'created neuro sphero manager'
+        print('created neurosphero manager')
+
 
     def run(self):
         """Start to run the websocket server in thread and get messages from the sensor."""
-        print 'running neuro sphero'
+        print('running neurosphero')
         self.running = True
 
         ws_thread = threading.Thread(target=self.ws.run_forever)
@@ -82,40 +81,39 @@ class NeuroSpheroManager(object):
 
     def on_close(self, ws):
         """Checks whether closed happened on purpose or not and handle it."""
-        print "### websocket closed ###"
+        print("### websocket closed ###")
         if self.running is False:  # wanted disconnection
-            print 'Wanted disconnection'
+            print('Wanted disconnection')
             disconnect_neuro(sensor=self.sensor)  # close the connection to the neuro sensor and stop the recording.
-            print 'sent disconnect neuro'
+            print('sent disconnect neuro')
         else:  # not wanted disconnection
-            print 'Unwanted disconnection'
+            print('Unwanted disconnection')
             try:
                 self.ws.close()  # Make sure websocket is really closed
             except Exception as e:
-                print e
+                print(e)
 
             self.login_neuro()  # login again and re-connect.
             self.ws = self.create_websocket_connection()
             self.run()
 
     def on_message(self, ws, message):
-        print 'message received'
         self.neurosphero.data = json.loads(message)
         features = self.neurosphero.data[u'features']
         # check if data is valid
         qf = features[u'qf']
         if qf != 0:
             self.neurosphero.sphero_ball.set_color(255, 0, 0)
-            print "data isn't valid!"
+            print("data isn't valid!")
         # training mode
         if self.neurosphero.sample_number <= self.neurosphero.calibration_samples:
             self.neurosphero.sphero_ball.set_color(255, 255, 255)  # white light  until buffer is full
         self.neurosphero.perform_calibration(features)
         if self.neurosphero.sample_number == self.neurosphero.calibration_samples + 1:
-            print '\nCalibration is done'
+            print('\nCalibration is done')
         # controlling mode
         if self.neurosphero.sample_number > self.neurosphero.calibration_samples:
-            print 'preform control sphero.'
+            print('preform control sphero.')
             self.neurosphero.control_sphero(features)
 
     def login_neuro(self):
@@ -135,7 +133,7 @@ class NeuroSpheroManager(object):
         # C:\Users\owner\Anaconda2\Lib\site-packages\websocket\_logging.py
         # added null handler to avoid no handler error
         websocket.enableTrace(False)
-        print "connecting to cloud..."
+        print("connecting to cloud...")
 
         ws = websocket.WebSocketApp(
             "wss://api.neurosteer.com/api/v1/features/" + self.sensor
@@ -144,7 +142,6 @@ class NeuroSpheroManager(object):
             on_error=self.on_error,
             on_close=self.on_close
         )
-
         return ws
 
     def connect(self):
@@ -158,19 +155,3 @@ class NeuroSpheroManager(object):
         """Close the connection to neuro API and stop the recording."""
         self.running = False
         self.ws.close()
-
-
-# if __name__ == "__main__":
-    # neuro_sphero_manager = NeuroSpheroManager()
-    # neuro_sphero_manager.run()
-
-
-
-    # email = sys.argv[1]
-    # password = sys.argv[2]
-    # sensor = sys.argv[3]
-    # sphero = sys.argv[4]
-    # features = sys.argv[5:]
-    #
-    # ws, _ = connect(email=email, password=password, sensor=sensor, sphero=sphero)
-    # ws.run_forever()
