@@ -26,7 +26,7 @@ def start_recording():
 
     neurosphero_manager.run()
 
-    description = json.loads(request.data)['description']
+    description = json.loads(request.data.decode('utf-8'))['description']
     description = '{} {:%d/%m/%y %H:%M}'.format(description,
                                                 dt.datetime.today())
     neurosphero_manager.neuro.update_description(description=description)
