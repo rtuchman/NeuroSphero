@@ -15,7 +15,7 @@ class NeuroLearn:
         self.classifier = Sequential()
 
         # First layer
-        self.classifier.add(Convolution2D(32, (3, 3), input_shape=(121, 10, 1), activation='relu'))  #CHANGE IMAGE SIZE
+        self.classifier.add(Convolution2D(32, (3, 3), input_shape=(121, 10, 1), activation='relu'))
         self.classifier.add(MaxPooling2D(pool_size=(2, 2)))
 
         # Second layer
@@ -35,11 +35,11 @@ class NeuroLearn:
 
     def data_preprocessing(self, x_train, y_train):
 
-        self.train_datagen = ImageDataGenerator(shear_range=0.2,
-                                                zoom_range=0.2,
-                                                horizontal_flip=True)
+        self.train_datagen = ImageDataGenerator(shear_range=0,
+                                                zoom_range=00,
+                                                horizontal_flip=False)
 
-        self.training_set = self.train_datagen.flow_from_dataframe(target_size=(64, 64),
+        self.training_set = self.train_datagen.flow_from_directory(target_size=(121, 10),
                                                  batch_size=32,
                                                  class_mode='categorical')
 
