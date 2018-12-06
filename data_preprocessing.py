@@ -46,9 +46,7 @@ class NeuroProcess():
         X_normalized = X * 255
         for j in range(0, X_normalized.shape[1]-10, 10):
             buffer = X_normalized[:, j:j+10]
-            buf2 = X[:, j:j+10]
             imageio.imwrite(r'dataset\{}\{}.{}.{}.bmp'.format(quary_string, quary_string, sessionName, j), buffer)
-            imageio.imwrite(r'dataset\{}\{}.{}.{}.png'.format(quary_string, quary_string, sessionName, j), buf2)
 
 
 
