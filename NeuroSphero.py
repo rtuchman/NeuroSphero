@@ -18,7 +18,7 @@ class NeuroSphero:
 
     def __init__(self, sphero_id, features=(u'c1', u'h1')):
         self.sphero_ball = Sphero("NAME", sphero_id, response_time_out=2, number_tries=5)
-        self.calibration_samples = 10  # buffer size
+        self.calibration_samples = 30  # buffer size
         self.features = [x for x in features]
         self.buf = {feature: numpy.zeros([self.calibration_samples]) for feature in self.features}
         self.sample_number = 0
@@ -26,7 +26,7 @@ class NeuroSphero:
 
     def connect(self):
         try:
-            print("connecting to sphero ball...")
+            print "connecting to sphero ball..."
             self.sphero_ball.connect()
             for i in range(5):
                 self.sphero_ball.set_color(255, 255, 0)  #yello
@@ -36,11 +36,11 @@ class NeuroSphero:
                 self.sphero_ball.set_color(255, 0, 0)    #red
                 sleep(0.5)
             if self.sphero_ball.ping()[0]:
-                print("sphero ball connected!")
+                print "sphero ball connected!"
                 self.sphero_ball.set_color(0, 255, 0)
         except ValueError:
-            print("Could not connect to sphero ball")
-            print("please make sure sphero is on and bluetooth is on")
+            print "Could not connect to sphero ball"
+            print "please make sure sphero is on and bluetooth is on"
             return False
 
         return True
@@ -51,7 +51,7 @@ class NeuroSphero:
         Each feature (e.g c1 ,h1) is saved in it's own buffer.
         For each buffer it computes mean, std, min, max
         """
-        buf_iter = self.sample_number % self.calibration_samples
+        buf_iter = (self.sample_number) % self.calibration_samples
         for feature in self.features:
             self.buf[feature][buf_iter] = features[feature]
         if self.sample_number <= self.calibration_samples:
@@ -64,6 +64,7 @@ class NeuroSphero:
             self.min = {feature: (numpy.min(self.buf[feature])) for feature in self.buf}
             self.max = {feature: (numpy.max(self.buf[feature])) for feature in self.buf}
             self.analytics = {'mean': self.mean, 'std': self.std, 'min': self.min, 'max': self.max}
+            #pp(self.analytics)
         self.sample_number += 1
 
     def control_sphero(self, features):
@@ -80,7 +81,7 @@ class NeuroSphero:
                                                                                     (down_thresh[i] + 1) * 50)
             str_ = ''.join([str_, tmp])
         flag = self.sample_number % 2
-        print("\n{}".format(str_))
+        print "\n{}".format(str_)
         if len(self.features) >= 1:
             if features[self.features[0]] > up_thresh[0]:  # if c1 > up_thresh: move forward
                 self.sphero_ball.roll(30, 90 + 180 * flag)
