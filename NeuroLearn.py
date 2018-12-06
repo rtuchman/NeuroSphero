@@ -15,7 +15,7 @@ class NeuroLearn:
         self.classifier = Sequential()
 
         # First layer
-        self.classifier.add(Convolution2D(32, (3, 3), input_shape=(64, 64, 3), activation='relu'))  #CHANGE IMAGE SIZE
+        self.classifier.add(Convolution2D(32, (3, 3), input_shape=(121, 10, 1), activation='relu'))  #CHANGE IMAGE SIZE
         self.classifier.add(MaxPooling2D(pool_size=(2, 2)))
 
         # Second layer
