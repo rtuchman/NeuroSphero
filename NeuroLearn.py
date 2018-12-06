@@ -28,6 +28,14 @@ class NeuroLearn:
         self.classifier.add(Convolution2D(64, (3, 3), activation='relu', padding="same"))
         self.classifier.add(MaxPooling2D(pool_size=(2, 2)))
 
+        # Forth layer
+        self.classifier.add(Convolution2D(64, (3, 3), activation='relu', padding="same"))
+        self.classifier.add(MaxPooling2D(pool_size=(2, 2), padding="same"))
+
+        # Fifth layer
+        #self.classifier.add(Convolution2D(128, (3, 3), activation='relu', padding="same"))
+        #self.classifier.add(MaxPooling2D(pool_size=(2, 2), padding="same"))
+
         # Output layers
         self.classifier.add(Flatten())
         self.classifier.add(Dense(units=128, activation='relu'))
@@ -46,13 +54,13 @@ class NeuroLearn:
         self.test_datagen = ImageDataGenerator(rescale=1./255)  # scale pixels [0-255] to [0,1]
 
         self.training_set = self.train_datagen.flow_from_directory(
-            r'C:\Users\owner\Desktop\NeuroSreer Project\NeuroSphero\dataset\train_data',
+            r'C:\Users\owner\Desktop\NeuroSreer Project\dataset\train_data',
             target_size=(121, 10),
             batch_size=20,
             class_mode='categorical')
 
         self.test_set = self.test_datagen.flow_from_directory(
-            r'C:\Users\owner\Desktop\NeuroSreer Project\NeuroSphero\dataset\test_data',
+            r'C:\Users\owner\Desktop\NeuroSreer Project\dataset\test_data',
             target_size=(121, 10),
             batch_size=10,
             class_mode='categorical')
@@ -64,7 +72,7 @@ class NeuroLearn:
         self.history = self.classifier.fit_generator(self.training_set,
                                       samples_per_epoch=384,
                                       nb_epoch=50,
-                                      verbose=1,
+                                      verbose=2,
                                       #callbacks=callback_tensorboard("logs/run_a"),
                                       validation_data=self.test_set,
                                       nb_val_samples=33)
@@ -75,4 +83,5 @@ if __name__ == "__main__":
     model = NeuroLearn()
     model.data_preprocessing()
     model.train()
+    model.classifier.save_weights('first_try.h5')
 
