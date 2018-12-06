@@ -7,6 +7,8 @@ from keras.preprocessing.image import ImageDataGenerator
 import warnings
 warnings.filterwarnings("ignore")
 
+# THIS MODEL RUNS ON PYTHON 3.6 ON WINDOWS
+
 class NeuroLearn:
 
     def __init_(self):
