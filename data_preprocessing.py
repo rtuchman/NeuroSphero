@@ -7,7 +7,7 @@ import zipfile
 import io
 from NeuroLogin import *
 import imageio
-
+from PIL import Image
 
 class NeuroProcess():
 
@@ -43,11 +43,10 @@ class NeuroProcess():
         X = (X + 4) / 5
         X[X < 0] = 0
         X[X > 1] = 1
-        X_normalized = X * 255
-        for j in range(0, X_normalized.shape[1]-10, 10):
-            buffer = X_normalized[:, j:j+10]
-            #imageio.imwrite(r'dataset\train_data\{}\{}.{}.{}.bmp'.format(quary_string, quary_string, sessionName, j), buffer)
-            imageio.imwrite(r'second data\{}\{}.{}.{}.bmp'.format(quary_string, quary_string, sessionName, j), buffer)
+        for j in range(0, X.shape[1]-10, 10):
+            img = Image.fromarray(X[:, j:j+10])
+            img.save(r'C:\Users\owner\Desktop\NeuroSreer Project\dataset\train_data\{}\{}.{}.{}.tiff'.format(quary_string, quary_string, sessionName, j))
+            print('printed {}.{}.{}'.format(quary_string, sessionName, j))
 
 
 

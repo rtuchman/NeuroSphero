@@ -85,3 +85,5 @@ if __name__ == "__main__":
     model.train()
     model.classifier.save_weights('first_try.h5')
 
+    print('Done!')
+
