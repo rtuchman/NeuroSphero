@@ -46,12 +46,13 @@ class NeuroProcess():
         X_normalized = X * 255
         for j in range(0, X_normalized.shape[1]-10, 10):
             buffer = X_normalized[:, j:j+10]
-            imageio.imwrite(r'dataset\{}\{}.{}.{}.bmp'.format(quary_string, quary_string, sessionName, j), buffer)
+            #imageio.imwrite(r'dataset\train_data\{}\{}.{}.{}.bmp'.format(quary_string, quary_string, sessionName, j), buffer)
+            imageio.imwrite(r'second data\{}\{}.{}.{}.bmp'.format(quary_string, quary_string, sessionName, j), buffer)
 
 
 
 if __name__ == "__main__":
-    query_list = ['MEMORY GAME', 'CHILL MUSIC MEDITATE', 'WRITE WITH WEAK HAND']
+    query_list = ['MEMORY GAME'] #, 'CHILL MUSIC MEDITATE', 'WRITE WITH WEAK HAND']
     my = NeuroProcess()
     for q in query_list:
         sessions = my.query_sessions('https://api.neurosteer.com', q)
