@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ce47967c-8dea-42de-8cbc-c65d40b84be3" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/NeuroLearn.py" afterPath="$PROJECT_DIR$/NeuroLearn.py" />
-      <change beforePath="$PROJECT_DIR$/data_preprocessing.py" afterPath="$PROJECT_DIR$/data_preprocessing.py" />
-      <change beforePath="$PROJECT_DIR$/first_try.h5" afterPath="$PROJECT_DIR$/first_try.h5" />
+      <change beforePath="$PROJECT_DIR$/first_try.h5" afterPath="" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -60,8 +58,8 @@
       <file leaf-file-name="NeuroLearn.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/NeuroLearn.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="348">
-              <caret line="119" column="0" lean-forward="true" selection-start-line="119" selection-start-column="0" selection-end-line="119" selection-end-column="0" />
+            <state relative-caret-position="178">
+              <caret line="129" column="60" lean-forward="true" selection-start-line="129" selection-start-column="60" selection-end-line="129" selection-end-column="60" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -72,11 +70,9 @@
       <file leaf-file-name="NeuroLogin.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/NeuroLogin.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
+            <state relative-caret-position="-77">
               <caret line="16" column="26" lean-forward="false" selection-start-line="16" selection-start-column="26" selection-end-line="16" selection-end-column="26" />
-              <folding>
-                <element signature="e#60#75#0" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -120,21 +116,11 @@
       <file leaf-file-name="data_preprocessing.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/data_preprocessing.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="138">
-              <caret line="73" column="0" lean-forward="false" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
+            <state relative-caret-position="229">
+              <caret line="59" column="21" lean-forward="true" selection-start-line="59" selection-start-column="21" selection-end-line="59" selection-end-column="21" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="generic.py" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/Anaconda2/envs/py36/Lib/site-packages/pandas/core/generic.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="4374" column="0" lean-forward="false" selection-start-line="4374" selection-start-column="0" selection-end-line="4374" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -307,17 +293,6 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/NeuroLearn.py</url>
-          <line>137</line>
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/NeuroLearn.py</url>
-          <line>105</line>
-          <option name="timeStamp" value="16" />
-        </line-breakpoint>
-      </breakpoints>
       <option name="time" value="17" />
     </breakpoint-manager>
     <watches-manager />
@@ -343,9 +318,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
           <caret line="16" column="26" lean-forward="true" selection-start-line="16" selection-start-column="26" selection-end-line="16" selection-end-column="26" />
-          <folding>
-            <element signature="e#60#75#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -399,16 +372,6 @@
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/Documents/Studies/ML/Machine-Learning-A-Z/data/Part 8 - Deep Learning/Section 40 - Convolutional Neural Networks (CNN)/cnn.py" />
-    <entry file="file://$PROJECT_DIR$/NeuroLogin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="16" column="26" lean-forward="false" selection-start-line="16" selection-start-column="26" selection-end-line="16" selection-end-column="26" />
-          <folding>
-            <element signature="e#60#75#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/NeuroLogout.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -471,10 +434,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/NeuroLogin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-77">
+          <caret line="16" column="26" lean-forward="false" selection-start-line="16" selection-start-column="26" selection-end-line="16" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/data_preprocessing.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="73" column="0" lean-forward="false" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
+        <state relative-caret-position="229">
+          <caret line="59" column="21" lean-forward="true" selection-start-line="59" selection-start-column="21" selection-end-line="59" selection-end-column="21" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
@@ -483,8 +454,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/NeuroLearn.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="348">
-          <caret line="119" column="0" lean-forward="true" selection-start-line="119" selection-start-column="0" selection-end-line="119" selection-end-column="0" />
+        <state relative-caret-position="178">
+          <caret line="129" column="60" lean-forward="true" selection-start-line="129" selection-start-column="60" selection-end-line="129" selection-end-column="60" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
           </folding>
