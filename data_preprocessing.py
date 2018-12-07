@@ -7,7 +7,7 @@ import zipfile
 import io
 from NeuroLogin import *
 import imageio
-from PIL import Image
+
 
 class NeuroProcess():
 
@@ -18,6 +18,7 @@ class NeuroProcess():
         get_token = NeuroLogin(self.email, self.password, self.sensor)
         get_token.get_token()
         self.token = get_token.token
+        self.dataset = pd.DataFrame()
         #self.from_date = parse('2018-06-01')
         #self.to_date = parse('2019-06-01')
 
@@ -30,7 +31,7 @@ class NeuroProcess():
 
         return sessions.sort_values('startDate')
 
-    def save_data(self, ns_connection, sessionName, quary_string):
+    def save_data_as_image(self, ns_connection, sessionName, quary_string):
         url = ns_connection + r'/api/v1/sensors/' + self.sensor + r'/' + sessionName + r'/all?access_token='+self.token
         r = requests.get(url)
         buffer = io.BytesIO(r.content)
@@ -43,18 +44,36 @@ class NeuroProcess():
         X = (X + 4) / 5
         X[X < 0] = 0
         X[X > 1] = 1
-        for j in range(0, X.shape[1]-10, 10):
-            img = Image.fromarray(X[:, j:j+10])
-            img.save(r'C:\Users\owner\Desktop\NeuroSreer Project\dataset\train_data\{}\{}.{}.{}.tiff'.format(quary_string, quary_string, sessionName, j))
-            print('printed {}.{}.{}'.format(quary_string, sessionName, j))
+        X_normalized = X * 255
+        for j in range(0, X_normalized.shape[1]-10, 10):
+            buffer = X_normalized[:, j:j+10]
+            imageio.imwrite(r'C:\Users\owner\Desktop\NeuroSreer Project\dataset\train_data\{}\{}.{}.{}.bmp'.format(quary_string, quary_string, sessionName, j), buffer)
+
+    def save_data_as_csv(self, ns_connection, sessionName, y_index):
+
+        url = ns_connection + r'/api/v1/sensors/' + self.sensor + r'/' + sessionName + r'/all?access_token='+self.token
+        r = requests.get(url)
+        buffer = io.BytesIO(r.content)
+        z = zipfile.ZipFile(buffer)
+        file = z.open('%s-%s.features.txt' % (self.sensor, sessionName))
+        X = np.genfromtxt(file, delimiter=',')
+        X = X[10:-10]
+        X = X[:, 1:122]
+        y = np.zeros((X.shape[0], 3))
+        y[:, y_index] = 1.0
+        temp = np.concatenate((X, y), axis=1)
+        temp_pd = pd.DataFrame(temp)
+        self.dataset = pd.concat((self.dataset, temp_pd), axis=0)
+
 
 
 
 if __name__ == "__main__":
-    query_list = ['MEMORY GAME'] #, 'CHILL MUSIC MEDITATE', 'WRITE WITH WEAK HAND']
+    query_list = ['MEMORY GAME', 'CHILL MUSIC MEDITATE', 'WRITE WITH WEAK HAND']
     my = NeuroProcess()
-    for q in query_list:
-        sessions = my.query_sessions('https://api.neurosteer.com', q)
+    for q in range(len(query_list)):
+        sessions = my.query_sessions('https://api.neurosteer.com', query_list[q])
         for s in sessions.sessionName:
-            my.save_data('https://api.neurosteer.com', s, q)
+            my.save_data_as_csv('https://api.neurosteer.com', s, q)
+    my.dataset.to_csv(r'C:\Users\owner\Desktop\NeuroSreer Project\dataset\train_data\neuro_data.csv')
 
