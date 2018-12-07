@@ -97,6 +97,7 @@ class NeuroLearnANN(object):
         self.classifier.add(Dense(units=65, kernel_initializer="uniform", activation='relu'))
 
         # Adding the output layer
+        self.classifier.add(Dropout(0.5))
         self.classifier.add(Dense(units=3, kernel_initializer='uniform', activation='softmax'))
 
         # Compiling the ANN
