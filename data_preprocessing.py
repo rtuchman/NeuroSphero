@@ -60,7 +60,7 @@ class NeuroProcess():
         X = X[10:-10]
         X = X[:, 1:122]
         y = np.zeros((X.shape[0], 3))
-        y[:, y_index] = 1.0
+        y[:, y_index] = 1.0  # one hot label for the categorical data
         temp = np.concatenate((X, y), axis=1)
         temp_pd = pd.DataFrame(temp)
         self.dataset = pd.concat((self.dataset, temp_pd), axis=0)

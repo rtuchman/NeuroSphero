@@ -1,8 +1,6 @@
 import numpy as np
 from keras.models import Sequential
-from keras.layers import Convolution2D
-from keras.layers import MaxPooling2D
-from keras.layers import Dropout, Flatten, Dense
+from keras.layers import Convolution2D, MaxPooling2D, Dropout, Flatten, Dense
 from keras.preprocessing.image import ImageDataGenerator
 from sklearn.metrics import confusion_matrix
 import warnings
@@ -10,7 +8,7 @@ warnings.filterwarnings("ignore")
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
-import tensorboard
+from keras.callbacks import TensorBoard
 import matplotlib.pyplot as plt
 import itertools
 
@@ -91,10 +89,13 @@ class NeuroLearnANN(object):
         self.classifier = Sequential()
 
         # Adding the input layer and the first hidden layer
-        self.classifier.add(Dense(activation='relu', input_dim=121, units=65, kernel_initializer='uniform'))
+        self.classifier.add(Dense(activation='relu', input_dim=121, units=90, kernel_initializer='uniform'))
 
         # Adding the second hidden layer
-        self.classifier.add(Dense(units=65, kernel_initializer="uniform", activation='relu'))
+        self.classifier.add(Dense(units=90, kernel_initializer="uniform", activation='relu'))
+
+        # Adding the third hidden layer
+        self.classifier.add(Dense(units=90, kernel_initializer="uniform", activation='relu'))
 
         # Adding the output layer
         self.classifier.add(Dropout(0.5))
@@ -120,8 +121,13 @@ class NeuroLearnANN(object):
 
     def train(self):
 
+        # to view tensorboard after training open command line in project's folder and run:
+        # tensorboard --logdir ./ --host localhost --port 8088
+        # than open in your browser: http://localhost:8088
+        tbCallBack = TensorBoard(log_dir='./Graph', histogram_freq=0,
+                                    write_graph=True, write_images=True)
         # Fitting the ANN to the Training set
-        self.classifier.fit(self.X_train, self.y_train, batch_size=10, nb_epoch=20)
+        self.classifier.fit(self.X_train, self.y_train, batch_size=10, nb_epoch=30, callbacks=[tbCallBack])
 
     def predict(self):
         # Predicting the Test set results
@@ -182,7 +188,7 @@ if __name__ == "__main__":
     model.train()
     model.predict()
     model.plot_confusion_matrix(model.cm, ['Memory game', 'Meditate', 'Write with weak hand'])
-    model.classifier.save('first_try.h5')
+    model.classifier.save('NeuroClassifier.h5')
 
     print('Done!')
 
