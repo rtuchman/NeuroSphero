@@ -21,7 +21,7 @@ class NeuroLearnCNN(object):
         self.classifier = Sequential()
 
         # First layer
-        self.classifier.add(Convolution2D(32, (3, 3), input_shape=(121, 10, 3), activation='relu', padding="same"))  #CHANGE IMAGE SIZE
+        self.classifier.add(Convolution2D(32, (3, 3), input_shape=(121, 10, 3), activation='relu', padding="same"))
         self.classifier.add(MaxPooling2D(pool_size=(2, 2)))
 
         # Second layer
@@ -33,12 +33,8 @@ class NeuroLearnCNN(object):
         self.classifier.add(MaxPooling2D(pool_size=(2, 2)))
 
         # Forth layer
-        #self.classifier.add(Convolution2D(64, (3, 3), activation='relu', padding="same"))
-        #self.classifier.add(MaxPooling2D(pool_size=(2, 2), padding="same"))
-
-        # Fifth layer
-        ##self.classifier.add(Convolution2D(128, (3, 3), activation='relu', padding="same"))
-        ##self.classifier.add(MaxPooling2D(pool_size=(2, 2), padding="same"))
+        self.classifier.add(Convolution2D(128, (3, 3), activation='relu', padding="same"))
+        self.classifier.add(MaxPooling2D(pool_size=(2, 2), padding="same"))
 
         # Output layers
         self.classifier.add(Flatten())
@@ -127,7 +123,7 @@ class NeuroLearnANN(object):
         tbCallBack = TensorBoard(log_dir='./Graph', histogram_freq=0,
                                     write_graph=True, write_images=True)
         # Fitting the ANN to the Training set
-        self.classifier.fit(self.X_train, self.y_train, batch_size=10, nb_epoch=30, callbacks=[tbCallBack])
+        self.history = self.classifier.fit(self.X_train, self.y_train, batch_size=10, nb_epoch=30, callbacks=[tbCallBack])
 
     def predict(self):
         # Predicting the Test set results
@@ -177,7 +173,7 @@ class NeuroLearnANN(object):
         plt.tight_layout()
         plt.ylabel('True label')
         plt.xlabel('Predicted label\naccuracy={:0.4f}; misclass={:0.4f}'.format(accuracy, misclass))
-        plt.show()
+        plt.savefig('Confusion Matrix.jpg')
 
 
 

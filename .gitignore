@@ -13,6 +13,7 @@ __pycache__/
 
 #Photos
 *.png
+*.jpg
 
 # Distribution / packaging
 .Python
