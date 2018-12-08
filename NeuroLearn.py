@@ -119,10 +119,12 @@ class NeuroLearnANN(object):
 
         # to view tensorboard after training open anaconda prompt in project's folder and run:
         # tensorboard --logdir ./ --host localhost --port 8088
-        # open in your browser: http://localhost:8088
+        # now open in your browser: http://localhost:8088
         tbCallBack = TensorBoard(log_dir='./Graph', histogram_freq=0,
                                     write_graph=True, write_images=True)
+
         # Fitting the ANN to the Training set
+        # you may use history to view accuracy
         self.history = self.classifier.fit(self.X_train,self.y_train, validation_split=0.2,
                                            batch_size=10, nb_epoch=200, callbacks=[tbCallBack])
 
