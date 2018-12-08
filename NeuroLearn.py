@@ -174,6 +174,7 @@ class NeuroLearnANN(object):
         plt.ylabel('True label')
         plt.xlabel('Predicted label\naccuracy={:0.4f}; misclass={:0.4f}'.format(accuracy, misclass))
         plt.savefig('Confusion Matrix.jpg')
+        plt.imsave('Confusion Matrix.png', )
 
 
 
