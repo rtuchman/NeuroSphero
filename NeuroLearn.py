@@ -3,13 +3,13 @@ from keras.models import Sequential
 from keras.layers import Convolution2D, MaxPooling2D, Dropout, Flatten, Dense
 from keras.preprocessing.image import ImageDataGenerator
 from keras import optimizers
+from keras.callbacks import TensorBoard
 from sklearn.metrics import confusion_matrix
 import warnings
 warnings.filterwarnings("ignore")
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
-from keras.callbacks import TensorBoard
 import matplotlib.pyplot as plt
 import itertools
 
@@ -65,7 +65,6 @@ class NeuroLearnCNN(object):
             batch_size=10,
             class_mode='categorical')
 
-
     def train(self):
 
         #tensorboard("logs/run_a")
@@ -98,7 +97,7 @@ class NeuroLearnANN(object):
         self.classifier.add(Dense(units=3, kernel_initializer='uniform', activation='softmax'))
 
         # Compiling the ANN
-        optimizer = optimizers.Adamax(lr=0.002, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0)
+        optimizer = optimizers.Adamax(lr=0.0011, epsilon=None, decay=0.0)
         self.classifier.compile(optimizer=optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
 
     def data_preprocessing(self):
@@ -123,8 +122,8 @@ class NeuroLearnANN(object):
         tbCallBack = TensorBoard(log_dir='./Graph', histogram_freq=0,
                                     write_graph=True, write_images=True)
         # Fitting the ANN to the Training set
-        self.history = self.classifier.fit(self.X_train,self.y_train, validation_split=0.33,
-                                           batch_size=10, nb_epoch=30, callbacks=[tbCallBack])
+        self.history = self.classifier.fit(self.X_train,self.y_train, validation_split=0.2,
+                                           batch_size=10, nb_epoch=50, callbacks=[tbCallBack])
 
     def predict(self):
         # Predicting the Test set results
@@ -158,7 +157,6 @@ class NeuroLearnANN(object):
         if normalize:
             cm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
 
-
         thresh = cm.max() / 1.5 if normalize else cm.max() / 2
         for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
             if normalize:
@@ -169,7 +167,6 @@ class NeuroLearnANN(object):
                 plt.text(j, i, "{:,}".format(cm[i, j]),
                          horizontalalignment="center",
                          color="white" if cm[i, j] > thresh else "black")
-
 
         plt.tight_layout()
         plt.gcf().subplots_adjust(bottom=0.3)
