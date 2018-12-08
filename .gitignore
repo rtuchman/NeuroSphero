@@ -114,3 +114,6 @@ venv.bak/
 
 # Pycharm
 .idea/workspace.xml
+
+#Tensorboard graph
+Graph/
