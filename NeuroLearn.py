@@ -92,6 +92,9 @@ class NeuroLearnANN(object):
         # Adding the third hidden layer
         self.classifier.add(Dense(units=100, kernel_initializer="uniform", activation='relu'))
 
+        # Adding the forth hidden layer
+        self.classifier.add(Dense(units=100, kernel_initializer="uniform", activation='relu'))
+
         # Adding the output layer
         self.classifier.add(Dropout(0.5))
         self.classifier.add(Dense(units=3, kernel_initializer='uniform', activation='softmax'))
@@ -119,12 +122,12 @@ class NeuroLearnANN(object):
 
         # to view tensorboard after training open command line in project's folder and run:
         # tensorboard --logdir ./ --host localhost --port 8088
-        # than open in your browser: http://localhost:8088
+        # open in your browser: http://localhost:8088
         tbCallBack = TensorBoard(log_dir='./Graph', histogram_freq=0,
                                     write_graph=True, write_images=True)
         # Fitting the ANN to the Training set
         self.history = self.classifier.fit(self.X_train,self.y_train, validation_split=0.2,
-                                           batch_size=10, nb_epoch=100, callbacks=[tbCallBack])
+                                           batch_size=10, nb_epoch=250, callbacks=[tbCallBack])
 
     def predict(self):
         # Predicting the Test set results
