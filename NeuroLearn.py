@@ -2,6 +2,7 @@ import numpy as np
 from keras.models import Sequential
 from keras.layers import Convolution2D, MaxPooling2D, Dropout, Flatten, Dense
 from keras.preprocessing.image import ImageDataGenerator
+from keras import optimizers
 from sklearn.metrics import confusion_matrix
 import warnings
 warnings.filterwarnings("ignore")
@@ -16,7 +17,6 @@ import itertools
 class NeuroLearnCNN(object):
 
     def __init__(self):
-
 
         self.classifier = Sequential()
 
@@ -98,14 +98,14 @@ class NeuroLearnANN(object):
         self.classifier.add(Dense(units=3, kernel_initializer='uniform', activation='softmax'))
 
         # Compiling the ANN
-        self.classifier.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+        optimizer = optimizers.Adamax(lr=0.002, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0)
+        self.classifier.compile(optimizer=optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
 
     def data_preprocessing(self):
         # Importing the dataset
-        dataset = pd.read_csv(r"C:\Users\rtuchman\Desktop\neuro_data.csv")
+        dataset = pd.read_csv(r'neuro_data.csv')
         X = dataset.iloc[:, 1:122].values
         y = dataset.iloc[:, 122:].values
-
 
         # Splitting the dataset into the Training set and Test set
         self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(X, y, test_size=0.2, random_state=0)
@@ -123,7 +123,8 @@ class NeuroLearnANN(object):
         tbCallBack = TensorBoard(log_dir='./Graph', histogram_freq=0,
                                     write_graph=True, write_images=True)
         # Fitting the ANN to the Training set
-        self.history = self.classifier.fit(self.X_train, self.y_train, batch_size=10, nb_epoch=30, callbacks=[tbCallBack])
+        self.history = self.classifier.fit(self.X_train,self.y_train, validation_split=0.33,
+                                           batch_size=10, nb_epoch=30, callbacks=[tbCallBack])
 
     def predict(self):
         # Predicting the Test set results
@@ -171,10 +172,10 @@ class NeuroLearnANN(object):
 
 
         plt.tight_layout()
+        plt.gcf().subplots_adjust(bottom=0.3)
         plt.ylabel('True label')
         plt.xlabel('Predicted label\naccuracy={:0.4f}; misclass={:0.4f}'.format(accuracy, misclass))
         plt.savefig('Confusion Matrix.jpg')
-        plt.imsave('Confusion Matrix.png', )
 
 
 
