@@ -84,20 +84,21 @@ class NeuroLearnANN(object):
         self.classifier = Sequential()
 
         # Adding the input layer and the first hidden layer
-        self.classifier.add(Dense(activation='relu', input_dim=121, units=90, kernel_initializer='uniform'))
+        self.classifier.add(Dense(activation='relu', input_dim=121, units=100, kernel_initializer='uniform'))
 
         # Adding the second hidden layer
-        self.classifier.add(Dense(units=90, kernel_initializer="uniform", activation='relu'))
+        self.classifier.add(Dense(units=100, kernel_initializer="uniform", activation='relu'))
 
         # Adding the third hidden layer
-        self.classifier.add(Dense(units=90, kernel_initializer="uniform", activation='relu'))
+        self.classifier.add(Dense(units=100, kernel_initializer="uniform", activation='relu'))
 
         # Adding the output layer
         self.classifier.add(Dropout(0.5))
         self.classifier.add(Dense(units=3, kernel_initializer='uniform', activation='softmax'))
 
         # Compiling the ANN
-        optimizer = optimizers.Adamax(lr=0.0011, epsilon=None, decay=0.0)
+        #optimizer = optimizers.Adamax(lr=0.001, epsilon=None, decay=0.0)
+        optimizer = optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)
         self.classifier.compile(optimizer=optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
 
     def data_preprocessing(self):
@@ -123,7 +124,7 @@ class NeuroLearnANN(object):
                                     write_graph=True, write_images=True)
         # Fitting the ANN to the Training set
         self.history = self.classifier.fit(self.X_train,self.y_train, validation_split=0.2,
-                                           batch_size=10, nb_epoch=50, callbacks=[tbCallBack])
+                                           batch_size=10, nb_epoch=100, callbacks=[tbCallBack])
 
     def predict(self):
         # Predicting the Test set results
