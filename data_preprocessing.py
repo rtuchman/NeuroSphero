@@ -49,7 +49,7 @@ class NeuroProcess():
             buffer = X_normalized[:, j:j+10]
             imageio.imwrite(r'C:\Users\owner\Desktop\NeuroSreer Project\dataset\train_data\{}\{}.{}.{}.bmp'.format(quary_string, quary_string, sessionName, j), buffer)
 
-    def save_data_as_csv(self, ns_connection, sessionName, y_index):
+    def save_data_as_csv(self, ns_connection, sessionName, y_index, y_size):
 
         url = ns_connection + r'/api/v1/sensors/' + self.sensor + r'/' + sessionName + r'/all?access_token='+self.token
         r = requests.get(url)
@@ -59,7 +59,7 @@ class NeuroProcess():
         X = np.genfromtxt(file, delimiter=',')
         X = X[10:-10]
         X = X[:, 1:122]
-        y = np.zeros((X.shape[0], 3))
+        y = np.zeros((X.shape[0], y_size))
         y[:, y_index] = 1.0  # one hot label for the categorical data
         temp = np.concatenate((X, y), axis=1)
         temp_pd = pd.DataFrame(temp)
@@ -74,6 +74,6 @@ if __name__ == "__main__":
     for q in range(len(query_list)):
         sessions = my.query_sessions('https://api.neurosteer.com', query_list[q])
         for s in sessions.sessionName:
-            my.save_data_as_csv('https://api.neurosteer.com', s, q)
+            my.save_data_as_csv('https://api.neurosteer.com', s, q, len(query_list))
     my.dataset.to_csv(r'neuro_data.csv')
 

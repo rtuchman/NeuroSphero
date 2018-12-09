@@ -14,6 +14,9 @@ import matplotlib.pyplot as plt
 import itertools
 
 
+"""THIS MODULE RUNS ON PYTHON 3.6"""
+
+
 class NeuroLearnCNN(object):
 
     def __init__(self):
@@ -39,7 +42,7 @@ class NeuroLearnCNN(object):
         # Output layers
         self.classifier.add(Flatten())
         self.classifier.add(Dense(units=128, activation='relu'))
-        #self.classifier.add(Dropout(0.5))
+        self.classifier.add(Dropout(0.5))
         self.classifier.add(Dense(units=3, activation='softmax'))
 
         self.classifier.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
@@ -97,8 +100,7 @@ class NeuroLearnANN(object):
         self.classifier.add(Dense(units=3, kernel_initializer='uniform', activation='softmax'))
 
         # Compiling the ANN
-        #optimizer = optimizers.Adamax(lr=0.001, epsilon=None, decay=0.0)
-        optimizer = optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)
+        optimizer = optimizers.Adam(lr=0.008, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)
         self.classifier.compile(optimizer=optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
 
     def data_preprocessing(self):
@@ -185,7 +187,7 @@ if __name__ == "__main__":
     model.data_preprocessing()
     model.train()
     model.predict()
-    model.plot_confusion_matrix(model.cm, ['Memory game', 'Meditate', 'Write with weak hand'])
+    model.plot_confusion_matrix(model.cm, ['Memory game', 'Meditate', 'Write with weak hand', 'Happy music (dancing)'])
     model.classifier.save('NeuroClassifier.h5')
 
     print('Done!')
