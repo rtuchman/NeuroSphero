@@ -4,6 +4,7 @@ from spheropy.Sphero import Sphero
 import numpy
 import json
 from time import sleep
+import random
 from pprint import pprint as pp
 
 class NeuroSphero:
@@ -44,6 +45,37 @@ class NeuroSphero:
             return False
 
         return True
+
+    def make_a_step(self, current_angle, speed, sleep_time):
+        self.sphero_ball.roll(speed, current_angle)
+        sleep(sleep_time)
+        self.sphero_ball.roll(0, current_angle)
+
+    def make_a_circle(self, steps=10):
+        speed = 0x30
+        sleep_time = 0.3
+        rotate_by = 360 // steps
+        current_angle = 1
+        for _ in range(steps):
+            self.make_a_step(current_angle % 360, speed, sleep_time)
+            current_angle += rotate_by
+
+    def blink(self):
+        self.sphero_ball.set_inactivity_timeout(3600)
+        blink_rate = 1
+        for _ in range(5):
+            blink_rate = abs(blink_rate - 0.05)
+            self.sphero_ball.set_color(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+            sleep(blink_rate)
+
+    def make_a_square(self):
+        speed = 0x88
+        sleep_time = 1
+        for angle in [1, 90, 180, 270]:
+            self.sphero_ball.roll(speed, angle)
+            sleep(sleep_time)
+        self.sphero_ball.roll(0, 0)
+
 
     def perform_calibration(self, features):
         """
