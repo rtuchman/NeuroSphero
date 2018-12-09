@@ -69,7 +69,7 @@ class NeuroProcess():
 
 
 if __name__ == "__main__":
-    query_list = ['MEMORY GAME', 'CHILL MUSIC MEDITATE', 'WRITE WITH WEAK HAND']
+    query_list = ['MEMORY GAME', 'CHILL MUSIC MEDITATE', 'WRITE WITH WEAK HAND', 'HAPPY MUSIC DANCING']
     my = NeuroProcess()
     for q in range(len(query_list)):
         sessions = my.query_sessions('https://api.neurosteer.com', query_list[q])
