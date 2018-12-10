@@ -75,5 +75,6 @@ if __name__ == "__main__":
         sessions = my.query_sessions('https://api.neurosteer.com', query_list[q])
         for s in sessions.sessionName:
             my.save_data_as_csv('https://api.neurosteer.com', s, q, len(query_list))
+            print('Saved: {} {}'.format(query_list[q], s))
     my.dataset.to_csv(r'neuro_data.csv')
 
