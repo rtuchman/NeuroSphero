@@ -100,7 +100,7 @@ class NeuroLearnANN(object):
         self.classifier.add(Dense(units=4, kernel_initializer='uniform', activation='softmax'))
 
         # Compiling the ANN
-        optimizer = optimizers.Adam(lr=0.0008, beta_1=0.9, beta_2=0.999, epsilon=10e-9, decay=0.0, amsgrad=False)
+        optimizer = optimizers.Adam(lr=0.0007, beta_1=0.9, beta_2=0.999, epsilon=10e-9, decay=0.0, amsgrad=False)
         self.classifier.compile(optimizer=optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
 
     def data_preprocessing(self):
@@ -128,7 +128,7 @@ class NeuroLearnANN(object):
         # Fitting the ANN to the Training set
         # you may use history to view accuracy
         self.history = self.classifier.fit(self.X_train,self.y_train, validation_split=0.2,
-                                           batch_size=10, nb_epoch=500, callbacks=[tbCallBack])
+                                           batch_size=8, nb_epoch=300, callbacks=[tbCallBack])
 
     def predict(self):
         # Predicting the Test set results
