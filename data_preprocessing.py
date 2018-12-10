@@ -66,8 +66,6 @@ class NeuroProcess():
         self.dataset = pd.concat((self.dataset, temp_pd), axis=0)
 
 
-
-
 if __name__ == "__main__":
     query_list = ['MEMORY GAME', 'CHILL MUSIC MEDITATE', 'WRITE WITH WEAK HAND', 'HAPPY MUSIC DANCING']
     my = NeuroProcess()
