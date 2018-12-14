@@ -11,6 +11,7 @@ from NeuroSphero import *
 from NeuroLogin import *
 from NeuroLogout import disconnect as disconnect_neuro
 from keras.models import load_model
+from sklearn.preprocessing import StandardScaler
 
 # EMAIL = 'runtuchman@gmail.com'
 # PASSWORD = '1234Ran'
@@ -35,7 +36,6 @@ class NeuroSpheroManager(object):
         self.running = False  # indication whether we want to read data from the sensor or not
         self.ws = self.connect()
         self.is_training = True
-
 
         sphero_thread = threading.Thread(target=self.neurosphero.control_sphero())
         sphero_thread.start()
@@ -77,6 +77,8 @@ class NeuroSpheroManager(object):
         self.data = json.loads(message)
         features = self.data[u'all']
         bafs = self.data[u'all'][1:122]
+        sc = StandardScaler()
+        bafs = sc.fit_transform(bafs)
         self.neurosphero.buffer[self.neurosphero.sample_number % 10] = bafs
         self.neurosphero.sample_number += 1
         # check if data is valid
@@ -87,9 +89,19 @@ class NeuroSpheroManager(object):
         # training mode
         if self.is_training:
             self.neurosphero.sphero_ball.set_color(255, 255, 255)  # white light
+
+        # predict mode
         if not self.is_training:
-            self.prediction = self.neurolearn.classifier.predict(self.neurosphero.buffer)
-            self.prediction = (self.prediction > 0.9)
+            if self.neurosphero.sample_number % 10 == 0:  # once every 10 samples make prediction
+                self.neurosphero.y_prediction = [0.0, 0.0, 0.0, 0.0]
+                self.prediction = self.neurolearn.classifier.predict(self.neurosphero.buffer)
+                self.prediction = (self.prediction > 0.9)
+                histogram = [0 for _ in range(4)]
+                for p in self.prediction:
+                    histogram[np.argmax(p)] += 1
+                if max(histogram) > 5:
+                    self.neurosphero.y_prediction[np.argmax(histogram)] = 1.0
+
 
 
     def login_neuro(self):

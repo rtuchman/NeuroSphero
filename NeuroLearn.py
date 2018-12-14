@@ -1,8 +1,7 @@
 from comet_ml import Experiment
 import numpy as np
 from keras.models import Sequential
-from keras.layers import Convolution2D, MaxPooling2D, Dropout, Flatten, Dense
-from keras.preprocessing.image import ImageDataGenerator
+from keras.layers import Dropout, Dense
 from keras import optimizers
 from keras.callbacks import TensorBoard
 from sklearn.metrics import confusion_matrix
@@ -40,7 +39,7 @@ class NeuroLearnANN(object):
         self.classifier.add(Dense(units=4, kernel_initializer='glorot_uniform', activation='softmax'))
 
         # Compiling the ANN
-        optimizer = optimizers.Adam(lr=0.0008, beta_1=b1, beta_2=0.999, epsilon=1e-8, decay=0.0, amsgrad=False)
+        optimizer = optimizers.Adam(lr=0.0008, beta_1=0.77, beta_2=b1, epsilon=1e-8, decay=0.0, amsgrad=False)
         self.classifier.compile(optimizer=optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
 
     def data_preprocessing(self):
@@ -73,7 +72,7 @@ class NeuroLearnANN(object):
         # you may use history to view accuracy
         self.history = self.classifier.fit(self.X_train, self.y_train, shuffle=True,
                                            validation_split=0.1, batch_size=10,
-                                           nb_epoch=50, callbacks=[tbCallBack])
+                                           nb_epoch=30, callbacks=[tbCallBack])
 
     def predict(self):
         # Predicting the Test set results
@@ -128,7 +127,8 @@ class NeuroLearnANN(object):
 
 
 if __name__ == "__main__":
-    b_list = [0.043 * x for x in range(1, 24)]
+    b_list = [0.89 + 0.01*x for x in range(11)]
+    b_list.append(0.999)
     val_list = []
     loss_list = []
     for b in b_list:
@@ -140,10 +140,12 @@ if __name__ == "__main__":
         #model.predict()
         #model.plot_confusion_matrix(model.cm, ['Memory game', 'Meditate', 'Write with weak hand', 'Happy music (dancing)'])
     #model.classifier.save('NeuroClassifier.h5')
-    plt.plot(b_list, val_list)
+    vv = [x[-1] for x in val_list]
+    ss = [x[-1] for x in loss_list]
+    plt.plot(b_list, vv)
     plt.savefig('val_acc')
     plt.close()
-    plt.plot(b_list, loss_list)
+    plt.plot(b_list, ss)
     plt.savefig('val_loss')
     plt.close()
 
