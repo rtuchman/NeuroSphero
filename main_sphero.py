@@ -1,47 +1,14 @@
 """to install tensorflow follow instructions from:
     https://www.tensorflow.org/install/pip?lang=python2
-
-   This module creates a NeuroLogin instance to get access to Neurosteer's api,
-   then is creates a NeuroSphero instance that makes decisions and send commands
-   to the sphero ball based on the measured data.
-
-
-   After creating the instances, it opens a websocket with websocket.WebSocketApp.
-   the websocket receives 3 args:
-   url: websocket url.
-   on_message: callable object which is called when received data. on_message has 2 arguments.
-               The 1st argument is this class object.
-               The 2nd argument is utf-8 string which we get from the server.
-   on_error: callable object which is called when we get error. on_error has 2 arguments.
-             The 1st argument is this class object.
-             The 2nd argument is exception object.
-   on_close: callable object which is called when closed the connection.
-             this function has one argument. The argument is this class object.
-
-
-   Args:
-       email: user's email for api.neurosteer.com/signin.
-       password: user's password for api.neurosteer.com/signin.
-       sensor id: user's sensor.
-       sphero id: user's sphero.
-       features (optional): the biomarkers on which the user want perform analysis. default = (c1, h1).
-
-
-   To run the program, connects sphero ball via bluetooth the the computer/rpi, wear the electrode and
-   connect the sensor the the rpi, run in command line:
-   python main_sphero.py <email> <password> <sensor> <sphero> <features(optional)>
-
 """
 import threading
-from functools import partial
-
-import time
+import websocket
+#import sys
+#from functools import partial
+#import time
 
 from NeuroSphero import *
 from NeuroLogin import *
-import sys
-import websocket
-
 from NeuroLogout import disconnect as disconnect_neuro
 
 # EMAIL = 'runtuchman@gmail.com'
@@ -63,9 +30,13 @@ class NeuroSpheroManager(object):
         self.password = password
         self.sensor = sensor
         self.sphero_id = sphero_id
-
-        self.running = False  # indication whether we want tp read data from the sensor or not
+        self.running = False  # indication whether we want to read data from the sensor or not
         self.ws = self.connect()
+        self.is_training = True
+
+        sphero_thread = threading.Thread(self.neurosphero.control_sphero())
+        sphero_thread.start()
+
         print('created neuro sphero manager')
 
     def run(self):
@@ -101,23 +72,21 @@ class NeuroSpheroManager(object):
 
     def on_message(self, ws, message):
         print('message received')
-        self.neurosphero.data = json.loads(message)
-        features = self.neurosphero.data[u'features']
+        self.data = json.loads(message)
+        features = self.data[u'all']
+        bafs = self.data[u'all'][1:122]
+
         # check if data is valid
         qf = features[u'qf']
         if qf != 0:
             self.neurosphero.sphero_ball.set_color(255, 0, 0)
             print("data isn't valid!")
         # training mode
-        if self.neurosphero.sample_number <= self.neurosphero.calibration_samples:
-            self.neurosphero.sphero_ball.set_color(255, 255, 255)  # white light  until buffer is full
-        self.neurosphero.perform_calibration(features)
-        if self.neurosphero.sample_number == self.neurosphero.calibration_samples + 1:
-            print('\nCalibration is done')
-        # controlling mode
-        if self.neurosphero.sample_number > self.neurosphero.calibration_samples:
-            print('preform control sphero')
-            self.neurosphero.control_sphero(features)
+        if self.is_training:
+            self.neurosphero.blink()  # changing colors
+        if not self.is_training:
+            pass
+
 
     def login_neuro(self):
         """Login to neurosteer API"""
@@ -157,7 +126,7 @@ class NeuroSpheroManager(object):
 
     def disconnect(self):
         """Close the connection to neuro API and stop the recording."""
-        self.neurosphero.buf = {feature: numpy.zeros([self.neurosphero.calibration_samples])
-                                for feature in self.neurosphero.features}
+        #self.neurosphero.buf = {feature: numpy.zeros([self.neurosphero.calibration_samples])
+        #                        for feature in self.neurosphero.features}
         self.running = False
-        self.ws.close()
+        self.ws.close()#
