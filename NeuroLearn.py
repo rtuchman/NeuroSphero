@@ -65,6 +65,7 @@ class NeuroLearnANN(object):
         tbCallBack = TensorBoard(log_dir='./Graph', histogram_freq=0,
                                     write_graph=True, write_images=True)
 
+        # comet.ml
         experiment = Experiment(api_key="805T52iSiXeQ6TdzG3KC68KbF",
                                 project_name="general", workspace="rtuchman")
 
