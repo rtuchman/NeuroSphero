@@ -1,8 +1,7 @@
-from comet_ml import Experiment
+#from comet_ml import Experiment
 import numpy as np
 from keras.models import Sequential
-from keras.layers import Convolution2D, MaxPooling2D, Dropout, Flatten, Dense
-from keras.preprocessing.image import ImageDataGenerator
+from keras.layers import Dropout, Dense
 from keras import optimizers
 from keras.callbacks import TensorBoard
 from sklearn.metrics import confusion_matrix
@@ -66,8 +65,8 @@ class NeuroLearnANN(object):
                                     write_graph=True, write_images=True)
 
         # comet.ml
-        experiment = Experiment(api_key="805T52iSiXeQ6TdzG3KC68KbF",
-                                project_name="NeuroSphero", workspace="rtuchman")
+        #experiment = Experiment(api_key="805T52iSiXeQ6TdzG3KC68KbF",
+        #                        project_name="NeuroSphero", workspace="rtuchman")
 
         # Fitting the ANN to the Training set
         # you may use history to view accuracy
