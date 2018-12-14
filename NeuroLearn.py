@@ -1,7 +1,8 @@
 from comet_ml import Experiment
 import numpy as np
 from keras.models import Sequential
-from keras.layers import Dropout, Dense
+from keras.layers import Convolution2D, MaxPooling2D, Dropout, Flatten, Dense
+from keras.preprocessing.image import ImageDataGenerator
 from keras import optimizers
 from keras.callbacks import TensorBoard
 from sklearn.metrics import confusion_matrix
@@ -21,7 +22,7 @@ import itertools
 
 class NeuroLearnANN(object):
 
-    def __init__(self, b1):
+    def __init__(self):
         # Initialising the ANN
         self.classifier = Sequential()
 
@@ -39,7 +40,7 @@ class NeuroLearnANN(object):
         self.classifier.add(Dense(units=4, kernel_initializer='glorot_uniform', activation='softmax'))
 
         # Compiling the ANN
-        optimizer = optimizers.Adam(lr=0.0008, beta_1=0.77, beta_2=b1, epsilon=1e-8, decay=0.0, amsgrad=False)
+        optimizer = optimizers.Adam(lr=0.0008, beta_1=0.77, beta_2=0.98, epsilon=1e-8, decay=0.0, amsgrad=False)
         self.classifier.compile(optimizer=optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
 
     def data_preprocessing(self):
@@ -70,9 +71,9 @@ class NeuroLearnANN(object):
 
         # Fitting the ANN to the Training set
         # you may use history to view accuracy
-        self.history = self.classifier.fit(self.X_train, self.y_train, shuffle=True,
-                                           validation_split=0.1, batch_size=10,
-                                           nb_epoch=30, callbacks=[tbCallBack])
+        self.history = self.classifier.fit(self.X_train,self.y_train, validation_split=0.1,
+                                           batch_size=10, nb_epoch=100, shuffle=True,
+                                           callbacks=[tbCallBack])
 
     def predict(self):
         # Predicting the Test set results
@@ -127,27 +128,13 @@ class NeuroLearnANN(object):
 
 
 if __name__ == "__main__":
-    b_list = [0.89 + 0.01*x for x in range(11)]
-    b_list.append(0.999)
-    val_list = []
-    loss_list = []
-    for b in b_list:
-        model = NeuroLearnANN(b)
-        model.data_preprocessing()
-        model.train()
-        val_list.append(model.history.history['val_acc'])
-        loss_list.append(model.history.history['val_loss'])
-        #model.predict()
-        #model.plot_confusion_matrix(model.cm, ['Memory game', 'Meditate', 'Write with weak hand', 'Happy music (dancing)'])
-    #model.classifier.save('NeuroClassifier.h5')
-    vv = [x[-1] for x in val_list]
-    ss = [x[-1] for x in loss_list]
-    plt.plot(b_list, vv)
-    plt.savefig('val_acc')
-    plt.close()
-    plt.plot(b_list, ss)
-    plt.savefig('val_loss')
-    plt.close()
+    model = NeuroLearnANN()
+    model.data_preprocessing()
+    model.train()
+    model.predict()
+    model.plot_confusion_matrix(model.cm, ['Memory game', 'Meditate', 'Write with weak hand', 'Happy music (dancing)'])
+    model.classifier.save('NeuroClassifier.h5')
+
 
     print('Done!')
 
