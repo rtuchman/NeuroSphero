@@ -32,10 +32,12 @@ class NeuroSpheroManager(object):
         self.password = password
         self.sensor = sensor
         self.sphero_id = sphero_id
-        self.neurolearn = load_model('NeuroClassifier.h5')
+
         self.running = False  # indication whether we want to read data from the sensor or not
         self.ws = self.connect()
-        self.is_training = True
+
+        self.neurosphero.y_prediction = -1
+        self.neurolearn = load_model('NeuroClassifier.h5')
 
         sphero_thread = threading.Thread(target=self.neurosphero.control_sphero())
         sphero_thread.start()
@@ -93,14 +95,19 @@ class NeuroSpheroManager(object):
         # predict mode
         if not self.is_training:
             if self.neurosphero.sample_number % 10 == 0:  # once every 10 samples make prediction
-                self.neurosphero.y_prediction = [0.0, 0.0, 0.0, 0.0]
                 self.prediction = self.neurolearn.classifier.predict(self.neurosphero.buffer)
                 self.prediction = (self.prediction > 0.9)
                 histogram = [0 for _ in range(4)]
                 for p in self.prediction:
                     histogram[np.argmax(p)] += 1
-                if max(histogram) > 5:
-                    self.neurosphero.y_prediction[np.argmax(histogram)] = 1.0
+
+                if self.neurosphero.y_prediction == np.argmax(histogram):
+                    pass
+                elif max(histogram) > 5:
+                    self.neurosphero.y_prediction = np.argmax(histogram)
+                else:
+                    self.neurosphero.y_prediction = -1
+        self.neurosphero.sample_number += 1
 
 
 

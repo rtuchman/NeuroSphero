@@ -24,6 +24,7 @@ def index():
 def start_recording():
     print('start recording')
 
+    neurosphero_manager.is_training = True
     neurosphero_manager.run()
 
     description = json.loads(request.data)['description']
@@ -44,6 +45,20 @@ def stop_recording():
         print(e)
 
     return Response(status=200)
+
+
+@app.route('/predict/')
+def predict():
+
+    try:
+        neurosphero_manager.is_training = False
+        neurosphero_manager.run()
+    except Exception as e:
+        print(e)
+
+    return Response(status=200)
+
+
 
 
 @app.route('/reconnect-sphero/')

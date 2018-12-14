@@ -5,6 +5,7 @@ import numpy as np
 import json
 from time import sleep
 import random
+import threading
 from pprint import pprint as pp
 
 class NeuroSphero:
@@ -22,7 +23,10 @@ class NeuroSphero:
         self.buf_size = 10
         self.buffer = [[] for _ in range(10)]
         self.sample_number = 0
-        self.y_prediction = [0.0, 0.0, 0.0, 0.0]
+        self.y_prediction = 0
+        self.thread_square = threading.Thread(target=self.make_a_square)
+        self.thread_circle = threading.Thread(target=self.make_a_circle())
+        self.thread_blink = threading.Thread(target=self.blink())
         return
 
     def connect(self):
@@ -36,9 +40,7 @@ class NeuroSphero:
                 sleep(0.5)
                 self.sphero_ball.set_color(255, 0, 0)    #red
                 sleep(0.5)
-            if self.sphero_ball.ping()[0]:
-                print("sphero ball connected!")
-                self.sphero_ball.set_color(0, 255, 0)
+
         except ValueError:
             print("Could not connect to sphero ball")
             print("please make sure sphero is on and bluetooth is on")
@@ -80,6 +82,13 @@ class NeuroSphero:
 
 
     def control_sphero(self, features):
-        pass
+        while True:
+            y = self.y_prediction
+
+            if y == 0:  #['Memory game', 'Meditate', 'Write with weak hand', 'Happy music (dancing)'])
+
+
+
+
 
 
