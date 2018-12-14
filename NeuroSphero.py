@@ -20,7 +20,7 @@ class NeuroSphero:
     def __init__(self, sphero_id):
         self.sphero_ball = Sphero("NAME", sphero_id, response_time_out=2, number_tries=5)
         self.buf_size = 10
-        self.buf = np.zer
+        self.buffer = [[] for _ in range(10)]
         self.sample_number = 0
         self.y_prediction = [0.0, 0.0, 0.0, 0.0]
         return

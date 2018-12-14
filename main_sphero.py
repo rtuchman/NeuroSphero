@@ -10,6 +10,7 @@ import websocket
 from NeuroSphero import *
 from NeuroLogin import *
 from NeuroLogout import disconnect as disconnect_neuro
+from keras.models import load_model
 
 # EMAIL = 'runtuchman@gmail.com'
 # PASSWORD = '1234Ran'
@@ -30,9 +31,11 @@ class NeuroSpheroManager(object):
         self.password = password
         self.sensor = sensor
         self.sphero_id = sphero_id
+        self.neurolearn = load_model('NeuroClassifier.h5')
         self.running = False  # indication whether we want to read data from the sensor or not
         self.ws = self.connect()
         self.is_training = True
+
 
         sphero_thread = threading.Thread(target=self.neurosphero.control_sphero())
         sphero_thread.start()
@@ -74,7 +77,8 @@ class NeuroSpheroManager(object):
         self.data = json.loads(message)
         features = self.data[u'all']
         bafs = self.data[u'all'][1:122]
-
+        self.neurosphero.buffer[self.neurosphero.sample_number % 10] = bafs
+        self.neurosphero.sample_number += 1
         # check if data is valid
         qf = features[u'qf']
         if qf != 0:
@@ -82,9 +86,10 @@ class NeuroSpheroManager(object):
             print("data isn't valid!")
         # training mode
         if self.is_training:
-            self.neurosphero.blink()  # changing colors
+            self.neurosphero.sphero_ball.set_color(255, 255, 255)  # white light
         if not self.is_training:
-            pass
+            self.prediction = self.neurolearn.classifier.predict(self.neurosphero.buffer)
+            self.prediction = (self.prediction > 0.9)
 
 
     def login_neuro(self):

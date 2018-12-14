@@ -71,8 +71,9 @@ class NeuroLearnANN(object):
 
         # Fitting the ANN to the Training set
         # you may use history to view accuracy
-        self.history = self.classifier.fit(self.X_train,self.y_train, validation_split=0.2,
-                                           batch_size=10, nb_epoch=50, callbacks=[tbCallBack])
+        self.history = self.classifier.fit(self.X_train, self.y_train, shuffle=True,
+                                           validation_split=0.1, batch_size=10,
+                                           nb_epoch=50, callbacks=[tbCallBack])
 
     def predict(self):
         # Predicting the Test set results
