@@ -1,7 +1,7 @@
 """Module for connecting to Sphero and using data from API to control it"""
 
 from spheropy.Sphero import Sphero
-import numpy
+import numpy as np
 import json
 from time import sleep
 import random
@@ -20,7 +20,7 @@ class NeuroSphero:
     def __init__(self, sphero_id):
         self.sphero_ball = Sphero("NAME", sphero_id, response_time_out=2, number_tries=5)
         self.buf_size = 10
-        self.buf = []
+        self.buf = np.zer
         self.sample_number = 0
         self.y_prediction = [0.0, 0.0, 0.0, 0.0]
         return

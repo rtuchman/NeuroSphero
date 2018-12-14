@@ -34,7 +34,7 @@ class NeuroSpheroManager(object):
         self.ws = self.connect()
         self.is_training = True
 
-        sphero_thread = threading.Thread(self.neurosphero.control_sphero())
+        sphero_thread = threading.Thread(target=self.neurosphero.control_sphero())
         sphero_thread.start()
 
         print('created neuro sphero manager')
@@ -71,7 +71,6 @@ class NeuroSpheroManager(object):
             self.run()
 
     def on_message(self, ws, message):
-        print('message received')
         self.data = json.loads(message)
         features = self.data[u'all']
         bafs = self.data[u'all'][1:122]

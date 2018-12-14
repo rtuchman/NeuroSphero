@@ -7,6 +7,7 @@ import zipfile
 import io
 from NeuroLogin import *
 import imageio
+import threading
 
 
 class NeuroProcess():
@@ -51,10 +52,18 @@ class NeuroProcess():
 if __name__ == "__main__":
     query_list = ['MEMORY GAME', 'CHILL MUSIC MEDITATE', 'WRITE WITH WEAK HAND', 'HAPPY MUSIC DANCING']
     my = NeuroProcess()
+    threads = []
     for q in range(len(query_list)):
         sessions = my.query_sessions('https://api.neurosteer.com', query_list[q])
+
         for s in sessions.sessionName:
-            my.save_data_as_csv('https://api.neurosteer.com', s, q, len(query_list))
+            t = threading.Thread(target=my.save_data_as_csv, args=('https://api.neurosteer.com', s, q, len(query_list),))
+            t.start()
+            threads.append(t)
             print('Saved: {} {}'.format(query_list[q], s))
+
+        for t in threads:
+            t.join() # wait for all threads to finish
+
     my.dataset.to_csv(r'neuro_data.csv')
 
