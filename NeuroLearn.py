@@ -1,3 +1,4 @@
+from comet_ml import Experiment
 import numpy as np
 from keras.models import Sequential
 from keras.layers import Convolution2D, MaxPooling2D, Dropout, Flatten, Dense
@@ -14,70 +15,9 @@ import matplotlib.pyplot as plt
 import itertools
 
 
+
+
 """THIS MODULE RUNS ON PYTHON 3.6"""
-
-
-class NeuroLearnCNN(object):
-
-    def __init__(self):
-
-        self.classifier = Sequential()
-
-        # First layer
-        self.classifier.add(Convolution2D(32, (3, 3), input_shape=(121, 10, 3), activation='relu', padding="same"))
-        self.classifier.add(MaxPooling2D(pool_size=(2, 2)))
-
-        # Second layer
-        self.classifier.add(Convolution2D(32, (3, 3), activation='relu', padding="same"))
-        self.classifier.add(MaxPooling2D(pool_size=(2, 2)))
-
-        # Third layer
-        self.classifier.add(Convolution2D(64, (3, 3), activation='relu', padding="same"))
-        self.classifier.add(MaxPooling2D(pool_size=(2, 2)))
-
-        # Forth layer
-        self.classifier.add(Convolution2D(128, (3, 3), activation='relu', padding="same"))
-        self.classifier.add(MaxPooling2D(pool_size=(2, 2), padding="same"))
-
-        # Output layers
-        self.classifier.add(Flatten())
-        self.classifier.add(Dense(units=128, activation='relu'))
-        self.classifier.add(Dropout(0.5))
-        self.classifier.add(Dense(units=3, activation='softmax'))
-
-        self.classifier.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
-
-    def data_preprocessing(self):
-
-        self.train_datagen = ImageDataGenerator(rescale=1./255,  # scale pixels [0-255] to [0,1]
-                                           shear_range=0,
-                                           zoom_range=0,
-                                           horizontal_flip=False)
-
-        self.test_datagen = ImageDataGenerator(rescale=1./255)  # scale pixels [0-255] to [0,1]
-
-        self.training_set = self.train_datagen.flow_from_directory(
-            r'C:\Users\owner\Desktop\NeuroSreer Project\dataset\train_data',
-            target_size=(121, 10),
-            batch_size=20,
-            class_mode='categorical')
-
-        self.test_set = self.test_datagen.flow_from_directory(
-            r'C:\Users\owner\Desktop\NeuroSreer Project\dataset\test_data',
-            target_size=(121, 10),
-            batch_size=10,
-            class_mode='categorical')
-
-    def train(self):
-
-        #tensorboard("logs/run_a")
-        self.history = self.classifier.fit_generator(self.training_set,
-                                      samples_per_epoch=384,
-                                      nb_epoch=50,
-                                      verbose=2,
-                                      #callbacks=callback_tensorboard("logs/run_a"),
-                                      validation_data=self.test_set,
-                                      nb_val_samples=33)
 
 
 class NeuroLearnANN(object):
@@ -87,17 +27,17 @@ class NeuroLearnANN(object):
         self.classifier = Sequential()
 
         # Adding the input layer and the first hidden layer
-        self.classifier.add(Dense(activation='relu', input_dim=121, units=135, kernel_initializer='uniform'))
+        self.classifier.add(Dense(activation='relu', input_dim=121, units=135, kernel_initializer='glorot_uniform'))
 
         # Adding the second hidden layer
-        self.classifier.add(Dense(units=135, kernel_initializer="uniform", activation='relu'))
+        self.classifier.add(Dense(units=135, kernel_initializer="glorot_uniform", activation='relu'))
 
         # Adding the third hidden layer
-        self.classifier.add(Dense(units=135, kernel_initializer="uniform", activation='relu'))
+        self.classifier.add(Dense(units=135, kernel_initializer="glorot_uniform", activation='relu'))
 
         # Adding the output layer
         self.classifier.add(Dropout(0.5))
-        self.classifier.add(Dense(units=4, kernel_initializer='uniform', activation='softmax'))
+        self.classifier.add(Dense(units=4, kernel_initializer='glorot_uniform', activation='softmax'))
 
         # Compiling the ANN
         optimizer = optimizers.Adam(lr=0.0008, beta_1=0.9, beta_2=0.999, epsilon=10e-9, decay=0.0, amsgrad=False)
@@ -119,16 +59,13 @@ class NeuroLearnANN(object):
 
     def train(self):
 
-        # to view tensorboard after training open anaconda prompt in project's folder and run:
-        # tensorboard --logdir ./ --host localhost --port 8088
-        # now open in your browser: http://localhost:8088
-        tbCallBack = TensorBoard(log_dir='./Graph', histogram_freq=0,
-                                    write_graph=True, write_images=True)
+        experiment = Experiment(api_key="805T52iSiXeQ6TdzG3KC68KbF",
+                                project_name="general", workspace="rtuchman")
 
         # Fitting the ANN to the Training set
         # you may use history to view accuracy
         self.history = self.classifier.fit(self.X_train,self.y_train, validation_split=0.2,
-                                           batch_size=10, nb_epoch=1000, callbacks=[tbCallBack])
+                                           batch_size=10, nb_epoch=300)
 
     def predict(self):
         # Predicting the Test set results
@@ -188,7 +125,7 @@ if __name__ == "__main__":
     model.train()
     model.predict()
     model.plot_confusion_matrix(model.cm, ['Memory game', 'Meditate', 'Write with weak hand', 'Happy music (dancing)'])
-    model.classifier.save('NeuroClassifier.h5')
+    #model.classifier.save('NeuroClassifier.h5')
 
     print('Done!')
 
