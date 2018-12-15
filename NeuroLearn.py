@@ -2,7 +2,7 @@
 import numpy as np
 from keras.models import Sequential
 from keras.layers import Dropout, Dense
-from keras import optimizers
+from keras import optimizers, regularizers
 from keras.callbacks import TensorBoard
 from sklearn.metrics import confusion_matrix
 import warnings
@@ -26,13 +26,16 @@ class NeuroLearnANN(object):
         self.classifier = Sequential()
 
         # Adding the input layer and the first hidden layer
-        self.classifier.add(Dense(activation='relu', input_dim=121, units=135, kernel_initializer='glorot_uniform'))
+        self.classifier.add(Dense(activation='relu', input_dim=121, units=135,
+                                  kernel_initializer='glorot_uniform', kernel_regularizer=regularizers.l1(0.001)))
 
         # Adding the second hidden layer
-        self.classifier.add(Dense(units=135, kernel_initializer="glorot_uniform", activation='relu'))
+        self.classifier.add(Dense(units=135, kernel_initializer="glorot_uniform",
+                                  activation='relu', kernel_regularizer=regularizers.l1(0.001)))
 
         # Adding the third hidden layer
-        self.classifier.add(Dense(units=135, kernel_initializer="glorot_uniform", activation='relu'))
+        self.classifier.add(Dense(units=135, kernel_initializer="glorot_uniform",
+                                  activation='relu', kernel_regularizer=regularizers.l1(0.001)))
 
         # Adding the output layer
         self.classifier.add(Dropout(0.5))
@@ -70,9 +73,11 @@ class NeuroLearnANN(object):
 
         # Fitting the ANN to the Training set
         # you may use history to view accuracy
-        self.history = self.classifier.fit(self.X_train,self.y_train, validation_split=0.1,
+        self.history = self.classifier.fit(self.X_train,self.y_train, validation_split=0.2,
                                            batch_size=10, nb_epoch=100, shuffle=True,
                                            callbacks=[tbCallBack])
+
+        self.save_graphs()
 
     def predict(self):
         # Predicting the Test set results
@@ -122,6 +127,25 @@ class NeuroLearnANN(object):
         plt.ylabel('True label')
         plt.xlabel('Predicted label\naccuracy={:0.4f}; misclass={:0.4f}'.format(accuracy, misclass))
         plt.savefig('Confusion Matrix.jpg')
+
+
+    def save_graphs(self):
+        epochs = self.history.epoch
+        plt.plot(epochs, self.history.history['val_acc'], label='val_acc')
+        plt.plot(epochs, self.history.history['acc'], label='train_acc')
+        plt.legend()
+        plt.xlabel('epochs')
+        plt.ylabel('Accuracy')
+        plt.savefig('Accuracy')
+        plt.close()
+        plt.plot(epochs, self.history.history['val_loss'], label='val_loss')
+        plt.plot(epochs, self.history.history['loss'], label='train_loss')
+        plt.legend()
+        plt.xlabel('epochs')
+        plt.ylabel('Loss')
+        plt.savefig('Loss')
+        plt.close()
+
 
 
 
