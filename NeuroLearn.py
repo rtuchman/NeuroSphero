@@ -1,18 +1,16 @@
-#from comet_ml import Experiment
 import numpy as np
 from keras.models import Sequential
 from keras.layers import Dropout, Dense
-from keras import optimizers, regularizers
+from keras import optimizers
 from keras.callbacks import TensorBoard
-from sklearn.metrics import confusion_matrix
-import warnings
-warnings.filterwarnings("ignore")
 import pandas as pd
+from sklearn.metrics import confusion_matrix
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 import itertools
-
+import warnings
+warnings.filterwarnings("ignore")
 
 
 
@@ -26,19 +24,20 @@ class NeuroLearnANN(object):
         self.classifier = Sequential()
 
         # Adding the input layer and the first hidden layer
-        self.classifier.add(Dense(activation='relu', input_dim=121, units=135,
-                                  kernel_initializer='glorot_uniform', kernel_regularizer=regularizers.l1(0.001)))
+        self.classifier.add(Dense(activation='relu', input_dim=121, units=135, kernel_initializer='glorot_uniform'))
+
+        # kernel_regularizer=regularizers.l1(0.001)
 
         # Adding the second hidden layer
-        self.classifier.add(Dense(units=135, kernel_initializer="glorot_uniform",
-                                  activation='relu', kernel_regularizer=regularizers.l1(0.001)))
+        self.classifier.add(Dropout(0.1))
+        self.classifier.add(Dense(units=135, kernel_initializer="glorot_uniform", activation='relu'))
 
         # Adding the third hidden layer
-        self.classifier.add(Dense(units=135, kernel_initializer="glorot_uniform",
-                                  activation='relu', kernel_regularizer=regularizers.l1(0.001)))
+        self.classifier.add(Dropout(0.1))
+        self.classifier.add(Dense(units=135, kernel_initializer="glorot_uniform", activation='relu'))
 
         # Adding the output layer
-        self.classifier.add(Dropout(0.5))
+        self.classifier.add(Dropout(0.1))
         self.classifier.add(Dense(units=4, kernel_initializer='glorot_uniform', activation='softmax'))
 
         # Compiling the ANN
@@ -67,13 +66,11 @@ class NeuroLearnANN(object):
         tbCallBack = TensorBoard(log_dir='./Graph', histogram_freq=0,
                                     write_graph=True, write_images=True)
 
-        # comet.ml
-        #experiment = Experiment(api_key="805T52iSiXeQ6TdzG3KC68KbF",
-        #                        project_name="NeuroSphero", workspace="rtuchman")
 
         # Fitting the ANN to the Training set
         # you may use history to view accuracy
-        self.history = self.classifier.fit(self.X_train,self.y_train, validation_split=0.2,
+        self.history = self.classifier.fit(self.X_train, self.y_train,
+                                           validation_data=(self.X_test, self.y_test),
                                            batch_size=10, nb_epoch=100, shuffle=True,
                                            callbacks=[tbCallBack])
 
