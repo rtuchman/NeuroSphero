@@ -6,7 +6,6 @@ import numpy as np
 import zipfile
 import io
 from NeuroLogin import *
-import imageio
 import threading
 
 
@@ -63,7 +62,7 @@ if __name__ == "__main__":
             print('Saved: {} {}'.format(query_list[q], s))
 
         for t in threads:
-            t.join() # wait for all threads to finish
+            t.join()  # wait for all threads to finish
 
     my.dataset.to_csv(r'neuro_data.csv')
 

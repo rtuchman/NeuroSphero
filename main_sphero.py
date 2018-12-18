@@ -96,7 +96,9 @@ class NeuroSpheroManager(object):
         if not self.is_training:
             if self.neurosphero.sample_number % 10 == 0:  # once every 10 samples make prediction
                 self.prediction = self.neurolearn.classifier.predict(self.neurosphero.buffer)
-                self.prediction = (self.prediction > 0.9)
+                self.prediction = (self.prediction > 0.8)
+                indices = np.where(self.prediction)[0]
+                self.prediction = self.prediction[indices]
                 histogram = [0 for _ in range(4)]
                 for p in self.prediction:
                     histogram[np.argmax(p)] += 1

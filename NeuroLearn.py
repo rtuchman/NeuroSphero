@@ -41,7 +41,7 @@ class NeuroLearnANN(object):
         self.classifier.add(Dense(units=4, kernel_initializer='glorot_uniform', activation='softmax'))
 
         # Compiling the ANN
-        optimizer = optimizers.Adam(lr=0.0008, beta_1=0.77, beta_2=0.98, epsilon=1e-8, decay=0.0, amsgrad=False)
+        optimizer = optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999) #, epsilon=1e-8)
         self.classifier.compile(optimizer=optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
 
     def data_preprocessing(self):
@@ -79,7 +79,14 @@ class NeuroLearnANN(object):
     def predict(self):
         # Predicting the Test set results
         self.y_pred = self.classifier.predict(self.X_test)
-        self.y_pred = (self.y_pred > 0.9)
+        self.y_pred = (self.y_pred > 0.8)
+
+        indices = np.where(self.y_pred)[0]  # only indices with above 0.8 certainty
+
+        self.y_pred = self.y_pred[indices]  # throw away predictions with less than 0.8 certainty
+        self.y_test = self.y_test[indices]
+
+
 
         # Making the Confusion Matrix
         y_test_non_category = [np.argmax(t) for t in self.y_test]
