@@ -71,7 +71,7 @@ class NeuroLearnANN(object):
         # you may use history to view accuracy
         self.history = self.classifier.fit(self.X_train, self.y_train,
                                            validation_data=(self.X_test, self.y_test),
-                                           batch_size=10, nb_epoch=100, shuffle=True,
+                                           batch_size=10, nb_epoch=120, shuffle=True,
                                            callbacks=[tbCallBack])
 
         self.save_graphs()
@@ -85,8 +85,6 @@ class NeuroLearnANN(object):
 
         self.y_pred = self.y_pred[indices]  # throw away predictions with less than 0.8 certainty
         self.y_test = self.y_test[indices]
-
-
 
         # Making the Confusion Matrix
         y_test_non_category = [np.argmax(t) for t in self.y_test]
@@ -149,9 +147,6 @@ class NeuroLearnANN(object):
         plt.ylabel('Loss')
         plt.savefig('Loss')
         plt.close()
-
-
-
 
 
 if __name__ == "__main__":

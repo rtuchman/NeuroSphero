@@ -85,7 +85,7 @@ class NeuroSphero:
         while True:
             y = self.y_prediction
 
-            if y == 0:  #['Memory game', 'Meditate', 'Write with weak hand', 'Happy music (dancing)'])
+            if y == 0:  #['Memory game', 'Meditate', 'Write with weak hand', 'Happy music (dancing)']
 
 
 
