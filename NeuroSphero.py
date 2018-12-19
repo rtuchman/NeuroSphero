@@ -64,7 +64,6 @@ class NeuroSphero:
 
     def blink(self, blink_rate=1):
         self.sphero_ball.set_inactivity_timeout(3600)
-
         for _ in range(5):
             blink_rate = abs(blink_rate - 0.05)
             self.sphero_ball.set_color(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
@@ -85,7 +84,40 @@ class NeuroSphero:
         while True:
             y = self.y_prediction
 
-            if y == 0:  #['Memory game', 'Meditate', 'Write with weak hand', 'Happy music (dancing)']
+            if y == 0:  # Memory game
+                for _ in range(19):
+                    self.sphero_ball.set_color(0, 0, 255)
+                    sleep(0.5)
+                    self.sphero_ball.set_color(255, 255, 0)
+
+            if y == 1:  # Meditate
+                for _ in range(19):
+                    self.sphero_ball.set_color(0, 255, 0)
+                    sleep(0.5)
+
+            if y == 2:  # Write with weak hand
+                self.thread_square.start()
+                for _ in range(19):
+                    self.sphero_ball.set_color(0, 255, 255)
+                    sleep(0.5)
+                    self.sphero_ball.set_color(255, 0, 255)
+                self.thread_square.join()
+
+            if y == 3:  # Happy music (dancing)
+                self.thread_blink.start()
+                self.thread_circle.start()
+                self.thread_blink.join()
+                self.thread_circle.join()
+
+            if y == -1:  # No prediction
+                for _ in range(19):
+                    self.sphero_ball.set_color(255, 255, 255)
+                    sleep(0.5)
+
+
+
+
+
 
 
 

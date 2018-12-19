@@ -26,8 +26,6 @@ class NeuroLearnANN(object):
         # Adding the input layer and the first hidden layer
         self.classifier.add(Dense(activation='relu', input_dim=121, units=135, kernel_initializer='glorot_uniform'))
 
-        # kernel_regularizer=regularizers.l1(0.001)
-
         # Adding the second hidden layer
         self.classifier.add(Dropout(0.1))
         self.classifier.add(Dense(units=135, kernel_initializer="glorot_uniform", activation='relu'))
@@ -41,7 +39,7 @@ class NeuroLearnANN(object):
         self.classifier.add(Dense(units=4, kernel_initializer='glorot_uniform', activation='softmax'))
 
         # Compiling the ANN
-        optimizer = optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999) #, epsilon=1e-8)
+        optimizer = optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999)
         self.classifier.compile(optimizer=optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
 
     def data_preprocessing(self):

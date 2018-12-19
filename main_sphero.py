@@ -39,9 +39,6 @@ class NeuroSpheroManager(object):
         self.neurosphero.y_prediction = -1
         self.neurolearn = load_model('NeuroClassifier.h5')
 
-        sphero_thread = threading.Thread(target=self.neurosphero.control_sphero())
-        sphero_thread.start()
-
         print('created neuro sphero manager')
 
     def run(self):
@@ -49,8 +46,10 @@ class NeuroSpheroManager(object):
         print('running neuro sphero')
         self.running = True
 
-        ws_thread = threading.Thread(target=self.ws.run_forever)
+        sphero_thread = threading.Thread(target=self.neurosphero.control_sphero())
+        sphero_thread.start()
 
+        ws_thread = threading.Thread(target=self.ws.run_forever)
         ws_thread.daemon = True
         ws_thread.start()
 
