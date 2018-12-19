@@ -36,6 +36,7 @@ class NeuroSpheroManager(object):
         self.running = False  # indication whether we want to read data from the sensor or not
         self.ws = self.connect()
 
+        self.is_training = False
         self.neurosphero.y_prediction = -1
         self.neurolearn = load_model('NeuroClassifier.h5')
 
@@ -47,6 +48,7 @@ class NeuroSpheroManager(object):
         self.running = True
 
         sphero_thread = threading.Thread(target=self.neurosphero.control_sphero())
+        sphero_thread.daemon = True
         sphero_thread.start()
 
         ws_thread = threading.Thread(target=self.ws.run_forever)
@@ -78,37 +80,39 @@ class NeuroSpheroManager(object):
         self.data = json.loads(message)
         features = self.data[u'all']
         bafs = self.data[u'all'][1:122]
-        sc = StandardScaler()
-        bafs = sc.fit_transform(bafs)
-        self.neurosphero.buffer[self.neurosphero.sample_number % 10] = bafs
-        self.neurosphero.sample_number += 1
+        self.neurosphero.buffer[self.neurosphero.sample_number] = bafs
+
         # check if data is valid
         qf = features[u'qf']
         if qf != 0:
             self.neurosphero.sphero_ball.set_color(255, 0, 0)
             print("data isn't valid!")
+
         # training mode
         if self.is_training:
             self.neurosphero.sphero_ball.set_color(255, 255, 255)  # white light
 
         # predict mode
-        if not self.is_training:
-            if self.neurosphero.sample_number % 10 == 0:  # once every 10 samples make prediction
-                self.prediction = self.neurolearn.classifier.predict(self.neurosphero.buffer)
-                self.prediction = (self.prediction > 0.8)
-                indices = np.where(self.prediction)[0]
-                self.prediction = self.prediction[indices]
-                histogram = [0 for _ in range(4)]
-                for p in self.prediction:
-                    histogram[np.argmax(p)] += 1
+        if (not self.is_training) and self.neurosphero.sample_number % 10 == 0:  # once every 10 samples make prediction
+            sc = StandardScaler()
+            self.neurosphero.buffer = sc.fit_transform(self.neurosphero.buffer)
+            self.prediction = self.neurolearn.classifier.predict(self.neurosphero.buffer)
+            self.prediction = (self.prediction > 0.8)
+            indices = np.where(self.prediction)[0]
+            self.prediction = self.prediction[indices]
+            histogram = [0 for _ in range(4)]
+            for p in self.prediction:
+                histogram[np.argmax(p)] += 1
+            if self.neurosphero.y_prediction == np.argmax(histogram):
+                pass
+            elif max(histogram) > 5:
+                self.neurosphero.y_prediction = np.argmax(histogram)
+            else:
+                self.neurosphero.y_prediction = -1
 
-                if self.neurosphero.y_prediction == np.argmax(histogram):
-                    pass
-                elif max(histogram) > 5:
-                    self.neurosphero.y_prediction = np.argmax(histogram)
-                else:
-                    self.neurosphero.y_prediction = -1
         self.neurosphero.sample_number += 1
+        if self.neurosphero.sample_number == 10:
+            self.neurosphero.sample_number -= 10
 
 
 

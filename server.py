@@ -51,14 +51,11 @@ def stop_recording():
 def predict():
 
     try:
-        neurosphero_manager.is_training = False
         neurosphero_manager.run()
     except Exception as e:
         print(e)
 
     return Response(status=200)
-
-
 
 
 @app.route('/reconnect-sphero/')

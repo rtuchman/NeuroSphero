@@ -21,9 +21,9 @@ class NeuroSphero:
     def __init__(self, sphero_id):
         self.sphero_ball = Sphero("NAME", sphero_id, response_time_out=2, number_tries=5)
         self.buf_size = 10
-        self.buffer = [[] for _ in range(10)]
-        self.sample_number = 0
-        self.y_prediction = 0
+        self.buffer = np.zeros((10, 121))
+        self.sample_number = 1
+        self.y_prediction = -1
         self.thread_square = threading.Thread(target=self.make_a_square)
         self.thread_circle = threading.Thread(target=self.make_a_circle())
         self.thread_blink = threading.Thread(target=self.blink())
@@ -77,10 +77,7 @@ class NeuroSphero:
             sleep(sleep_time)
         self.sphero_ball.roll(0, 0)
 
-
-
-
-    def control_sphero(self, features):
+    def control_sphero(self):
         while True:
             y = self.y_prediction
 
