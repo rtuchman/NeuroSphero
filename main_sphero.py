@@ -4,7 +4,7 @@
 import threading
 import websocket
 #import sys
-#from functools import partial
+#from functools import partial`
 #import time
 
 from NeuroSphero import *
@@ -47,13 +47,14 @@ class NeuroSpheroManager(object):
         print('running neuro sphero')
         self.running = True
 
-        sphero_thread = threading.Thread(target=self.neurosphero.control_sphero())
+        sphero_thread = threading.Thread(target=self.neurosphero.control_sphero)
         sphero_thread.daemon = True
         sphero_thread.start()
 
         ws_thread = threading.Thread(target=self.ws.run_forever)
         ws_thread.daemon = True
         ws_thread.start()
+        print('websocket thread started')
 
     def on_error(self, ws, error):
         print("ERROR: {0}".format(error))
@@ -77,7 +78,7 @@ class NeuroSpheroManager(object):
             self.run()
 
     def on_message(self, ws, message):
-        self.data = json.loads(message)
+        self.data = json.loads(message)#
         features = self.data[u'all']
         bafs = self.data[u'all'][1:122]
         self.neurosphero.buffer[self.neurosphero.sample_number] = bafs
@@ -97,7 +98,7 @@ class NeuroSpheroManager(object):
             sc = StandardScaler()
             self.neurosphero.buffer = sc.fit_transform(self.neurosphero.buffer)
             self.prediction = self.neurolearn.classifier.predict(self.neurosphero.buffer)
-            self.prediction = (self.prediction > 0.8)
+            self.prediction = (self.prediction > 0.5)
             indices = np.where(self.prediction)[0]
             self.prediction = self.prediction[indices]
             histogram = [0 for _ in range(4)]
@@ -154,7 +155,10 @@ class NeuroSpheroManager(object):
 
     def disconnect(self):
         """Close the connection to neuro API and stop the recording."""
-        #self.neurosphero.buf = {feature: numpy.zeros([self.neurosphero.calibration_samples])
-        #                        for feature in self.neurosphero.features}
         self.running = False
-        self.ws.close()#
+        self.ws.close()
+
+if __name__ == '__main__':
+    neurosphero_manager = NeuroSpheroManager()
+    neurosphero_manager.run()
+

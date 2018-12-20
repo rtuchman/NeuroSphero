@@ -25,8 +25,8 @@ class NeuroSphero:
         self.sample_number = 1
         self.y_prediction = -1
         self.thread_square = threading.Thread(target=self.make_a_square)
-        self.thread_circle = threading.Thread(target=self.make_a_circle())
-        self.thread_blink = threading.Thread(target=self.blink())
+        self.thread_circle = threading.Thread(target=self.make_a_circle)
+        self.thread_blink = threading.Thread(target=self.blink)
         return
 
     def connect(self):

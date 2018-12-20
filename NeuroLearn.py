@@ -27,20 +27,23 @@ class NeuroLearnANN(object):
         self.classifier.add(Dense(activation='relu', input_dim=121, units=135, kernel_initializer='glorot_uniform'))
 
         # Adding the second hidden layer
-        self.classifier.add(Dropout(0.1))
+        self.classifier.add(Dropout(0.2))
         self.classifier.add(Dense(units=135, kernel_initializer="glorot_uniform", activation='relu'))
 
         # Adding the third hidden layer
-        self.classifier.add(Dropout(0.1))
+        self.classifier.add(Dropout(0.2))
         self.classifier.add(Dense(units=135, kernel_initializer="glorot_uniform", activation='relu'))
 
         # Adding the output layer
-        self.classifier.add(Dropout(0.1))
+        self.classifier.add(Dropout(0.2))
         self.classifier.add(Dense(units=4, kernel_initializer='glorot_uniform', activation='softmax'))
 
         # Compiling the ANN
-        optimizer = optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999)
-        self.classifier.compile(optimizer=optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
+        adam = optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999)
+        adagrad = optimizers.Adagrad(lr=0.01, epsilon=None, decay=0.0)
+        sgd = optimizers.SGD(lr=0.01, nesterov=True)
+        adadelta = optimizers.adadelta()
+        self.classifier.compile(optimizer=adam, loss='categorical_crossentropy', metrics=['accuracy'])
 
     def data_preprocessing(self):
         # Importing the dataset
@@ -69,7 +72,7 @@ class NeuroLearnANN(object):
         # you may use history to view accuracy
         self.history = self.classifier.fit(self.X_train, self.y_train,
                                            validation_data=(self.X_test, self.y_test),
-                                           batch_size=10, nb_epoch=120, shuffle=True,
+                                           batch_size=10, nb_epoch=150, shuffle=True,
                                            callbacks=[tbCallBack])
 
         self.save_graphs()
@@ -77,7 +80,7 @@ class NeuroLearnANN(object):
     def predict(self):
         # Predicting the Test set results
         self.y_pred = self.classifier.predict(self.X_test)
-        self.y_pred = (self.y_pred > 0.8)
+        self.y_pred = (self.y_pred > 0.5)
 
         indices = np.where(self.y_pred)[0]  # only indices with above 0.8 certainty
 
