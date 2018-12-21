@@ -41,17 +41,17 @@ class NeuroSpheroManager(object):
 
     def run(self):
         """Start to run the websocket server in thread and get messages from the sensor."""
-        print('running neuro sphero')
         self.running = True
 
-        sphero_thread = threading.Thread(target=self.neurosphero.control_sphero)
-        sphero_thread.daemon = True
-        sphero_thread.start()
+        self.sphero_thread = threading.Thread(target=self.neurosphero.control_sphero)
+        self.sphero_thread.daemon = True
+        self.sphero_thread.start()
 
-        ws_thread = threading.Thread(target=self.ws.run_forever)
-        ws_thread.daemon = True
-        ws_thread.start()
-        print('websocket thread started')
+        self.ws_thread = threading.Thread(target=self.ws.run_forever)
+        self.ws_thread.daemon = True
+        self.ws_thread.start()
+
+        print('running neuro sphero')
 
     def on_error(self, ws, error):
         print("ERROR: {0}".format(error))
@@ -74,7 +74,7 @@ class NeuroSpheroManager(object):
             self.ws = self.create_websocket_connection()
             self.run()
 
-    def on_message(self, ws, message):
+    def on_message(self, message):
         self.data = json.loads(message)#
         features = self.data[u'all']
         bafs = self.data[u'all'][1:122]

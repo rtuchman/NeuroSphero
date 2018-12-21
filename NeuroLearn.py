@@ -1,5 +1,5 @@
 import numpy as np
-from keras.models import Sequential
+from keras import Sequential
 from keras.layers import Dropout, Dense
 from keras import optimizers
 from keras.callbacks import TensorBoard
