@@ -5,6 +5,15 @@ class Client {
         $('#start-recording').click(this.onStartRecording);
         $('#stop-recording').click(this.onStopRecording);
         $('#reconnect-sphero').click(this.onReconnectSphero);
+        $('#predict').click(this.onPredict);
+    }
+
+    onPredict(event) {
+        $.ajax({
+            url: '/predict/'
+        }).done(function() {
+            alert.log('Predict mode.')
+        })
     }
 
     onStartRecording(event) { // $ represent an instance of jquery
@@ -35,6 +44,8 @@ class Client {
             console.log('reconnected.')
         })
     }
+
+
 }
 
 

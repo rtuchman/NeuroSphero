@@ -1,10 +1,7 @@
-"""to install tensorflow follow instructions from:
-    https://www.tensorflow.org/install/pip?lang=python2
-"""
 import threading
 import websocket
 #import sys
-#from functools import partial`
+#from functools import partial
 #import time
 
 from NeuroSphero import *
