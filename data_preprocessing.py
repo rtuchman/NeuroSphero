@@ -49,7 +49,7 @@ class NeuroProcess():
 
 
 if __name__ == "__main__":
-    query_list = ['MEMORY GAME', 'CHILL MUSIC MEDITATE', 'WRITE WITH WEAK HAND', 'HAPPY MUSIC DANCING']
+    query_list = ['MEMORY GAME', 'CHILL MUSIC MEDITATE', 'WRITE WITH WEAK HAND']   #, 'HAPPY MUSIC DANCING']
     my = NeuroProcess()
     threads = []
     for q in range(len(query_list)):

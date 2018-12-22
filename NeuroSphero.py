@@ -5,8 +5,7 @@ import numpy as np
 import json
 from time import sleep
 import random
-import threading
-from pprint import pprint as pp
+from threading import Thread
 
 class NeuroSphero:
     """
@@ -21,19 +20,17 @@ class NeuroSphero:
     def __init__(self, sphero_id):
         self.sphero_ball = Sphero("NAME", sphero_id, response_time_out=2, number_tries=5)
         self.buf_size = 10
-        self.buffer = np.zeros((10, 121))
+        self.buffer = np.zeros((12, 121))
         self.sample_number = 1
         self.y_prediction = -1
-        self.thread_square = threading.Thread(target=self.make_a_square)
-        self.thread_circle = threading.Thread(target=self.make_a_circle)
-        self.thread_blink = threading.Thread(target=self.blink)
+
         return
 
     def connect(self):
         try:
             print("connecting to sphero ball...")
             self.sphero_ball.connect()
-            self.sphero_ball.set_color(0, 255, 0)
+            self.sphero_ball.set_color(255, 255, 255)
         except ValueError:
             print("Could not connect to sphero ball")
             print("please make sure sphero is on and bluetooth is on")
@@ -51,55 +48,69 @@ class NeuroSphero:
         sleep_time = 0.3
         rotate_by = 360 // steps
         current_angle = 1
-        for _ in range(steps):
-            self.make_a_step(current_angle % 360, speed, sleep_time)
-            current_angle += rotate_by
+        for _ in range(5):  # 5 circles
+            for _ in range(steps):
+                self.make_a_step(current_angle % 360, speed, sleep_time)
+                current_angle += rotate_by
 
     def blink(self, blink_rate=1):
         self.sphero_ball.set_inactivity_timeout(3600)
-        for _ in range(5):
-            blink_rate = abs(blink_rate - 0.05)
+        for _ in range(20):
             self.sphero_ball.set_color(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
             sleep(blink_rate)
 
     def make_a_square(self):
-        speed = 0x88
+        speed = 0x30
         sleep_time = 1
-        for angle in [1, 90, 180, 270]:
-            self.sphero_ball.roll(speed, angle)
-            sleep(sleep_time)
-        self.sphero_ball.roll(0, 0)
+        for _ in range(5):
+            for angle in [1, 90, 180, 270]:
+                self.sphero_ball.roll(speed, angle)
+                sleep(sleep_time)
+            self.sphero_ball.roll(0, 0)
 
     def control_sphero(self):
         while True:
             y = self.y_prediction
 
             if y == 0:  # Memory game
+                print('Memory game')
                 for _ in range(19):
                     self.sphero_ball.set_color(0, 0, 255)
-                    sleep(0.5)
+                    sleep(0.25)
                     self.sphero_ball.set_color(255, 255, 0)
+                    sleep(0.25)
+
 
             if y == 1:  # Meditate
-                for _ in range(19):
-                    self.sphero_ball.set_color(0, 255, 0)
-                    sleep(0.5)
+                print('Meditate')
+                self.thread_blink = Thread(target=self.blink)
+                self.thread_blink.start()
+                self.thread_blink.join()
+                #sleep(0.5)
 
             if y == 2:  # Write with weak hand
-                self.thread_square.start()
+                print('Write with weak hand')
+                #self.thread_square = Thread(target=self.make_a_square)
+                #self.thread_square.start()
                 for _ in range(19):
                     self.sphero_ball.set_color(0, 255, 255)
-                    sleep(0.5)
+                    sleep(0.25)
                     self.sphero_ball.set_color(255, 0, 255)
-                self.thread_square.join()
+                    sleep(0.25)
 
-            if y == 3:  # Happy music (dancing)
-                self.thread_blink.start()
-                self.thread_circle.start()
-                self.thread_blink.join()
-                self.thread_circle.join()
+                #self.thread_square.join()
+
+            #if y == 3:  # Happy music (dancing)
+            #    print('Happy music (dancing)')
+            #    self.thread_circle = Thread(target=self.make_a_circle)
+            #    self.thread_blink = Thread(target=self.blink)
+            #    self.thread_blink.start()
+            #    self.thread_circle.start()
+            #    self.thread_blink.join()
+            #    self.thread_circle.join()
 
             if y == -1:  # No prediction
+                print('No prediction')
                 for _ in range(19):
                     self.sphero_ball.set_color(255, 255, 255)
                     sleep(0.5)

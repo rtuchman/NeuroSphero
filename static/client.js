@@ -2,10 +2,11 @@
 
 class Client {
     constructor() {
+        $('#predict').click(this.onPredict);
         $('#start-recording').click(this.onStartRecording);
         $('#stop-recording').click(this.onStopRecording);
         $('#reconnect-sphero').click(this.onReconnectSphero);
-        $('#predict').click(this.onPredict);
+
     }
 
     onPredict(event) {

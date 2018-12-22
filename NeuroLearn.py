@@ -1,7 +1,7 @@
 import numpy as np
 from keras import Sequential
 from keras.layers import Dropout, Dense
-from keras import optimizers
+from keras import optimizers, regularizers
 from keras.callbacks import TensorBoard
 import pandas as pd
 from sklearn.metrics import confusion_matrix
@@ -19,31 +19,29 @@ warnings.filterwarnings("ignore")
 
 class NeuroLearnANN(object):
 
-    def __init__(self):
-        # Initialising the ANN
+    def __init__(self):        # Initialising the ANN
         self.classifier = Sequential()
 
         # Adding the input layer and the first hidden layer
+        #self.classifier.add(Dropout(0.2))
         self.classifier.add(Dense(activation='relu', input_dim=121, units=135, kernel_initializer='glorot_uniform'))
 
         # Adding the second hidden layer
-        self.classifier.add(Dropout(0.2))
+        self.classifier.add(Dropout(0.3))
         self.classifier.add(Dense(units=135, kernel_initializer="glorot_uniform", activation='relu'))
 
         # Adding the third hidden layer
-        self.classifier.add(Dropout(0.2))
+        self.classifier.add(Dropout(0.3))
         self.classifier.add(Dense(units=135, kernel_initializer="glorot_uniform", activation='relu'))
 
         # Adding the output layer
-        self.classifier.add(Dropout(0.2))
-        self.classifier.add(Dense(units=4, kernel_initializer='glorot_uniform', activation='softmax'))
+        self.classifier.add(Dropout(0.3))
+        self.classifier.add(Dense(units=3, kernel_initializer='glorot_uniform', activation='softmax'))
 
         # Compiling the ANN
+        sgd = optimizers.SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
         adam = optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999)
-        adagrad = optimizers.Adagrad(lr=0.01, epsilon=None, decay=0.0)
-        sgd = optimizers.SGD(lr=0.01, nesterov=True)
-        adadelta = optimizers.adadelta()
-        self.classifier.compile(optimizer=adam, loss='categorical_crossentropy', metrics=['accuracy'])
+        self.classifier.compile(optimizer=sgd, loss='categorical_crossentropy', metrics=['accuracy'])
 
     def data_preprocessing(self):
         # Importing the dataset
@@ -72,7 +70,7 @@ class NeuroLearnANN(object):
         # you may use history to view accuracy
         self.history = self.classifier.fit(self.X_train, self.y_train,
                                            validation_data=(self.X_test, self.y_test),
-                                           batch_size=10, nb_epoch=150, shuffle=True,
+                                           batch_size=10, nb_epoch=300, shuffle=False,
                                            callbacks=[tbCallBack])
 
         self.save_graphs()
@@ -82,9 +80,9 @@ class NeuroLearnANN(object):
         self.y_pred = self.classifier.predict(self.X_test)
         self.y_pred = (self.y_pred > 0.5)
 
-        indices = np.where(self.y_pred)[0]  # only indices with above 0.8 certainty
+        indices = np.where(self.y_pred)[0]  # only indices with above 0.5 certainty
 
-        self.y_pred = self.y_pred[indices]  # throw away predictions with less than 0.8 certainty
+        self.y_pred = self.y_pred[indices]  # throw away predictions with less than 0.5 certainty
         self.y_test = self.y_test[indices]
 
         # Making the Confusion Matrix
@@ -155,7 +153,7 @@ if __name__ == "__main__":
     model.data_preprocessing()
     model.train()
     model.predict()
-    model.plot_confusion_matrix(model.cm, ['Memory game', 'Meditate', 'Write with weak hand', 'Happy music (dancing)'])
+    model.plot_confusion_matrix(model.cm, ['Memory game', 'Meditate', 'Write with weak hand'])   #, 'Happy music (dancing)'])
     model.classifier.save('NeuroClassifier.h5')
 
 
