@@ -110,7 +110,6 @@ class NeuroSphero:
             #    self.thread_circle.join()
 
             if y == -1:  # No prediction
-                print('No prediction')
                 for _ in range(19):
                     self.sphero_ball.set_color(255, 255, 255)
                     sleep(0.5)

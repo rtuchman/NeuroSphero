@@ -5,15 +5,14 @@ from NeuroLogin import *
 from NeuroLogout import disconnect as disconnect_neuro
 from keras.models import load_model
 from sklearn.preprocessing import StandardScaler
-
-# EMAIL = 'runtuchman@gmail.com'
-# PASSWORD = '1234Ran'
+import warnings
+warnings.filterwarnings("ignore")
 
 EMAIL = 'matanron3@gmail.com'
 PASSWORD = 'Matan1234'
 
 SENSOR = '00a3b4810811'
-SPHERO_ID = '68:86:e7:01:fb:b2' #obr
+SPHERO_ID = '68:86:e7:01:fb:b2'
 
 class NeuroSpheroManager(object):
     """Neuro sphero manager in charge of managing the connections of neuro sensor and sphero balls."""
@@ -39,21 +38,20 @@ class NeuroSpheroManager(object):
             pass
 
         else:
-
             self.running = True
             self.sphero_thread = Thread(target=self.neurosphero.control_sphero)
             self.sphero_thread.daemon = True
             self.sphero_thread.start()
 
-            self.ws_thread = Thread(target=self.ws.run_forever, kwargs={'ping_interval': 100}) #, 'ping_timeout': 49})
+            self.ws_thread = Thread(target=self.ws.run_forever, kwargs={'ping_interval': 100})
             self.ws_thread.daemon = True
             self.ws_thread.start()
             print('running neuro sphero')
 
-    def on_error(self, error):
+    def on_error(self, ws, error):
         print("ERROR: {0}".format(error))
 
-    def on_close(self):
+    def on_close(self, ws):
         """Checks whether closed happened on purpose or not and handle it."""
         print("### websocket closed ###")
         if self.running is False:  # wanted disconnection
@@ -71,7 +69,7 @@ class NeuroSpheroManager(object):
             self.ws = self.create_websocket_connection()
             self.run()
 
-    def on_message(self, message):
+    def on_message(self, message, ws):
         self.data = json.loads(message)
         self.neurosphero.buffer[self.neurosphero.sample_number % 12] = self.data[u'all'][1:122]
         self.neurosphero.sample_number += 1
@@ -81,19 +79,12 @@ class NeuroSpheroManager(object):
             self.neurosphero.sphero_ball.set_color(255, 255, 255)  # white light
 
         # predict mode
-        if (not self.is_training) and (self.neurosphero.sample_number % 12) == 0:  # once every 10 samples make prediction
+        if (not self.is_training) and (self.neurosphero.sample_number % 12) == 0:
             sc = StandardScaler()
             self.neurosphero.buffer = sc.fit_transform(self.neurosphero.buffer)
             self.prediction = self.neurolearn.model.predict(self.neurosphero.buffer)
-            self.neurosphero.buffer = np.zeros((12, 121))
-
             pred_sum = sum(self.prediction)
-            self.prediction = (self.prediction > 0.5)
-
-            histogram = sum(self.prediction)
-            print("historgram={}".format(histogram))
-            print("sum={}\n".format(pred_sum))
-
+            self.neurosphero.buffer = np.zeros((12, 121))
 
             if self.neurosphero.y_prediction == np.argmax(pred_sum):
                 pass
@@ -101,7 +92,6 @@ class NeuroSpheroManager(object):
                 self.neurosphero.y_prediction = np.argmax(pred_sum)
             else:
                 self.neurosphero.y_prediction = -1
-
 
     def login_neuro(self):
         """Login to neurosteer API"""
@@ -127,7 +117,7 @@ class NeuroSpheroManager(object):
             + "/real-time/?all=true&access_token=" + self.neuro.token,
             on_message=self.on_message,
             on_error=self.on_error,
-            on_close=self.on_close,
+            on_close=self.on_close
         )
 
         return ws

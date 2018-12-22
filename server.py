@@ -49,7 +49,6 @@ def stop_recording():
 
 @app.route('/predict/')
 def predict():
-
     try:
         neurosphero_manager.run()
     except Exception as e:
