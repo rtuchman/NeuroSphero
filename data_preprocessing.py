@@ -6,7 +6,7 @@ import numpy as np
 import zipfile
 import io
 from NeuroLogin import *
-import imageio
+import threading
 
 
 class NeuroProcess():
@@ -31,24 +31,6 @@ class NeuroProcess():
 
         return sessions.sort_values('startDate')
 
-    def save_data_as_image(self, ns_connection, sessionName, quary_string):
-        url = ns_connection + r'/api/v1/sensors/' + self.sensor + r'/' + sessionName + r'/all?access_token='+self.token
-        r = requests.get(url)
-        buffer = io.BytesIO(r.content)
-        z = zipfile.ZipFile(buffer)
-        file = z.open('%s-%s.features.txt' % (self.sensor, sessionName))
-        X = np.genfromtxt(file, delimiter=',')
-        X = X[10:]
-        X = X.T
-        X = X[1:122]
-        X = (X + 4) / 5
-        X[X < 0] = 0
-        X[X > 1] = 1
-        X_normalized = X * 255
-        for j in range(0, X_normalized.shape[1]-10, 10):
-            buffer = X_normalized[:, j:j+10]
-            imageio.imwrite(r'C:\Users\owner\Desktop\NeuroSreer Project\dataset\train_data\{}\{}.{}.{}.bmp'.format(quary_string, quary_string, sessionName, j), buffer)
-
     def save_data_as_csv(self, ns_connection, sessionName, y_index, y_size):
 
         url = ns_connection + r'/api/v1/sensors/' + self.sensor + r'/' + sessionName + r'/all?access_token='+self.token
@@ -67,12 +49,20 @@ class NeuroProcess():
 
 
 if __name__ == "__main__":
-    query_list = ['MEMORY GAME', 'CHILL MUSIC MEDITATE', 'WRITE WITH WEAK HAND', 'HAPPY MUSIC DANCING']
+    query_list = ['MEMORY GAME', 'CHILL MUSIC MEDITATE', 'WRITE WITH WEAK HAND']   #, 'HAPPY MUSIC DANCING']
     my = NeuroProcess()
+    threads = []
     for q in range(len(query_list)):
         sessions = my.query_sessions('https://api.neurosteer.com', query_list[q])
+
         for s in sessions.sessionName:
-            my.save_data_as_csv('https://api.neurosteer.com', s, q, len(query_list))
+            t = threading.Thread(target=my.save_data_as_csv, args=('https://api.neurosteer.com', s, q, len(query_list),))
+            t.start()
+            threads.append(t)
             print('Saved: {} {}'.format(query_list[q], s))
+
+        for t in threads:
+            t.join()  # wait for all threads to finish
+
     my.dataset.to_csv(r'neuro_data.csv')
 

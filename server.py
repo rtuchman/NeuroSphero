@@ -24,6 +24,7 @@ def index():
 def start_recording():
     print('start recording')
 
+    neurosphero_manager.is_training = True
     neurosphero_manager.run()
 
     description = json.loads(request.data)['description']
@@ -40,6 +41,16 @@ def stop_recording():
 
     try:
         neurosphero_manager.disconnect()
+    except Exception as e:
+        print(e)
+
+    return Response(status=200)
+
+
+@app.route('/predict/')
+def predict():
+    try:
+        neurosphero_manager.run()
     except Exception as e:
         print(e)
 
@@ -65,4 +76,4 @@ if __name__ == '__main__':
     except Exception as e:
         print(e)
 
-    app.run(host='127.0.0.1', port=8000, debug=False)
+    app.run(host='127.0.0.1', port=8000, debug=False, threaded=True)

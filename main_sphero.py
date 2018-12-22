@@ -1,60 +1,18 @@
-"""to install tensorflow follow instructions from:
-    https://www.tensorflow.org/install/pip?lang=python2
-
-   This module creates a NeuroLogin instance to get access to Neurosteer's api,
-   then is creates a NeuroSphero instance that makes decisions and send commands
-   to the sphero ball based on the measured data.
-
-
-   After creating the instances, it opens a websocket with websocket.WebSocketApp.
-   the websocket receives 3 args:
-   url: websocket url.
-   on_message: callable object which is called when received data. on_message has 2 arguments.
-               The 1st argument is this class object.
-               The 2nd argument is utf-8 string which we get from the server.
-   on_error: callable object which is called when we get error. on_error has 2 arguments.
-             The 1st argument is this class object.
-             The 2nd argument is exception object.
-   on_close: callable object which is called when closed the connection.
-             this function has one argument. The argument is this class object.
-
-
-   Args:
-       email: user's email for api.neurosteer.com/signin.
-       password: user's password for api.neurosteer.com/signin.
-       sensor id: user's sensor.
-       sphero id: user's sphero.
-       features (optional): the biomarkers on which the user want perform analysis. default = (c1, h1).
-
-
-   To run the program, connects sphero ball via bluetooth the the computer/rpi, wear the electrode and
-   connect the sensor the the rpi, run in command line:
-   python main_sphero.py <email> <password> <sensor> <sphero> <features(optional)>
-
-"""
-import threading
-from functools import partial
-
-import time
-
+from threading import Thread
+import websocket
 from NeuroSphero import *
 from NeuroLogin import *
-import sys
-import websocket
-
 from NeuroLogout import disconnect as disconnect_neuro
-
-# EMAIL = 'runtuchman@gmail.com'
-# PASSWORD = '1234Ran'
+from keras.models import load_model
+from sklearn.preprocessing import StandardScaler
+import warnings
+warnings.filterwarnings("ignore")
 
 EMAIL = 'matanron3@gmail.com'
 PASSWORD = 'Matan1234'
 
-SENSOR = '00a3b4810811' #'b827eb0b7120' # ''810811' # new
-SPHERO_ID = '68:86:e7:01:fb:b2' #obr
-
-# SENSOR =  '00a3b4d8a9a7' # old
-# SPHERO_ID = '68:86:e7:04:4d:10' #ypr
+SENSOR = '00a3b4810811'
+SPHERO_ID = '68:86:e7:01:fb:b2'
 
 class NeuroSpheroManager(object):
     """Neuro sphero manager in charge of managing the connections of neuro sensor and sphero balls."""
@@ -64,19 +22,31 @@ class NeuroSpheroManager(object):
         self.sensor = sensor
         self.sphero_id = sphero_id
 
-        self.running = False  # indication whether we want tp read data from the sensor or not
+        self.running = False  # indication whether we want to read data from the sensor or not
         self.ws = self.connect()
+
+        self.is_training = False
+        self.neurosphero.y_prediction = -1
+        self.neurolearn = load_model('NeuroClassifier.h5')
+        self.neurolearn._make_predict_function()
+
         print('created neuro sphero manager')
 
     def run(self):
         """Start to run the websocket server in thread and get messages from the sensor."""
-        print('running neuro sphero')
-        self.running = True
+        if self.running:
+            pass
 
-        ws_thread = threading.Thread(target=self.ws.run_forever)
+        else:
+            self.running = True
+            self.sphero_thread = Thread(target=self.neurosphero.control_sphero)
+            self.sphero_thread.daemon = True
+            self.sphero_thread.start()
 
-        ws_thread.daemon = True
-        ws_thread.start()
+            self.ws_thread = Thread(target=self.ws.run_forever, kwargs={'ping_interval': 100})
+            self.ws_thread.daemon = True
+            self.ws_thread.start()
+            print('running neuro sphero')
 
     def on_error(self, ws, error):
         print("ERROR: {0}".format(error))
@@ -99,25 +69,29 @@ class NeuroSpheroManager(object):
             self.ws = self.create_websocket_connection()
             self.run()
 
-    def on_message(self, ws, message):
-        print('message received')
-        self.neurosphero.data = json.loads(message)
-        features = self.neurosphero.data[u'features']
-        # check if data is valid
-        qf = features[u'qf']
-        if qf != 0:
-            self.neurosphero.sphero_ball.set_color(255, 0, 0)
-            print("data isn't valid!")
+    def on_message(self, message, ws):
+        self.data = json.loads(message)
+        self.neurosphero.buffer[self.neurosphero.sample_number % 12] = self.data[u'all'][1:122]
+        self.neurosphero.sample_number += 1
+
         # training mode
-        if self.neurosphero.sample_number <= self.neurosphero.calibration_samples:
-            self.neurosphero.sphero_ball.set_color(255, 255, 255)  # white light  until buffer is full
-        self.neurosphero.perform_calibration(features)
-        if self.neurosphero.sample_number == self.neurosphero.calibration_samples + 1:
-            print('\nCalibration is done')
-        # controlling mode
-        if self.neurosphero.sample_number > self.neurosphero.calibration_samples:
-            print('preform control sphero')
-            self.neurosphero.control_sphero(features)
+        if self.is_training:
+            self.neurosphero.sphero_ball.set_color(255, 255, 255)  # white light
+
+        # predict mode
+        if (not self.is_training) and (self.neurosphero.sample_number % 12) == 0:
+            sc = StandardScaler()
+            self.neurosphero.buffer = sc.fit_transform(self.neurosphero.buffer)
+            self.prediction = self.neurolearn.model.predict(self.neurosphero.buffer)
+            pred_sum = sum(self.prediction)
+            self.neurosphero.buffer = np.zeros((12, 121))
+
+            if self.neurosphero.y_prediction == np.argmax(pred_sum):
+                pass
+            elif max(pred_sum) >= 5:
+                self.neurosphero.y_prediction = np.argmax(pred_sum)
+            else:
+                self.neurosphero.y_prediction = -1
 
     def login_neuro(self):
         """Login to neurosteer API"""
@@ -157,7 +131,11 @@ class NeuroSpheroManager(object):
 
     def disconnect(self):
         """Close the connection to neuro API and stop the recording."""
-        self.neurosphero.buf = {feature: numpy.zeros([self.neurosphero.calibration_samples])
-                                for feature in self.neurosphero.features}
         self.running = False
         self.ws.close()
+
+if __name__ == '__main__':
+    neurosphero_manager = NeuroSpheroManager()
+    while True:
+        neurosphero_manager.run()
+
