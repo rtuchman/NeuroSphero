@@ -1,0 +1,776 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="4a2ac0f9-de25-4662-91a0-e4db08160381" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/NeuroSphero.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeuroSphero.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main_sphero.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_sphero.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/client.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/client.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/static/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/AUTHORS.txt" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/AUTHORS.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/LICENSE.txt" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/LICENSE.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/bower.json" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/bower.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/external/sizzle/LICENSE.txt" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/external/sizzle/LICENSE.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/.eslintrc.json" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/.eslintrc.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/ajax.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/ajax.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/ajax/jsonp.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/ajax/jsonp.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/ajax/load.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/ajax/load.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/ajax/parseXML.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/ajax/parseXML.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/ajax/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/ajax/script.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/ajax/xhr.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/ajax/xhr.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/attributes.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/attributes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/attributes/attr.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/attributes/attr.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/attributes/classes.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/attributes/classes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/attributes/prop.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/attributes/prop.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/attributes/support.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/attributes/support.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/attributes/val.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/attributes/val.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/callbacks.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/callbacks.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/core.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/core.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/core/DOMEval.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/core/DOMEval.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/core/access.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/core/access.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/core/camelCase.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/core/camelCase.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/core/init.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/core/init.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/core/nodeName.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/core/nodeName.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/core/parseHTML.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/core/parseHTML.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/core/ready-no-deferred.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/core/ready-no-deferred.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/core/ready.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/core/ready.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/core/readyException.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/core/readyException.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/core/stripAndCollapse.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/core/stripAndCollapse.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/core/support.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/core/support.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/core/toType.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/core/toType.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/css.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/css.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/css/addGetHookIf.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/css/addGetHookIf.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/css/adjustCSS.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/css/adjustCSS.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/css/curCSS.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/css/curCSS.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/css/hiddenVisibleSelectors.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/css/hiddenVisibleSelectors.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/css/showHide.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/css/showHide.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/css/support.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/css/support.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/data.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/data.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/data/Data.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/data/Data.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/deferred.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/deferred.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/deferred/exceptionHook.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/deferred/exceptionHook.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/deprecated.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/deprecated.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/dimensions.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/dimensions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/effects.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/effects.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/effects/Tween.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/effects/Tween.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/effects/animatedSelector.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/effects/animatedSelector.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/event.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/event.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/event/ajax.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/event/ajax.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/event/alias.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/event/alias.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/event/focusin.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/event/focusin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/event/support.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/event/support.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/event/trigger.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/event/trigger.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/exports/amd.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/exports/amd.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/exports/global.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/exports/global.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/jquery.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/jquery.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/manipulation.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/manipulation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/manipulation/_evalUrl.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/manipulation/_evalUrl.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/manipulation/buildFragment.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/manipulation/buildFragment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/manipulation/getAll.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/manipulation/getAll.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/manipulation/setGlobalEval.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/manipulation/setGlobalEval.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/manipulation/support.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/manipulation/support.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/manipulation/wrapMap.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/manipulation/wrapMap.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/offset.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/offset.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/queue.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/queue.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/queue/delay.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/queue/delay.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/selector-native.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/selector-native.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/selector-sizzle.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/selector-sizzle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/selector.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/selector.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/serialize.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/serialize.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/traversing.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/traversing.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/traversing/findFilter.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/traversing/findFilter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/node_modules/jquery/src/wrap.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/node_modules/jquery/src/wrap.js" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/NeuroSphero$main_sphero.coverage" NAME="main_sphero Coverage Results" MODIFIED="1545493400595" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/NeuroSphero$server.coverage" NAME="server Coverage Results" MODIFIED="1545385383332" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/NeuroSphero$data_preprocessing.coverage" NAME="data_preprocessing Coverage Results" MODIFIED="1545492891549" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/NeuroSphero$NeuroLearn.coverage" NAME="NeuroLearn Coverage Results" MODIFIED="1545490526063" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+  </component>
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="NeuroSphero" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/main_sphero.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="340">
+              <caret line="95" column="26" lean-forward="true" selection-start-line="95" selection-start-column="26" selection-end-line="95" selection-end-column="26" />
+              <folding>
+                <element signature="e#0#28#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/NeuroSphero.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="127">
+              <caret line="90" column="46" lean-forward="true" selection-end-line="126" />
+              <folding>
+                <element signature="e#77#111#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/NeuroLogout.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="835">
+              <caret line="59" column="32" lean-forward="true" selection-start-line="59" selection-start-column="32" selection-end-line="59" selection-end-column="32" />
+              <folding>
+                <element signature="e#0#23#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/NeuroLogin.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="19">
+              <caret line="17" column="26" lean-forward="true" selection-start-line="17" selection-start-column="26" selection-end-line="17" selection-end-column="26" />
+              <folding>
+                <element signature="e#60#75#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/NeuroLearn.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="385">
+              <caret line="74" lean-forward="true" selection-start-line="74" selection-end-line="74" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>is_r</find>
+      <find>bluetooth</find>
+      <find>404</find>
+      <find>2</find>
+      <find>threading</find>
+      <find>predict</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/NeuroLogin.py" />
+        <option value="$PROJECT_DIR$/data_preprocessing.py" />
+        <option value="$PROJECT_DIR$/static/client.js" />
+        <option value="$PROJECT_DIR$/NeuroLearn.py" />
+        <option value="$PROJECT_DIR$/static/index.html" />
+        <option value="$PROJECT_DIR$/server.py" />
+        <option value="$PROJECT_DIR$/NeuroSphero.py" />
+        <option value="$PROJECT_DIR$/main_sphero.py" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-236" />
+    <option name="y" value="39" />
+    <option name="width" value="697" />
+    <option name="height" value="735" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="NeuroSphero" type="b2602c69:ProjectViewProjectNode" />
+              <item name="NeuroSphero" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../New folder/Intro-to-Machine-Learning/ex4" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Python.main_sphero">
+    <configuration name="NeuroLearn" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="NeuroSphero" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/NeuroLearn.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="data_preprocessing" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="NeuroSphero" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data_preprocessing.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main_sphero" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="NeuroSphero" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main_sphero.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="server" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="NeuroSphero" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/server.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.data_preprocessing" />
+      <item itemvalue="Python.server" />
+      <item itemvalue="Python.main_sphero" />
+      <item itemvalue="Python.NeuroLearn" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.main_sphero" />
+        <item itemvalue="Python.data_preprocessing" />
+        <item itemvalue="Python.NeuroLearn" />
+        <item itemvalue="Python.server" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4a2ac0f9-de25-4662-91a0-e4db08160381" name="Default" comment="" />
+      <created>1544532776005</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1544532776005</updated>
+      <workItem from="1545381318113" duration="9218000" />
+      <workItem from="1545391154998" duration="54363000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="63581000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18381241" />
+      <window_info id="Structure" order="1" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.28641573" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.44189852" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.3289689" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.5139116" />
+      <window_info anchor="bottom" id="Python Console" order="9" weight="0.3797054" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" order="12" />
+      <window_info active="true" anchor="bottom" id="Concurrent Activities Diagram" order="13" weight="0.5286416" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Database" order="3" />
+      <window_info anchor="right" x="209" y="134" width="903" height="502" id="SciView" order="4" show_stripe_button="false" type="FLOATING" weight="0.32980332" />
+    </layout>
+    <layout-to-restore>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18381241" />
+      <window_info id="Structure" order="1" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.5040917" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.41080198" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.3289689" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.5139116" />
+      <window_info anchor="bottom" id="Python Console" order="9" weight="0.3797054" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" order="12" />
+      <window_info active="true" anchor="bottom" id="Concurrent Activities Diagram" order="13" weight="0.5286416" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Database" order="3" />
+      <window_info anchor="right" x="209" y="134" width="903" height="502" id="SciView" order="4" show_stripe_button="false" type="FLOATING" weight="0.32980332" />
+    </layout-to-restore>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/server.py</url>
+          <line>70</line>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/main_sphero.py</url>
+          <line>72</line>
+          <option name="timeStamp" value="47" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/main_sphero.py</url>
+          <line>56</line>
+          <option name="timeStamp" value="48" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/main_sphero.py</url>
+          <line>40</line>
+          <option name="timeStamp" value="52" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/main_sphero.py</url>
+          <line>84</line>
+          <option name="timeStamp" value="55" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/NeuroLearn.py</url>
+          <line>156</line>
+          <option name="timeStamp" value="59" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/NeuroLearn.py</url>
+          <line>52</line>
+          <option name="timeStamp" value="62" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/data_preprocessing.py</url>
+          <line>41</line>
+          <option name="timeStamp" value="63" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/server.py</url>
+          <line>19</line>
+          <option name="timeStamp" value="64" />
+        </line-breakpoint>
+      </breakpoints>
+      <breakpoints-defaults>
+        <breakpoint type="python-line" />
+      </breakpoints-defaults>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="PythonConfigurationType">
+        <watch expression="self.neurosphero.sample_number" />
+        <watch expression="self.neurosphero.buffer" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$USER_HOME$/Anaconda2/envs/py36/Lib/site-packages/keras/legacy/interfaces.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="29" selection-start-line="29" selection-end-line="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Anaconda2/envs/py36/Lib/site-packages/keras/engine/sequential.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="90" selection-start-line="90" selection-end-line="90" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Anaconda2/envs/py36/Lib/site-packages/tensorflow/python/client/session.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-475">
+          <caret line="1439" selection-start-line="1439" selection-end-line="1439" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Anaconda2/envs/py36/Lib/site-packages/keras/engine/training.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="1141" selection-start-line="1141" selection-end-line="1141" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BluetoothSetup.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Anaconda2/envs/py36/Lib/site-packages/requests/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="107">
+          <caret line="808" selection-start-line="808" selection-end-line="808" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Anaconda2/envs/py36/Lib/site-packages/requests/sessions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="348" selection-start-line="348" selection-end-line="348" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Anaconda2/envs/py36/Lib/site-packages/requests/api.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="107">
+          <caret line="111" selection-start-line="111" selection-end-line="111" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Anaconda2/envs/py36/Lib/codecs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="166">
+          <caret line="308" selection-start-line="308" selection-end-line="308" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Anaconda2/envs/py36/Lib/site-packages/colorama/ansitowin32.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="36" selection-start-line="36" selection-end-line="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Anaconda2/envs/py36/Lib/site-packages/flask/app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="903" selection-start-line="903" selection-end-line="903" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spheropy/Sphero.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="111">
+          <caret line="848" selection-start-line="848" selection-end-line="848" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Anaconda2/envs/py36/Lib/socket.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="106">
+          <caret line="102" selection-start-line="102" selection-end-line="102" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Anaconda2/envs/py36/Lib/tokenize.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="452" selection-start-line="452" selection-end-line="452" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Anaconda2/envs/py36/Lib/linecache.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="139" column="46" lean-forward="true" selection-start-line="139" selection-start-column="46" selection-end-line="139" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Anaconda2/envs/py36/Lib/enum.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="543" selection-start-line="543" selection-end-line="543" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Anaconda2/envs/py36/Lib/threading.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="118">
+          <caret line="863" selection-start-line="863" selection-end-line="863" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/Anaconda2/envs/py36/Lib/site-packages/PyBluez-0.22-py3.6-win-amd64.egg!/bluetooth/msbt.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="86" selection-start-line="86" selection-end-line="86" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Anaconda2/envs/py36/Lib/site-packages/websocket/_app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-130">
+          <caret line="288" selection-start-line="288" selection-end-line="288" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Anaconda2/envs/py36/Lib/site-packages/OpenSSL/SSL.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="106">
+          <caret line="1813" selection-start-line="1813" selection-end-line="1813" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Loss.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Accuracy.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data_preprocessing.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="43" selection-start-line="43" selection-end-line="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Confusion Matrix.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/node_modules/jquery/dist/jquery.slim.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-867">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/node_modules/jquery/dist/jquery.min.map">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-17">
+          <caret column="9803" selection-start-column="9803" selection-end-column="9803" />
+        </state>
+      </provider>
+      <provider editor-type-id="sourcemapFileViewerProvider" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/node_modules/jquery/dist/jquery.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1887">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/node_modules/jquery/dist/core.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/node_modules/jquery/AUTHORS.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/node_modules/jquery/bower.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/node_modules/jquery/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-663" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/client.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="40" selection-start-line="9" selection-start-column="40" selection-end-line="9" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NeuroLogout.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NeuroLogin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="17" column="26" lean-forward="true" selection-start-line="17" selection-start-column="26" selection-end-line="17" selection-end-column="26" />
+          <folding>
+            <element signature="e#60#75#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NeuroLearn.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="385">
+          <caret line="74" lean-forward="true" selection-start-line="74" selection-end-line="74" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NeuroSphero.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="127">
+          <caret line="90" column="46" lean-forward="true" selection-end-line="126" />
+          <folding>
+            <element signature="e#77#111#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="835">
+          <caret line="59" column="32" lean-forward="true" selection-start-line="59" selection-start-column="32" selection-end-line="59" selection-end-column="32" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main_sphero.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="95" column="26" lean-forward="true" selection-start-line="95" selection-start-column="26" selection-end-line="95" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
