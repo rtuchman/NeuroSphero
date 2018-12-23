@@ -70,7 +70,7 @@ class NeuroLearnANN(object):
         # you may use history to view accuracy
         self.history = self.classifier.fit(self.X_train, self.y_train,
                                            validation_data=(self.X_test, self.y_test),
-                                           batch_size=10, nb_epoch=5000, shuffle=False,
+                                           batch_size=10, nb_epoch=300, shuffle=True,
                                            callbacks=[tbCallBack])
 
         self.save_graphs()
