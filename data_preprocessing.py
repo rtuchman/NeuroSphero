@@ -41,6 +41,7 @@ class NeuroProcess():
         X = np.genfromtxt(file, delimiter=',')
         X = X[10:-10]
         X = X[:, 1:122]
+        X = np.tanh(0.8*(X + 4) - 2)  # normalize the same as online data
         y = np.zeros((X.shape[0], y_size))
         y[:, y_index] = 1.0  # one hot label for the categorical data
         temp = np.concatenate((X, y), axis=1)
@@ -49,7 +50,7 @@ class NeuroProcess():
 
 
 if __name__ == "__main__":
-    query_list = ['MEMORY GAME', 'CHILL MUSIC MEDITATE', 'WRITE WITH WEAK HAND']   #, 'HAPPY MUSIC DANCING']
+    query_list = ['MEMORY GAME', 'CHILL MUSIC MEDITATE', 'WRITE WITH WEAK HAND', 'HAPPY MUSIC DANCING']
     my = NeuroProcess()
     threads = []
     for q in range(len(query_list)):
@@ -59,10 +60,11 @@ if __name__ == "__main__":
             t = threading.Thread(target=my.save_data_as_csv, args=('https://api.neurosteer.com', s, q, len(query_list),))
             t.start()
             threads.append(t)
-            print('Saved: {} {}'.format(query_list[q], s))
+
 
         for t in threads:
             t.join()  # wait for all threads to finish
+            print('Saved: {} {}'.format(query_list[q], s))
 
     my.dataset.to_csv(r'neuro_data.csv')
 

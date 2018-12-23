@@ -19,7 +19,6 @@ class NeuroSphero:
 
     def __init__(self, sphero_id):
         self.sphero_ball = Sphero("NAME", sphero_id, response_time_out=2, number_tries=5)
-        self.buf_size = 10
         self.buffer = np.zeros((12, 121))
         self.sample_number = 1
         self.y_prediction = -1
@@ -100,14 +99,14 @@ class NeuroSphero:
 
                 #self.thread_square.join()
 
-            #if y == 3:  # Happy music (dancing)
-            #    print('Happy music (dancing)')
-            #    self.thread_circle = Thread(target=self.make_a_circle)
-            #    self.thread_blink = Thread(target=self.blink)
-            #    self.thread_blink.start()
-            #    self.thread_circle.start()
-            #    self.thread_blink.join()
-            #    self.thread_circle.join()
+            if y == 3:  # Happy music (dancing)
+                print('Happy music (dancing)')
+                self.thread_circle = Thread(target=self.make_a_circle)
+                self.thread_blink = Thread(target=self.blink)
+                self.thread_blink.start()
+                self.thread_circle.start()
+                self.thread_blink.join()
+                self.thread_circle.join()
 
             if y == -1:  # No prediction
                 for _ in range(19):

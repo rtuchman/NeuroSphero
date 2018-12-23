@@ -4,7 +4,7 @@ from NeuroSphero import *
 from NeuroLogin import *
 from NeuroLogout import disconnect as disconnect_neuro
 from keras.models import load_model
-from sklearn.preprocessing import StandardScaler
+import os
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -25,9 +25,12 @@ class NeuroSpheroManager(object):
         self.running = False  # indication whether we want to read data from the sensor or not
         self.ws = self.connect()
 
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+
+
         self.is_training = False
         self.neurosphero.y_prediction = -1
-        self.neurolearn = load_model('NeuroClassifier.h5')
+        self.neurolearn = load_model(dir_path + r'\NeuroClassifier.h5')
         self.neurolearn._make_predict_function()
 
         print('created neuro sphero manager')
@@ -80,11 +83,8 @@ class NeuroSpheroManager(object):
 
         # predict mode
         if (not self.is_training) and (self.neurosphero.sample_number % 12) == 0:
-            sc = StandardScaler()
-            self.neurosphero.buffer = sc.fit_transform(self.neurosphero.buffer)
             self.prediction = self.neurolearn.model.predict(self.neurosphero.buffer)
             pred_sum = sum(self.prediction)
-            self.neurosphero.buffer = np.zeros((12, 121))
 
             if self.neurosphero.y_prediction == np.argmax(pred_sum):
                 pass

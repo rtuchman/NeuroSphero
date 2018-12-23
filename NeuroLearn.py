@@ -23,20 +23,20 @@ class NeuroLearnANN(object):
         self.classifier = Sequential()
 
         # Adding the input layer and the first hidden layer
-        #self.classifier.add(Dropout(0.2))
+        self.classifier.add(Dropout(0.05))
         self.classifier.add(Dense(activation='relu', input_dim=121, units=135, kernel_initializer='glorot_uniform'))
 
         # Adding the second hidden layer
-        self.classifier.add(Dropout(0.3))
+        self.classifier.add(Dropout(0.35))
         self.classifier.add(Dense(units=135, kernel_initializer="glorot_uniform", activation='relu'))
 
         # Adding the third hidden layer
-        self.classifier.add(Dropout(0.3))
+        self.classifier.add(Dropout(0.35))
         self.classifier.add(Dense(units=135, kernel_initializer="glorot_uniform", activation='relu'))
 
         # Adding the output layer
-        self.classifier.add(Dropout(0.3))
-        self.classifier.add(Dense(units=3, kernel_initializer='glorot_uniform', activation='softmax'))
+        self.classifier.add(Dropout(0.35))
+        self.classifier.add(Dense(units=4, kernel_initializer='glorot_uniform', activation='softmax'))
 
         # Compiling the ANN
         sgd = optimizers.SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
@@ -53,9 +53,9 @@ class NeuroLearnANN(object):
         self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(X, y, test_size=0.2, random_state=22)
 
         # Feature Scaling
-        sc = StandardScaler()
-        self.X_train = sc.fit_transform(self.X_train)
-        self.X_test = sc.transform(self.X_test)
+        #sc = StandardScaler()
+        #self.X_train = sc.fit_transform(self.X_train)
+        #self.X_test = sc.transform(self.X_test)
 
     def train(self):
 
@@ -70,7 +70,7 @@ class NeuroLearnANN(object):
         # you may use history to view accuracy
         self.history = self.classifier.fit(self.X_train, self.y_train,
                                            validation_data=(self.X_test, self.y_test),
-                                           batch_size=10, nb_epoch=300, shuffle=False,
+                                           batch_size=10, nb_epoch=5000, shuffle=False,
                                            callbacks=[tbCallBack])
 
         self.save_graphs()
@@ -78,12 +78,6 @@ class NeuroLearnANN(object):
     def predict(self):
         # Predicting the Test set results
         self.y_pred = self.classifier.predict(self.X_test)
-        self.y_pred = (self.y_pred > 0.5)
-
-        indices = np.where(self.y_pred)[0]  # only indices with above 0.5 certainty
-
-        self.y_pred = self.y_pred[indices]  # throw away predictions with less than 0.5 certainty
-        self.y_test = self.y_test[indices]
 
         # Making the Confusion Matrix
         y_test_non_category = [np.argmax(t) for t in self.y_test]
@@ -137,6 +131,8 @@ class NeuroLearnANN(object):
         plt.legend()
         plt.xlabel('epochs')
         plt.ylabel('Accuracy')
+        plt.title('Validation Accuracy={0:.4f}\nTraining Accuracy={1:.4f}'.format(self.history.history['val_acc'][-1],
+                                                                        self.history.history['acc'][-1]))
         plt.savefig('Accuracy')
         plt.close()
         plt.plot(epochs, self.history.history['val_loss'], label='val_loss')
@@ -144,6 +140,8 @@ class NeuroLearnANN(object):
         plt.legend()
         plt.xlabel('epochs')
         plt.ylabel('Loss')
+        plt.title('Validation Loss={0:.4f}\nTraining Loss={1:.4f}'.format(self.history.history['val_loss'][-1],
+                                                                self.history.history['loss'][-1]))
         plt.savefig('Loss')
         plt.close()
 
@@ -153,7 +151,7 @@ if __name__ == "__main__":
     model.data_preprocessing()
     model.train()
     model.predict()
-    model.plot_confusion_matrix(model.cm, ['Memory game', 'Meditate', 'Write with weak hand'])   #, 'Happy music (dancing)'])
+    model.plot_confusion_matrix(model.cm, ['Memory game', 'Meditate', 'Write with weak hand', 'Happy music (dancing)'])
     model.classifier.save('NeuroClassifier.h5')
 
 
