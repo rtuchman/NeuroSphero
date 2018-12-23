@@ -50,11 +50,6 @@ class NeuroLearnANN(object):
         # Splitting the dataset into the Training set and Test set
         self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(X, y, test_size=0.2, random_state=22)
 
-        # Feature Scaling
-        #sc = StandardScaler()
-        #self.X_train = sc.fit_transform(self.X_train)
-        #self.X_test = sc.transform(self.X_test)
-
     def train(self):
 
         # to view tensorboard after training open anaconda prompt in project's folder and run:
