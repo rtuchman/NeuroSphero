@@ -22,19 +22,20 @@ class NeuroLearnANN(object):
         self.classifier = Sequential()
 
         # Adding the input layer and the first hidden layer
+        #self.classifier.add(Dropout(0.05))
         self.classifier.add(Dense(activation='relu', input_dim=121, units=135, kernel_initializer='glorot_uniform'))
 
         # Adding the second hidden layer
-        self.classifier.add(Dropout(0.35))
+        self.classifier.add(Dropout(0.3))
         self.classifier.add(Dense(units=135, kernel_initializer="glorot_uniform", activation='relu'))
 
         # Adding the third hidden layer
-        self.classifier.add(Dropout(0.35))
+        self.classifier.add(Dropout(0.3))
         self.classifier.add(Dense(units=135, kernel_initializer="glorot_uniform", activation='relu'))
 
         # Adding the output layer
-        self.classifier.add(Dropout(0.35))
-        self.classifier.add(Dense(units=4, kernel_initializer='glorot_uniform', activation='softmax'))
+        self.classifier.add(Dropout(0.3))
+        self.classifier.add(Dense(units=3, kernel_initializer='glorot_uniform', activation='softmax'))
 
         # Compiling the ANN
         sgd = optimizers.SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
@@ -63,7 +64,7 @@ class NeuroLearnANN(object):
         # you may use history to view accuracy
         self.history = self.classifier.fit(self.X_train, self.y_train,
                                            validation_data=(self.X_test, self.y_test),
-                                           batch_size=10, nb_epoch=1500, shuffle=True,
+                                           batch_size=10, nb_epoch=1000, shuffle=True,
                                            callbacks=[tbCallBack])
 
         self.save_graphs()
@@ -144,7 +145,7 @@ if __name__ == "__main__":
     model.data_preprocessing()
     model.train()
     model.predict()
-    model.plot_confusion_matrix(model.cm, ['Memory game', 'Meditate', 'Write with weak hand', 'Happy music (dancing)'])
+    model.plot_confusion_matrix(model.cm, ['Memory game', 'Meditate', 'Write with weak hand'])  #, 'Happy music (dancing)'])
     model.classifier.save('NeuroClassifier.h5')
 
 

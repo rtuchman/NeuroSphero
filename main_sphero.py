@@ -27,7 +27,6 @@ class NeuroSpheroManager(object):
 
         dir_path = os.path.dirname(os.path.realpath(__file__))
 
-
         self.is_training = False
         self.neurosphero.y_prediction = -1
         self.neurolearn = load_model(dir_path + r'\NeuroClassifier.h5')
@@ -51,10 +50,10 @@ class NeuroSpheroManager(object):
             self.ws_thread.start()
             print('running neuro sphero')
 
-    def on_error(self, ws, error):
+    def on_error(self, error):
         print("ERROR: {0}".format(error))
 
-    def on_close(self, ws):
+    def on_close(self):
         """Checks whether closed happened on purpose or not and handle it."""
         print("### websocket closed ###")
         if self.running is False:  # wanted disconnection
@@ -70,11 +69,14 @@ class NeuroSpheroManager(object):
 
             self.login_neuro()  # login again and re-connect.
             self.ws = self.create_websocket_connection()
-            self.run()
+            self.ws_thread.join()
+            self.ws_thread = Thread(target=self.ws.run_forever)
+            self.ws_thread.daemon = True
+            self.ws_thread.start()
 
-    def on_message(self, message, ws):
+    def on_message(self, message):
         self.data = json.loads(message)
-        self.neurosphero.buffer[self.neurosphero.sample_number % 12] = self.data[u'all'][1:122]
+        self.neurosphero.buffer[self.neurosphero.sample_number % 20] = self.data[u'all'][1:122]
         self.neurosphero.sample_number += 1
 
         # training mode
@@ -82,13 +84,16 @@ class NeuroSpheroManager(object):
             self.neurosphero.sphero_ball.set_color(255, 255, 255)  # white light
 
         # predict mode
-        if (not self.is_training) and (self.neurosphero.sample_number % 12) == 0:
+        if (not self.is_training) and (self.neurosphero.sample_number % 20) == 0:
             self.prediction = self.neurolearn.model.predict(self.neurosphero.buffer)
             pred_sum = sum(self.prediction)
 
+            print('histogram={}'.format(sum(self.prediction > 0.5)))
+            print('prediction sum={}\n'.format(pred_sum))
+
             if self.neurosphero.y_prediction == np.argmax(pred_sum):
                 pass
-            elif max(pred_sum) >= 6:
+            elif max(pred_sum) >= 8:
                 self.neurosphero.y_prediction = np.argmax(pred_sum)
             else:
                 self.neurosphero.y_prediction = -1
