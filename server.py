@@ -2,14 +2,7 @@ from flask import Flask
 from flask import Response, request
 import datetime as dt
 import json
-
 from main_sphero import NeuroSpheroManager
-from main_sphero import EMAIL, PASSWORD, SENSOR, SPHERO_ID
-
-# EMAIL = 'runtuchman@gmail.com'
-# PASSWORD = '1234Ran'
-# SENSOR = '00a3b4d8a9a7'
-# SPHERO_ID = '68:86:e7:04:4d:10'
 
 
 app = Flask(__name__, static_url_path='')

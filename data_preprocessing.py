@@ -61,7 +61,6 @@ if __name__ == "__main__":
             t.start()
             threads.append(t)
 
-
         for t in threads:
             t.join()  # wait for all threads to finish
             print('Saved: {} {}'.format(query_list[q], s))

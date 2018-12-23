@@ -46,7 +46,7 @@ class NeuroSpheroManager(object):
             self.sphero_thread.daemon = True
             self.sphero_thread.start()
 
-            self.ws_thread = Thread(target=self.ws.run_forever, kwargs={'ping_interval': 100})
+            self.ws_thread = Thread(target=self.ws.run_forever)
             self.ws_thread.daemon = True
             self.ws_thread.start()
             print('running neuro sphero')
@@ -88,7 +88,7 @@ class NeuroSpheroManager(object):
 
             if self.neurosphero.y_prediction == np.argmax(pred_sum):
                 pass
-            elif max(pred_sum) >= 5:
+            elif max(pred_sum) >= 6:
                 self.neurosphero.y_prediction = np.argmax(pred_sum)
             else:
                 self.neurosphero.y_prediction = -1

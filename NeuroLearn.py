@@ -5,7 +5,6 @@ from keras import optimizers, regularizers
 from keras.callbacks import TensorBoard
 import pandas as pd
 from sklearn.metrics import confusion_matrix
-from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 import itertools
@@ -23,7 +22,6 @@ class NeuroLearnANN(object):
         self.classifier = Sequential()
 
         # Adding the input layer and the first hidden layer
-        self.classifier.add(Dropout(0.05))
         self.classifier.add(Dense(activation='relu', input_dim=121, units=135, kernel_initializer='glorot_uniform'))
 
         # Adding the second hidden layer
@@ -70,7 +68,7 @@ class NeuroLearnANN(object):
         # you may use history to view accuracy
         self.history = self.classifier.fit(self.X_train, self.y_train,
                                            validation_data=(self.X_test, self.y_test),
-                                           batch_size=10, nb_epoch=300, shuffle=True,
+                                           batch_size=10, nb_epoch=1500, shuffle=True,
                                            callbacks=[tbCallBack])
 
         self.save_graphs()
