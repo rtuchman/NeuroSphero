@@ -43,17 +43,15 @@ class NeuroSpheroManager(object):
         else:
             self.running = True
 
-            self.sphero_thread = Thread(target=self.neurosphero.control_sphero)
-            self.sphero_thread.daemon = True
-            self.sphero_thread.start()
-
             self.ws_thread = Thread(target=self.ws.run_forever)
             self.ws_thread.daemon = True
             self.ws_thread.start()
 
-            #if not self.is_training:  # ball thread only when in predict mode
+            if not self.is_training:  # ball thread only when in predict mode
+                self.sphero_thread = Thread(target=self.neurosphero.control_sphero)
+                self.sphero_thread.daemon = True
+                self.sphero_thread.start()
 
-        #if not self.is_training:  # ball thread only when in predict mode
 
 
 
@@ -99,7 +97,7 @@ class NeuroSpheroManager(object):
             pred_sum = ['%.3f' % elem for elem in pred_sum]
             pred_sum = [float(elem) for elem in pred_sum]
 
-            print('*********Memory  Meditate Weakhand  Happy*********')
+            print('*********Memory Meditate Weakhand Happy*********')
             print('          {}\n'.format(pred_sum))
 
             if self.neurosphero.y_prediction == np.argmax(pred_sum):
