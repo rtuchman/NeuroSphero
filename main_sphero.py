@@ -76,7 +76,8 @@ class NeuroSpheroManager(object):
 
     def on_message(self, message):
         self.data = json.loads(message)
-        self.neurosphero.buffer[self.neurosphero.sample_number % 20] = self.data[u'all'][1:122]
+        #self.neurosphero.buffer[self.neurosphero.sample_number % 30] = self.data[u'all'][1:122]
+        self.neurosphero.buffer[self.neurosphero.sample_number % 30] = self.data[u'features'][u'baf_24bit_fix'][1:122]
         self.neurosphero.sample_number += 1
 
         # training mode
@@ -84,16 +85,16 @@ class NeuroSpheroManager(object):
             self.neurosphero.sphero_ball.set_color(255, 255, 255)  # white light
 
         # predict mode
-        if (not self.is_training) and (self.neurosphero.sample_number % 20) == 0:
+        if (not self.is_training) and (self.neurosphero.sample_number % 30) == 0:
             self.prediction = self.neurolearn.model.predict(self.neurosphero.buffer)
             pred_sum = sum(self.prediction)
 
-            print('histogram={}'.format(sum(self.prediction > 0.5)))
+            #print('histogram={}'.format(sum(self.prediction > 0.5)))
             print('prediction sum={}\n'.format(pred_sum))
 
             if self.neurosphero.y_prediction == np.argmax(pred_sum):
                 pass
-            elif max(pred_sum) >= 8:
+            elif max(pred_sum) >= 15:
                 self.neurosphero.y_prediction = np.argmax(pred_sum)
             else:
                 self.neurosphero.y_prediction = -1

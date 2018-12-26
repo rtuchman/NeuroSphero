@@ -13,7 +13,7 @@ def index():
     return app.send_static_file(filename='index.html')
 
 
-@app.route('/start-recording/', methods=['POST']) # describes what will happen when someone will get to this path:
+@app.route('/start-recording/', methods=['POST'])  # describes what will happen when someone will get to this path:
 def start_recording():
     print('start recording')
 

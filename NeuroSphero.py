@@ -18,8 +18,8 @@ class NeuroSphero:
 
     def __init__(self, sphero_id):
         self.sphero_ball = Sphero("NAME", sphero_id, response_time_out=2, number_tries=5)
-        self.buffer = np.zeros((20, 121))
-        self.sample_number = 1
+        self.buffer = np.zeros((30, 121))
+        self.sample_number = 0
         self.y_prediction = -1
 
         return
@@ -46,7 +46,7 @@ class NeuroSphero:
         sleep_time = 0.3
         rotate_by = 360 // steps
         current_angle = 1
-        for _ in range(5):  # 5 circles
+        for _ in range(3):  # 5 circles
             for _ in range(steps):
                 self.make_a_step(current_angle % 360, speed, sleep_time)
                 current_angle += rotate_by
@@ -89,27 +89,31 @@ class NeuroSphero:
 
             if y == 2:  # Write with weak hand
                 print('Write with weak hand')
-                for _ in range(38):
+                for _ in range(19):
                     self.sphero_ball.set_color(0, 255, 255)
                     sleep(0.25)
                     self.sphero_ball.set_color(255, 0, 255)
                     sleep(0.25)
 
 
-            #if y == 3:  # Happy music (dancing)
-            #    print('Happy music (dancing)')
-            #    self.thread_circle = threading.Thread(target=self.make_a_circle)
-            #    self.thread_blink = threading.Thread(target=self.blink)
-            #    self.thread_blink.start()
-            #    self.thread_circle.start()
-            #    self.thread_blink.join()
-            #    self.thread_circle.join()
+            if y == 3:  # Happy music (dancing)
+                print('Happy music (dancing)')
+                self.thread_circle = threading.Thread(target=self.make_a_circle)
+                self.thread_circle.start()
+                for _ in range(19):
+                    self.sphero_ball.set_color(0, 255, 255)
+                    sleep(0.25)
+                    self.sphero_ball.set_color(255, 0, 255)
+                    sleep(0.25)
+
+
+                self.thread_circle.join()
 
 
             if y == -1:  # No prediction
                 for _ in range(19):
                     self.sphero_ball.set_color(255, 255, 255)
-                    sleep(0.5)#
+                    sleep(0.5)
 
 
 
