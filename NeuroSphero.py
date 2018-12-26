@@ -75,38 +75,35 @@ class NeuroSphero:
                 for _ in range(38):
                     self.sphero_ball.set_color(0, 0, 255)
                     sleep(0.25)
-                    self.sphero_ball.set_color(255, 255, 0)
+                    self.sphero_ball.set_color(149, 0, 179)
                     sleep(0.25)
 
 
             if y == 1:  # Meditate
-                print('Meditate')
                 self.thread_blink = threading.Thread(target=self.blink)
                 self.thread_blink.start()
                 self.thread_blink.join()
-                #sleep(0.5)
+
 
 
             if y == 2:  # Write with weak hand
-                print('Write with weak hand')
-                for _ in range(19):
-                    self.sphero_ball.set_color(0, 255, 255)
+               for _ in range(19):
+                    self.sphero_ball.set_color(255, 0, 0)
                     sleep(0.25)
-                    self.sphero_ball.set_color(255, 0, 255)
+                    self.sphero_ball.set_color(255, 255, 25)
                     sleep(0.25)
 
 
             if y == 3:  # Happy music (dancing)
-                print('Happy music (dancing)')
                 self.thread_circle = threading.Thread(target=self.make_a_circle)
                 self.thread_circle.start()
                 for _ in range(19):
                     self.sphero_ball.set_color(0, 255, 255)
-                    sleep(0.25)
+                    sleep(0.15)
                     self.sphero_ball.set_color(255, 0, 255)
-                    sleep(0.25)
-
-
+                    sleep(0.15)
+                    self.sphero_ball.set_color(43, 255, 0)
+                    sleep(0.15)
                 self.thread_circle.join()
 
 

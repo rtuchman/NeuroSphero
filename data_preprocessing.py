@@ -7,7 +7,6 @@ import zipfile
 import io
 from NeuroLogin import *
 import threading
-from math import ceil
 
 
 class NeuroProcess():
@@ -50,44 +49,20 @@ class NeuroProcess():
 
 
 if __name__ == "__main__":
-    query_list = ['MEMORY GAME', 'CHILL MUSIC MEDITATE', 'HAPPY MUSIC DANCING'] # , 'WRITE WITH WEAK HAND'
+    query_list = ['MEMORY GAME', 'CHILL MUSIC MEDITATE', 'WRITE WITH WEAK HAND', 'HAPPY MUSIC DANCING']
     my = NeuroProcess()
     threads = []
     for q in range(len(query_list)):
         sessions = my.query_sessions('https://api.neurosteer.com', query_list[q])
 
-        n = ceil(0.8*len(sessions))
-
-        for s in range(n):
-            t = threading.Thread(target=my.save_data_as_csv, args=('https://api.neurosteer.com', sessions.sessionName[s], q, len(query_list),))
+        for s in sessions.sessionName:
+            t = threading.Thread(target=my.save_data_as_csv, args=('https://api.neurosteer.com', s, q, len(query_list),))
             t.start()
             threads.append(t)
 
         for t in threads:
             t.join()  # wait for all threads to finish
-            print('Saved: {} {}'.format(query_list[q], sessions.sessionName[s]))
+            print('Saved: {} {}'.format(query_list[q], s))
 
-    my.dataset.to_csv(r'train_data.csv')
-    del my, threads
-
-    my = NeuroProcess()
-    threads = []
-
-    for q in range(len(query_list)):
-        sessions = my.query_sessions('https://api.neurosteer.com', query_list[q])
-
-        n = ceil(0.8 * len(sessions))
-
-        for s in range(n, len(sessions.sessionName)):
-            t = threading.Thread(target=my.save_data_as_csv,
-                                 args=('https://api.neurosteer.com', sessions.sessionName[s], q, len(query_list),))
-            t.start()
-            threads.append(t)
-
-        for t in threads:
-            t.join()  # wait for all threads to finish
-            print('Saved: {} {}'.format(query_list[q], sessions.sessionName[s]))
-
-
-    my.dataset.to_csv(r'test_data.csv')
+    my.dataset.to_csv(r'neuro_data.csv')
 

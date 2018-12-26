@@ -39,7 +39,6 @@ def stop_recording():
 
     return Response(status=200)
 
-
 @app.route('/predict/')
 def predict():
     try:

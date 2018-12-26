@@ -1,7 +1,7 @@
 import numpy as np
 from keras import Sequential
 from keras.layers import Dropout, Dense
-from keras import optimizers, regularizers
+from keras import optimizers
 from keras.callbacks import TensorBoard
 import pandas as pd
 from sklearn.metrics import confusion_matrix
@@ -25,15 +25,15 @@ class NeuroLearnANN(object):
         self.classifier.add(Dense(activation='relu', input_dim=121, units=300, kernel_initializer='glorot_uniform'))
 
         # Adding the second hidden layer
-        self.classifier.add(Dropout(0.25))
+        #self.classifier.add(Dropout(0.25))
         self.classifier.add(Dense(units=300, kernel_initializer="glorot_uniform", activation='relu'))
 
         # Adding the third hidden layer
-        self.classifier.add(Dropout(0.25))
+        #self.classifier.add(Dropout(0.25))
         self.classifier.add(Dense(units=300, kernel_initializer="glorot_uniform", activation='relu'))
 
         # Adding the output layer
-        self.classifier.add(Dropout(0.25))
+        #self.classifier.add(Dropout(0.25))
         self.classifier.add(Dense(units=4, kernel_initializer='glorot_uniform', activation='softmax'))
 
         # Compiling the ANN
@@ -111,7 +111,7 @@ class NeuroLearnANN(object):
         plt.gcf().subplots_adjust(bottom=0.3)
         plt.ylabel('True label')
         plt.xlabel('Predicted label\naccuracy={:0.4f}; misclass={:0.4f}'.format(accuracy, misclass))
-        plt.savefig('Confusion Matrix.jpg')
+        plt.savefig('Confusion Matrix2.jpg')
 
 
     def save_graphs(self):
@@ -123,8 +123,9 @@ class NeuroLearnANN(object):
         plt.ylabel('Accuracy')
         plt.title('Validation Accuracy={0:.4f}\nTraining Accuracy={1:.4f}'.format(self.history.history['val_categorical_accuracy'][-1],
                                                                         self.history.history['categorical_accuracy'][-1]))
-        plt.savefig('Accuracy')
+        plt.savefig('Accuracy2')
         plt.close()
+
         plt.plot(epochs, self.history.history['val_loss'], label='val_loss')
         plt.plot(epochs, self.history.history['loss'], label='train_loss')
         plt.legend()
@@ -132,7 +133,7 @@ class NeuroLearnANN(object):
         plt.ylabel('Loss')
         plt.title('Validation Loss={0:.4f}\nTraining Loss={1:.4f}'.format(self.history.history['val_loss'][-1],
                                                                 self.history.history['loss'][-1]))
-        plt.savefig('Loss')
+        plt.savefig('Loss2')
         plt.close()
 
 
