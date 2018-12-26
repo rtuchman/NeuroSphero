@@ -2,14 +2,7 @@ from flask import Flask
 from flask import Response, request
 import datetime as dt
 import json
-
 from main_sphero import NeuroSpheroManager
-from main_sphero import EMAIL, PASSWORD, SENSOR, SPHERO_ID
-
-# EMAIL = 'runtuchman@gmail.com'
-# PASSWORD = '1234Ran'
-# SENSOR = '00a3b4d8a9a7'
-# SPHERO_ID = '68:86:e7:04:4d:10'
 
 
 app = Flask(__name__, static_url_path='')
@@ -20,7 +13,7 @@ def index():
     return app.send_static_file(filename='index.html')
 
 
-@app.route('/start-recording/', methods=['POST']) # describes what will happen when someone will get to this path:
+@app.route('/start-recording/', methods=['POST'])  # describes what will happen when someone will get to this path:
 def start_recording():
     print('start recording')
 
@@ -45,7 +38,6 @@ def stop_recording():
         print(e)
 
     return Response(status=200)
-
 
 @app.route('/predict/')
 def predict():

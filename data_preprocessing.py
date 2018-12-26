@@ -19,8 +19,7 @@ class NeuroProcess():
         get_token.get_token()
         self.token = get_token.token
         self.dataset = pd.DataFrame()
-        #self.from_date = parse('2018-06-01')
-        #self.to_date = parse('2019-06-01')
+
 
     def query_sessions(self, ns_connection,quary_string='', page=1, perPage=1000):
         payload = dict(access_token=self.token)
@@ -60,7 +59,6 @@ if __name__ == "__main__":
             t = threading.Thread(target=my.save_data_as_csv, args=('https://api.neurosteer.com', s, q, len(query_list),))
             t.start()
             threads.append(t)
-
 
         for t in threads:
             t.join()  # wait for all threads to finish
