@@ -36,24 +36,36 @@ class NeuroSpheroManager(object):
 
     def run(self):
         """Start to run the websocket server in thread and get messages from the sensor."""
-        self.running = True
+        """Start to run the websocket server in thread and get messages from the sensor."""
+        if self.running:
+            pass
 
-        self.ws_thread = Thread(target=self.ws.run_forever)
-        self.ws_thread.daemon = True
-        self.ws_thread.start()
+        else:
+            self.running = True
 
-        if not self.is_training:  # ball thread only when in predict mode
             self.sphero_thread = Thread(target=self.neurosphero.control_sphero)
             self.sphero_thread.daemon = True
             self.sphero_thread.start()
 
-        print('running neuro sphero')
+            self.ws_thread = Thread(target=self.ws.run_forever)
+            self.ws_thread.daemon = True
+            self.ws_thread.start()
+
+            #if not self.is_training:  # ball thread only when in predict mode
+
+        #if not self.is_training:  # ball thread only when in predict mode
+
+
+
+
+            print('running neuro sphero')
 
     def on_error(self, error):
         print("ERROR: {0}".format(error))
 
     def on_close(self):
         """Checks whether closed happened on purpose or not and handle it."""
+        self.neurosphero.y_prediction = -2  # red color to signal websocket error
         print("### websocket closed ###")
         if self.running is False:  # wanted disconnection
             print('Wanted disconnection')
@@ -62,13 +74,11 @@ class NeuroSpheroManager(object):
         else:  # not wanted disconnection
             print('Unwanted disconnection')
             try:
-                self.ws.close()  # Make sure websocket is really closed
+                self.ws_thread.join()   # Make sure websocket is really closed
             except Exception as e:
                 print(e)
 
-            self.login_neuro()  # login again and re-connect.
             self.ws = self.create_websocket_connection()
-            self.ws_thread.join()
             self.ws_thread = Thread(target=self.ws.run_forever)
             self.ws_thread.daemon = True
             self.ws_thread.start()
@@ -87,11 +97,15 @@ class NeuroSpheroManager(object):
             self.prediction = self.neurolearn.model.predict(self.neurosphero.buffer)
             pred_sum = sum(self.prediction) / 30
             pred_sum = ['%.3f' % elem for elem in pred_sum]
+            pred_sum = [float(elem) for elem in pred_sum]
 
-            print('*********Memory  Meditate Weak hand  Happy*********')
-            print('        {}\n'.format(pred_sum))
+            print('*********Memory  Meditate Weakhand  Happy*********')
+            print('          {}\n'.format(pred_sum))
 
-            if max(pred_sum) >= 0.45:
+            if self.neurosphero.y_prediction == np.argmax(pred_sum):
+                pass
+
+            if max(pred_sum) >= 0.42:
                 self.neurosphero.y_prediction = np.argmax(pred_sum)
             else:
                 self.neurosphero.y_prediction = -1
@@ -117,7 +131,7 @@ class NeuroSpheroManager(object):
 
         ws = websocket.WebSocketApp(
             "wss://api.neurosteer.com/api/v1/features/" + self.sensor
-            + "/real-time/?all=true&access_token=" + self.neuro.token,
+            + "/real-time/?all=true&access_token=" + self.neurologin.token,
             on_message=self.on_message,
             on_error=self.on_error,
             on_close=self.on_close
@@ -126,7 +140,7 @@ class NeuroSpheroManager(object):
 
     def connect(self):
         """Loging to Neuro API using credentials and Sphero ball using the sphero id"""
-        self.neuro = self.login_neuro()
+        self.neurologin = self.login_neuro()
         self.neurosphero, is_connected = self.connect_sphero()
 
         return self.create_websocket_connection()
@@ -136,3 +150,7 @@ class NeuroSpheroManager(object):
         self.running = False
         self.ws.close()
 
+if __name__ == '__main__':
+    neurosphero_manager = NeuroSpheroManager()
+    while True:
+        neurosphero_manager.run()
