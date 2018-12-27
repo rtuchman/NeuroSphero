@@ -54,6 +54,7 @@ if __name__ == "__main__":
     threads = []
     for q in range(len(query_list)):
         sessions = my.query_sessions('https://api.neurosteer.com', query_list[q])
+        print("There are {} sessions of {}\n".format(len(sessions), query_list[q]))
 
         for s in sessions.sessionName:
             t = threading.Thread(target=my.save_data_as_csv, args=('https://api.neurosteer.com', s, q, len(query_list),))
