@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4a2ac0f9-de25-4662-91a0-e4db08160381" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/NeuroLearn.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeuroLearn.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NeuroSphero.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeuroSphero.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main_sphero.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_sphero.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -15,7 +17,7 @@
     <SUITE FILE_PATH="coverage/NeuroSphero$server.coverage" NAME="server Coverage Results" MODIFIED="1545385383332" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/NeuroSphero$data_preprocessing.coverage" NAME="data_preprocessing Coverage Results" MODIFIED="1545844044727" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/NeuroSphero$NeuroSphero.coverage" NAME="NeuroSphero Coverage Results" MODIFIED="1545584046526" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/NeuroSphero$NeuroLearn.coverage" NAME="NeuroLearn Coverage Results" MODIFIED="1545858548637" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/NeuroSphero$NeuroLearn.coverage" NAME="NeuroLearn Coverage Results" MODIFIED="1545902652662" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -25,11 +27,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main_sphero.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="145">
-              <caret line="101" lean-forward="true" selection-start-line="101" selection-end-line="101" />
+            <state relative-caret-position="255">
+              <caret line="90" column="22" lean-forward="true" selection-start-line="90" selection-start-column="22" selection-end-line="90" selection-end-column="22" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -50,11 +52,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/NeuroSphero.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1362">
-              <caret line="124" lean-forward="true" selection-start-line="124" selection-end-line="124" />
+            <state relative-caret-position="342">
+              <caret line="80" column="34" lean-forward="true" selection-start-line="80" selection-start-column="34" selection-end-line="80" selection-end-column="34" />
               <folding>
                 <element signature="e#77#111#0" expanded="true" />
               </folding>
@@ -65,8 +67,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/NeuroLearn.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="45" selection-start-line="45" selection-end-line="45" />
+            <state relative-caret-position="15">
+              <caret line="35" column="39" selection-start-line="35" selection-start-column="39" selection-end-line="35" selection-end-column="39" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -137,11 +139,6 @@
               <item name="NeuroSphero" type="b2602c69:ProjectViewProjectNode" />
               <item name="NeuroSphero" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="NeuroSphero" type="b2602c69:ProjectViewProjectNode" />
-              <item name="NeuroSphero" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -166,7 +163,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.main_sphero">
+  <component name="RunManager" selected="Python.NeuroLearn">
     <configuration name="NeuroLearn" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="NeuroSphero" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -286,8 +283,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.main_sphero" />
         <item itemvalue="Python.NeuroLearn" />
+        <item itemvalue="Python.main_sphero" />
         <item itemvalue="Python.data_preprocessing" />
         <item itemvalue="Python.NeuroSphero" />
         <item itemvalue="Python.server" />
@@ -314,7 +311,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="147879000" />
+    <option name="totallyTimeSpent" value="152768000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -333,15 +330,15 @@
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49924356" weight="0.5368249" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3289689" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49924356" weight="0.64484453" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.7675941" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3289689" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.5139116" />
-      <window_info anchor="bottom" id="Python Console" order="9" weight="0.6628478" />
+      <window_info anchor="bottom" id="Python Console" order="9" weight="0.46644846" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50075644" side_tool="true" weight="0.5482815" />
       <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="12" />
@@ -385,7 +382,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="python-line">
           <url>file://$PROJECT_DIR$/NeuroLearn.py</url>
-          <line>65</line>
+          <line>68</line>
           <option name="timeStamp" value="79" />
         </line-breakpoint>
       </breakpoints>
@@ -632,14 +629,10 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Confusion Matrix - Copy.jpg" />
-    <entry file="file://$PROJECT_DIR$/Accuracy.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/Confusion Matrix_learn_sessions.jpg" />
     <entry file="file://$PROJECT_DIR$/Loss.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/Accuracy2.png" />
     <entry file="file://$PROJECT_DIR$/Loss2.png" />
     <entry file="file://$PROJECT_DIR$/static/client.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -675,15 +668,24 @@
     <entry file="file://$PROJECT_DIR$/Confusion Matrix.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/Accuracy.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Accuracy2.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/NeuroLearn.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="45" selection-start-line="45" selection-end-line="45" />
+        <state relative-caret-position="15">
+          <caret line="35" column="39" selection-start-line="35" selection-start-column="39" selection-end-line="35" selection-end-column="39" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Confusion Matrix2.jpg">
+      <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/NeuroLogin.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -696,22 +698,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/NeuroSphero.py">
+    <entry file="file://$PROJECT_DIR$/main_sphero.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1362">
-          <caret line="124" lean-forward="true" selection-start-line="124" selection-end-line="124" />
+        <state relative-caret-position="255">
+          <caret line="90" column="22" lean-forward="true" selection-start-line="90" selection-start-column="22" selection-end-line="90" selection-end-column="22" />
           <folding>
-            <element signature="e#77#111#0" expanded="true" />
+            <element signature="e#0#28#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main_sphero.py">
+    <entry file="file://$PROJECT_DIR$/NeuroSphero.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="145">
-          <caret line="101" lean-forward="true" selection-start-line="101" selection-end-line="101" />
+        <state relative-caret-position="342">
+          <caret line="80" column="34" lean-forward="true" selection-start-line="80" selection-start-column="34" selection-end-line="80" selection-end-column="34" />
           <folding>
-            <element signature="e#0#28#0" expanded="true" />
+            <element signature="e#77#111#0" expanded="true" />
           </folding>
         </state>
       </provider>

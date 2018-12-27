@@ -21,6 +21,7 @@ class NeuroSpheroManager(object):
         self.password = password
         self.sensor = sensor
         self.sphero_id = sphero_id
+        self.buffer = np.zeros((20, 121))  # save samples in buffer and predict once every len(buffer) samples
 
         self.running = False  # indication whether we want to read data from the sensor or not
         self.ws = self.connect()
@@ -29,13 +30,13 @@ class NeuroSpheroManager(object):
 
         dir_path = os.path.dirname(os.path.realpath(__file__))
         self.neurosphero.y_prediction = -1
+        #self.neurolearn = load_model(dir_path + r'\NeuroClassifier600.h5')
         self.neurolearn = load_model(dir_path + r'\NeuroClassifier.h5')
         self.neurolearn._make_predict_function()
 
         print('created neuro sphero manager')
 
     def run(self):
-        """Start to run the websocket server in thread and get messages from the sensor."""
         """Start to run the websocket server in thread and get messages from the sensor."""
         if self.running:
             pass
@@ -51,10 +52,6 @@ class NeuroSpheroManager(object):
                 self.sphero_thread = Thread(target=self.neurosphero.control_sphero)
                 self.sphero_thread.daemon = True
                 self.sphero_thread.start()
-
-
-
-
 
             print('running neuro sphero')
 
@@ -80,10 +77,11 @@ class NeuroSpheroManager(object):
             self.ws_thread = Thread(target=self.ws.run_forever)
             self.ws_thread.daemon = True
             self.ws_thread.start()
+            print('running neuro sphero')
 
     def on_message(self, message):
         self.data = json.loads(message)
-        self.neurosphero.buffer[self.neurosphero.sample_number % 30] = self.data[u'all'][0:121]
+        self.buffer[self.neurosphero.sample_number % 20] = self.data[u'all'][0:121]
         self.neurosphero.sample_number += 1
 
         # training mode
@@ -91,9 +89,9 @@ class NeuroSpheroManager(object):
             self.neurosphero.sphero_ball.set_color(255, 255, 255)  # white light
 
         # predict mode
-        if (not self.is_training) and (self.neurosphero.sample_number % 30) == 0:  # checks prediction every 30 samples
-            self.prediction = self.neurolearn.model.predict(self.neurosphero.buffer)
-            pred_sum = sum(self.prediction) / 30
+        if (not self.is_training) and (self.neurosphero.sample_number % 20) == 0:  # checks prediction every 30 samples
+            self.prediction = self.neurolearn.model.predict(self.buffer)
+            pred_sum = sum(self.prediction) / 20
             pred_sum = ['%.3f' % elem for elem in pred_sum]
             pred_sum = [float(elem) for elem in pred_sum]
 
@@ -103,7 +101,7 @@ class NeuroSpheroManager(object):
             if self.neurosphero.y_prediction == np.argmax(pred_sum):
                 pass
 
-            if max(pred_sum) >= 0.42:
+            if max(pred_sum) >= 0.45:
                 self.neurosphero.y_prediction = np.argmax(pred_sum)
             else:
                 self.neurosphero.y_prediction = -1
