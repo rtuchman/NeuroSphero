@@ -41,6 +41,15 @@ class NeuroSphero:
         sleep(sleep_time)
         self.sphero_ball.roll(0, current_angle)
 
+    def make_a_square(self):
+        speed = 0x30
+        sleep_time = 1
+        for _ in range(5):
+            for angle in [1, 90, 180, 270]:
+                self.sphero_ball.roll(speed, angle)
+                sleep(sleep_time)
+            self.sphero_ball.roll(0, 0)
+
     def make_a_circle(self, steps=10):
         speed = 0x20
         sleep_time = 0.3
@@ -51,19 +60,30 @@ class NeuroSphero:
                 self.make_a_step(current_angle % 360, speed, sleep_time)
                 current_angle += rotate_by
 
-    def blink(self, blink_rate=0.25):
-        for _ in range(25):
-            self.sphero_ball.set_color(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
-            sleep(blink_rate)
 
-    def make_a_square(self):
-        speed = 0x30
-        sleep_time = 1
-        for _ in range(5):
-            for angle in [1, 90, 180, 270]:
-                self.sphero_ball.roll(speed, angle)
-                sleep(sleep_time)
-            self.sphero_ball.roll(0, 0)
+    def colorFade(self, colorFrom, colorTo, wait_ms=2,  steps=200):
+        step_R = (colorTo[0] - colorFrom[0]) / steps
+        step_G = (colorTo[1] - colorFrom[1]) / steps
+        step_B = (colorTo[2] - colorFrom[2]) / steps
+        r = colorFrom[0]
+        g = colorFrom[1]
+        b = colorFrom[2]
+
+        for x in range(steps):
+            self.sphero_ball.set_color(int(r), int(g), int(b))
+            sleep(wait_ms / 1000.0)
+            r += step_R
+            g += step_G
+            b += step_B
+
+    def blink(self, wait_ms=2):
+        c1 = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+        self.colorFade((255, 255, 255), (c1[0], c1[1], c1[2]), wait_ms=wait_ms)
+        for _ in range(10):
+            c2 = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+            self.colorFade((c1[0], c1[1], c1[2]), (c2[0], c2[1], c2[2]), wait_ms=wait_ms)
+            c1 = c2
+
 
     def control_sphero(self):
         while True:
@@ -80,13 +100,9 @@ class NeuroSphero:
 
             if y == 1:  # Meditate
                 print('Meditate')
-                for _ in range(3):
-                    for i in range(25, 260, 5):
-                        self.sphero_ball.set_color(0, i, 0)
-                        sleep(0.03)
-                    for i in range(255, 25, -5):
-                        self.sphero_ball.set_color(0, i, 0)
-                        sleep(0.03)
+                for _ in range(4):
+                    self.colorFade((0, 25, 0), (0, 255, 0))
+                    self.colorFade((0, 255, 0), (0, 25, 0))
 
 
             if y == 2:  # Write with weak hand
@@ -112,10 +128,10 @@ class NeuroSphero:
                     self.sphero_ball.set_color(255, 255, 255)
                     sleep(0.5)
 
-            if y == -2:  # No prediction
-                for _ in range(19):
-                    self.sphero_ball.set_color(255, 0, 0)
-                    sleep(0.5)
+            if y == -2:  # connection error
+                for _ in range(4):
+                    self.colorFade((50, 0, 0), (255, 0, 0))
+                    self.colorFade((255, 0, 0), (50, 0, 0))
 
 
 

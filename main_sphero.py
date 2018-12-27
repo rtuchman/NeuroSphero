@@ -55,6 +55,8 @@ class NeuroSpheroManager(object):
 
             print('running neuro sphero')
 
+    # if running on python 3 erase ws argument from on_error, on_close and on_message
+
     def on_error(self, ws, error):
         print("ERROR: {0}".format(error))
 

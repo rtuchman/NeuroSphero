@@ -1,9 +1,13 @@
 """Module for setting up connection with Neurosteer API"""
 
 import requests
-#from urllib.parse import (urlparse, parse_qs)  # python3
-from urlparse import (urlparse, parse_qs)
 import json
+import sys
+if sys.version_info.major == 2:
+    from urlparse import (urlparse, parse_qs)  # python2
+else:
+    from urllib.parse import (urlparse, parse_qs)  # python3
+
 
 
 class NeuroLogin:
