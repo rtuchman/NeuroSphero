@@ -61,7 +61,7 @@ class NeuroSphero:
                 current_angle += rotate_by
 
 
-    def colorFade(self, colorFrom, colorTo, wait_ms=5,  steps=200):
+    def colorFade(self, colorFrom, colorTo, wait_ms=2,  steps=200):
         step_R = (colorTo[0] - colorFrom[0]) / steps
         step_G = (colorTo[1] - colorFrom[1]) / steps
         step_B = (colorTo[2] - colorFrom[2]) / steps
@@ -76,12 +76,12 @@ class NeuroSphero:
             g += step_G
             b += step_B
 
-    def blink(self):
+    def blink(self, wait_ms=2):
         c1 = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
-        self.colorFade((255, 255, 255), (c1[0], c1[1], c1[2]), wait_ms=1)
-        for _ in range(20):
+        self.colorFade((255, 255, 255), (c1[0], c1[1], c1[2]), wait_ms=wait_ms)
+        for _ in range(10):
             c2 = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
-            self.colorFade((c1[0], c1[1], c1[2]), (c2[0], c2[1], c2[2]), wait_ms=2)
+            self.colorFade((c1[0], c1[1], c1[2]), (c2[0], c2[1], c2[2]), wait_ms=wait_ms)
             c1 = c2
 
 

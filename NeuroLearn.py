@@ -22,15 +22,15 @@ class NeuroLearnANN(object):
         self.classifier = Sequential()
 
         # Adding the input layer and the first hidden layer
-        self.classifier.add(Dense(activation='relu', input_dim=121, units=650, kernel_initializer='glorot_uniform'))
+        self.classifier.add(Dense(activation='relu', input_dim=121, units=600, kernel_initializer='glorot_uniform'))
 
         # Adding the second hidden layer
-        self.classifier.add(Dropout(0.5))
-        self.classifier.add(Dense(units=650, kernel_initializer="glorot_uniform", activation='relu'))
+        self.classifier.add(Dropout(0.35))
+        self.classifier.add(Dense(units=600, kernel_initializer="glorot_uniform", activation='relu'))
 
         # Adding the third hidden layer
-        self.classifier.add(Dropout(0.5))
-        self.classifier.add(Dense(units=650, kernel_initializer="glorot_uniform", activation='relu'))
+        self.classifier.add(Dropout(0.35))
+        self.classifier.add(Dense(units=600, kernel_initializer="glorot_uniform", activation='relu'))
 
         # Adding the output layer
         self.classifier.add(Dense(units=4, kernel_initializer='glorot_uniform', activation='softmax'))
