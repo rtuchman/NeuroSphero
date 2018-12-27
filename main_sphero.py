@@ -55,10 +55,10 @@ class NeuroSpheroManager(object):
 
             print('running neuro sphero')
 
-    def on_error(self, error):
+    def on_error(self, ws, error):
         print("ERROR: {0}".format(error))
 
-    def on_close(self):
+    def on_close(self, ws):
         """Checks whether closed happened on purpose or not and handle it."""
         self.neurosphero.y_prediction = -2  # red color to signal websocket error
         print("### websocket closed ###")
@@ -79,7 +79,7 @@ class NeuroSpheroManager(object):
             self.ws_thread.start()
             print('running neuro sphero')
 
-    def on_message(self, message):
+    def on_message(self, ws, message):
         self.data = json.loads(message)
         self.buffer[self.neurosphero.sample_number % 20] = self.data[u'all'][0:121]
         self.neurosphero.sample_number += 1
