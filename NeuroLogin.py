@@ -1,8 +1,8 @@
 """Module for setting up connection with Neurosteer API"""
 
 import requests
-from urllib.parse import (urlparse, parse_qs)  # python3
-#from urlparse import (urlparse, parse_qs)
+#from urllib.parse import (urlparse, parse_qs)  # python3
+from urlparse import (urlparse, parse_qs)
 import json
 
 
