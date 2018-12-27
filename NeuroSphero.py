@@ -52,7 +52,7 @@ class NeuroSphero:
                 current_angle += rotate_by
 
     def blink(self, blink_rate=0.25):
-        for _ in range(10):
+        for _ in range(15):
             self.sphero_ball.set_color(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
             sleep(blink_rate)
 
