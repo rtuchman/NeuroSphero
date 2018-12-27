@@ -22,18 +22,21 @@ class NeuroLearnANN(object):
         self.classifier = Sequential()
 
         # Adding the input layer and the first hidden layer
-        self.classifier.add(Dense(activation='relu', input_dim=121, units=300, kernel_initializer='glorot_uniform'))
+        self.classifier.add(Dense(activation='relu', input_dim=121, units=600, kernel_initializer='glorot_uniform'))
 
         # Adding the second hidden layer
-        #self.classifier.add(Dropout(0.25))
-        self.classifier.add(Dense(units=300, kernel_initializer="glorot_uniform", activation='relu'))
+        self.classifier.add(Dropout(0.5))
+        self.classifier.add(Dense(units=600, kernel_initializer="glorot_uniform", activation='relu'))
 
         # Adding the third hidden layer
-        #self.classifier.add(Dropout(0.25))
-        self.classifier.add(Dense(units=300, kernel_initializer="glorot_uniform", activation='relu'))
+        self.classifier.add(Dropout(0.5))
+        self.classifier.add(Dense(units=600, kernel_initializer="glorot_uniform", activation='relu'))
+
+        # Adding the third hidden layer
+        self.classifier.add(Dropout(0.5))
+        self.classifier.add(Dense(units=600, kernel_initializer="glorot_uniform", activation='relu'))
 
         # Adding the output layer
-        #self.classifier.add(Dropout(0.25))
         self.classifier.add(Dense(units=4, kernel_initializer='glorot_uniform', activation='softmax'))
 
         # Compiling the ANN
@@ -111,7 +114,7 @@ class NeuroLearnANN(object):
         plt.gcf().subplots_adjust(bottom=0.3)
         plt.ylabel('True label')
         plt.xlabel('Predicted label\naccuracy={:0.4f}; misclass={:0.4f}'.format(accuracy, misclass))
-        plt.savefig('Confusion Matrix2.jpg')
+        plt.savefig('Confusion Matrix3.jpg')
 
 
     def save_graphs(self):
@@ -123,7 +126,7 @@ class NeuroLearnANN(object):
         plt.ylabel('Accuracy')
         plt.title('Validation Accuracy={0:.4f}\nTraining Accuracy={1:.4f}'.format(self.history.history['val_categorical_accuracy'][-1],
                                                                         self.history.history['categorical_accuracy'][-1]))
-        plt.savefig('Accuracy2')
+        plt.savefig('Accuracy3')
         plt.close()
 
         plt.plot(epochs, self.history.history['val_loss'], label='val_loss')
@@ -133,7 +136,7 @@ class NeuroLearnANN(object):
         plt.ylabel('Loss')
         plt.title('Validation Loss={0:.4f}\nTraining Loss={1:.4f}'.format(self.history.history['val_loss'][-1],
                                                                 self.history.history['loss'][-1]))
-        plt.savefig('Loss2')
+        plt.savefig('Loss3')
         plt.close()
 
 
@@ -143,7 +146,7 @@ if __name__ == "__main__":
     model.train()
     model.predict()
     model.plot_confusion_matrix(model.cm, ['Memory game', 'Meditate', 'Write with weak hand', 'Happy music (dancing)'])
-    model.classifier.save('NeuroClassifier.h5')
+    model.classifier.save('NeuroClassifier600_4.h5')
 
     print('Done!')
 

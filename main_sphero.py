@@ -21,6 +21,7 @@ class NeuroSpheroManager(object):
         self.password = password
         self.sensor = sensor
         self.sphero_id = sphero_id
+        self.buffer = np.zeros((20, 121))  # save samples in buffer and predict once every len(buffer) samples
 
         self.running = False  # indication whether we want to read data from the sensor or not
         self.ws = self.connect()
@@ -29,6 +30,7 @@ class NeuroSpheroManager(object):
 
         dir_path = os.path.dirname(os.path.realpath(__file__))
         self.neurosphero.y_prediction = -1
+        #self.neurolearn = load_model(dir_path + r'\NeuroClassifier600.h5')
         self.neurolearn = load_model(dir_path + r'\NeuroClassifier.h5')
         self.neurolearn._make_predict_function()
 
@@ -36,24 +38,29 @@ class NeuroSpheroManager(object):
 
     def run(self):
         """Start to run the websocket server in thread and get messages from the sensor."""
-        self.running = True
+        if self.running:
+            pass
 
-        self.ws_thread = Thread(target=self.ws.run_forever)
-        self.ws_thread.daemon = True
-        self.ws_thread.start()
+        else:
+            self.running = True
 
-        if not self.is_training:  # ball thread only when in predict mode
-            self.sphero_thread = Thread(target=self.neurosphero.control_sphero)
-            self.sphero_thread.daemon = True
-            self.sphero_thread.start()
+            self.ws_thread = Thread(target=self.ws.run_forever)
+            self.ws_thread.daemon = True
+            self.ws_thread.start()
 
-        print('running neuro sphero')
+            if not self.is_training:  # ball thread only when in predict mode
+                self.sphero_thread = Thread(target=self.neurosphero.control_sphero)
+                self.sphero_thread.daemon = True
+                self.sphero_thread.start()
+
+            print('running neuro sphero')
 
     def on_error(self, error):
         print("ERROR: {0}".format(error))
 
     def on_close(self):
         """Checks whether closed happened on purpose or not and handle it."""
+        self.neurosphero.y_prediction = -2  # red color to signal websocket error
         print("### websocket closed ###")
         if self.running is False:  # wanted disconnection
             print('Wanted disconnection')
@@ -62,20 +69,19 @@ class NeuroSpheroManager(object):
         else:  # not wanted disconnection
             print('Unwanted disconnection')
             try:
-                self.ws.close()  # Make sure websocket is really closed
+                self.ws_thread.join()   # Make sure websocket is really closed
             except Exception as e:
                 print(e)
 
-            self.login_neuro()  # login again and re-connect.
             self.ws = self.create_websocket_connection()
-            self.ws_thread.join()
             self.ws_thread = Thread(target=self.ws.run_forever)
             self.ws_thread.daemon = True
             self.ws_thread.start()
+            print('running neuro sphero')
 
     def on_message(self, message):
         self.data = json.loads(message)
-        self.neurosphero.buffer[self.neurosphero.sample_number % 30] = self.data[u'all'][0:121]
+        self.buffer[self.neurosphero.sample_number % 20] = self.data[u'all'][0:121]
         self.neurosphero.sample_number += 1
 
         # training mode
@@ -83,13 +89,17 @@ class NeuroSpheroManager(object):
             self.neurosphero.sphero_ball.set_color(255, 255, 255)  # white light
 
         # predict mode
-        if (not self.is_training) and (self.neurosphero.sample_number % 30) == 0:  # checks prediction every 30 samples
-            self.prediction = self.neurolearn.model.predict(self.neurosphero.buffer)
-            pred_sum = sum(self.prediction) / 30
+        if (not self.is_training) and (self.neurosphero.sample_number % 20) == 0:  # checks prediction every 30 samples
+            self.prediction = self.neurolearn.model.predict(self.buffer)
+            pred_sum = sum(self.prediction) / 20
             pred_sum = ['%.3f' % elem for elem in pred_sum]
+            pred_sum = [float(elem) for elem in pred_sum]
 
-            print('*********Memory  Meditate Weak hand  Happy*********')
-            print('        {}\n'.format(pred_sum))
+            print('*********Memory Meditate Weakhand Happy*********')
+            print('          {}\n'.format(pred_sum))
+
+            if self.neurosphero.y_prediction == np.argmax(pred_sum):
+                pass
 
             if max(pred_sum) >= 0.45:
                 self.neurosphero.y_prediction = np.argmax(pred_sum)
@@ -117,7 +127,7 @@ class NeuroSpheroManager(object):
 
         ws = websocket.WebSocketApp(
             "wss://api.neurosteer.com/api/v1/features/" + self.sensor
-            + "/real-time/?all=true&access_token=" + self.neuro.token,
+            + "/real-time/?all=true&access_token=" + self.neurologin.token,
             on_message=self.on_message,
             on_error=self.on_error,
             on_close=self.on_close
@@ -126,7 +136,7 @@ class NeuroSpheroManager(object):
 
     def connect(self):
         """Loging to Neuro API using credentials and Sphero ball using the sphero id"""
-        self.neuro = self.login_neuro()
+        self.neurologin = self.login_neuro()
         self.neurosphero, is_connected = self.connect_sphero()
 
         return self.create_websocket_connection()
@@ -136,3 +146,7 @@ class NeuroSpheroManager(object):
         self.running = False
         self.ws.close()
 
+if __name__ == '__main__':
+    neurosphero_manager = NeuroSpheroManager()
+    while True:
+        neurosphero_manager.run()
