@@ -4,6 +4,7 @@ import datetime as dt
 import json
 from main_sphero import NeuroSpheroManager
 
+
 app = Flask(__name__, static_url_path='')
 
 
@@ -38,6 +39,15 @@ def stop_recording():
 
     return Response(status=200)
 
+@app.route('/predict/')
+def predict():
+    try:
+        neurosphero_manager.run()
+    except Exception as e:
+        print(e)
+
+    return Response(status=200)
+
 
 @app.route('/reconnect-sphero/')
 def reconnect_sphero():
@@ -48,17 +58,6 @@ def reconnect_sphero():
         return Response(status=200)
     else:
         return Response(status=400)
-
-
-@app.route('/predict/')
-def predict():
-    try:
-        neurosphero_manager.run()
-    except Exception as e:
-        print(e)
-
-    return Response(status=200)
-
 
 if __name__ == '__main__':
     neurosphero_manager = NeuroSpheroManager()
