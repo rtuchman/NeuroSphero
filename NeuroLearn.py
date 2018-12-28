@@ -110,7 +110,7 @@ class NeuroLearnANN(object):
         plt.gcf().subplots_adjust(bottom=0.3)
         plt.ylabel('True label')
         plt.xlabel('Predicted label\naccuracy={:0.4f}; misclass={:0.4f}'.format(accuracy, misclass))
-        plt.savefig('Confusion Matrix_600.jpg')
+        plt.savefig('Confusion Matrix.jpg')
 
 
     def save_graphs(self):
@@ -122,7 +122,7 @@ class NeuroLearnANN(object):
         plt.ylabel('Accuracy')
         plt.title('Validation Accuracy={0:.4f}\nTraining Accuracy={1:.4f}'.format(self.history.history['val_categorical_accuracy'][-1],
                                                                         self.history.history['categorical_accuracy'][-1]))
-        plt.savefig('Accuracy600')
+        plt.savefig('Accuracy')
         plt.close()
 
         plt.plot(epochs, self.history.history['val_loss'], label='val_loss')
@@ -132,7 +132,7 @@ class NeuroLearnANN(object):
         plt.ylabel('Loss')
         plt.title('Validation Loss={0:.4f}\nTraining Loss={1:.4f}'.format(self.history.history['val_loss'][-1],
                                                                 self.history.history['loss'][-1]))
-        plt.savefig('Loss600')
+        plt.savefig('Loss')
         plt.close()
 
 
@@ -142,7 +142,7 @@ if __name__ == "__main__":
     model.train()
     model.predict()
     model.plot_confusion_matrix(model.cm, ['Memory game', 'Meditate', 'Write with weak hand', 'Happy music (dancing)'])
-    model.classifier.save('NeuroClassifier600_05.h5')
+    model.classifier.save('NeuroClassifier.h5')
 
     print('Done!')
 
