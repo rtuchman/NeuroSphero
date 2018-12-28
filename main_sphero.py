@@ -38,22 +38,18 @@ class NeuroSpheroManager(object):
 
     def run(self):
         """Start to run the websocket server in thread and get messages from the sensor."""
-        if self.running:
-            pass
 
-        else:
-            self.running = True
+        self.running = True
+        self.ws_thread = Thread(target=self.ws.run_forever)
+        self.ws_thread.daemon = True
+        self.ws_thread.start()
 
-            self.ws_thread = Thread(target=self.ws.run_forever)
-            self.ws_thread.daemon = True
-            self.ws_thread.start()
+        if not self.is_training:  # ball thread only when in predict mode
+            self.sphero_thread = Thread(target=self.neurosphero.control_sphero)
+            self.sphero_thread.daemon = True
+            self.sphero_thread.start()
+        print('running neuro sphero')
 
-            if not self.is_training:  # ball thread only when in predict mode
-                self.sphero_thread = Thread(target=self.neurosphero.control_sphero)
-                self.sphero_thread.daemon = True
-                self.sphero_thread.start()
-
-            print('running neuro sphero')
 
     # if running on python 3 erase ws argument from on_error, on_close and on_message
 
@@ -147,8 +143,3 @@ class NeuroSpheroManager(object):
         """Close the connection to neuro API and stop the recording."""
         self.running = False
         self.ws.close()
-
-if __name__ == '__main__':
-    neurosphero_manager = NeuroSpheroManager()
-    while True:
-        neurosphero_manager.run()

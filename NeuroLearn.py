@@ -25,11 +25,11 @@ class NeuroLearnANN(object):
         self.classifier.add(Dense(activation='relu', input_dim=121, units=600, kernel_initializer='glorot_uniform'))
 
         # Adding the second hidden layer
-        self.classifier.add(Dropout(0.35))
+        self.classifier.add(Dropout(0.3))
         self.classifier.add(Dense(units=600, kernel_initializer="glorot_uniform", activation='relu'))
 
         # Adding the third hidden layer
-        self.classifier.add(Dropout(0.35))
+        self.classifier.add(Dropout(0.3))
         self.classifier.add(Dense(units=600, kernel_initializer="glorot_uniform", activation='relu'))
 
         # Adding the output layer
@@ -61,7 +61,7 @@ class NeuroLearnANN(object):
         # Fitting the ANN to the Training set
         # you may use history to view accuracy
         self.history = self.classifier.fit(self.X_train, self.y_train, validation_data=(self.X_test, self.y_test),
-                                           batch_size=10, nb_epoch=300, shuffle=True, callbacks=[tbCallBack])
+                                           batch_size=10, nb_epoch=1000, shuffle=True, callbacks=[tbCallBack])
         self.save_graphs()
 
     def predict(self):
