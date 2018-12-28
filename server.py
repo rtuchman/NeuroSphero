@@ -57,7 +57,6 @@ def predict():
     except Exception as e:
         print(e)
 
-    print("predict button pressed")
     return Response(status=200)
 
 
