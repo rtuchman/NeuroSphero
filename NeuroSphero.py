@@ -84,7 +84,6 @@ class NeuroSphero:
             self.colorFade((c1[0], c1[1], c1[2]), (c2[0], c2[1], c2[2]), wait_ms=wait_ms)
             c1 = c2
 
-
     def control_sphero(self):
         while True:
             y = self.y_prediction  # pull prediction from main thread
@@ -97,13 +96,11 @@ class NeuroSphero:
                     self.sphero_ball.set_color(149, 0, 179)
                     sleep(0.25)
 
-
             if y == 1:  # Meditate
                 print('Meditate')
                 for _ in range(4):
                     self.colorFade((0, 25, 0), (0, 255, 0))
                     self.colorFade((0, 255, 0), (0, 25, 0))
-
 
             if y == 2:  # Write with weak hand
                 print('Write with weak hand')
@@ -112,7 +109,6 @@ class NeuroSphero:
                     sleep(0.25)
                     self.sphero_ball.set_color(43, 0, 255)
                     sleep(0.25)
-
 
             if y == 3:  # Happy music (dancing)
                 print('Happy music')
@@ -123,7 +119,7 @@ class NeuroSphero:
                 self.thread_blink.join()
                 self.thread_circle.join()
 
-            if y == -1:  # No prediction
+            if y == -1:  # No prediction\uncertain
                 for _ in range(19):
                     self.sphero_ball.set_color(255, 255, 255)
                     sleep(0.5)
@@ -132,6 +128,12 @@ class NeuroSphero:
                 for _ in range(4):
                     self.colorFade((50, 0, 0), (255, 0, 0))
                     self.colorFade((255, 0, 0), (50, 0, 0))
+
+            if y == -3:  # training mode
+                for _ in range(2):
+                    self.colorFade((50, 50, 50), (255, 255, 255))
+                    self.colorFade((255, 255, 255), (50, 50, 50))
+
 
 
 

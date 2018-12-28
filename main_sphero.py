@@ -15,7 +15,8 @@ SENSOR = '00a3b4810811'
 SPHERO_ID = '68:86:e7:01:fb:b2'
 
 class NeuroSpheroManager(object):
-    """Neuro sphero manager in charge of managing the connections of neuro sensor and sphero balls."""
+    """Neuro sphero manager in charge of managing the connections of neuro sensor and sphero ball.
+       It is also in charge of loading the classifier and predicting the state of the patient."""
     def __init__(self, email=EMAIL, password=PASSWORD, sensor=SENSOR, sphero_id=SPHERO_ID):
         self.email = email
         self.password = password
@@ -30,26 +31,23 @@ class NeuroSpheroManager(object):
 
         dir_path = os.path.dirname(os.path.realpath(__file__))
         self.neurosphero.y_prediction = -1
-        #self.neurolearn = load_model(dir_path + r'\NeuroClassifier600.h5')
         self.neurolearn = load_model(dir_path + r'\NeuroClassifier.h5')
         self.neurolearn._make_predict_function()
-
         print('created neuro sphero manager')
 
     def run(self):
-        """Start to run the websocket server in thread and get messages from the sensor."""
+        """Start to run the websocket server in thread and get messages from the sensor.
+           Start to run Sphero ball thread."""
 
         self.running = True
         self.ws_thread = Thread(target=self.ws.run_forever)
         self.ws_thread.daemon = True
         self.ws_thread.start()
 
-        if not self.is_training:  # ball thread only when in predict mode
-            self.sphero_thread = Thread(target=self.neurosphero.control_sphero)
-            self.sphero_thread.daemon = True
-            self.sphero_thread.start()
+        self.sphero_thread = Thread(target=self.neurosphero.control_sphero)
+        self.sphero_thread.daemon = True
+        self.sphero_thread.start()
         print('running neuro sphero')
-
 
     # if running on python 3 erase ws argument from on_error, on_close and on_message
 
@@ -79,17 +77,17 @@ class NeuroSpheroManager(object):
 
     def on_message(self, ws, message):
         self.data = json.loads(message)
-        self.buffer[self.neurosphero.sample_number % 20] = self.data[u'all'][0:121]
+        self.buffer[self.neurosphero.sample_number % len(self.buffer)] = self.data[u'all'][0:121]
         self.neurosphero.sample_number += 1
 
         # training mode
         if self.is_training:
-            self.neurosphero.sphero_ball.set_color(255, 255, 255)  # white light
+            self.neurosphero.y_prediction = -3
 
         # predict mode
-        if (not self.is_training) and (self.neurosphero.sample_number % 20) == 0:  # checks prediction every 30 samples
-            self.prediction = self.neurolearn.model.predict(self.buffer)
-            pred_sum = sum(self.prediction) / 20
+        if (not self.is_training) and (self.neurosphero.sample_number % len(self.buffer)) == 0:  # checks prediction every 30 samples
+            self.buf_prediction = self.neurolearn.model.predict(self.buffer)
+            pred_sum = sum(self.buf_prediction) / len(self.buffer)
             pred_sum = ['%.3f' % elem for elem in pred_sum]
             pred_sum = [float(elem) for elem in pred_sum]
 
@@ -99,7 +97,7 @@ class NeuroSpheroManager(object):
             if self.neurosphero.y_prediction == np.argmax(pred_sum):
                 pass
 
-            if max(pred_sum) >= 0.45:
+            if max(pred_sum) >= 0.5:  # more than 50% certainty of a prediction
                 self.neurosphero.y_prediction = np.argmax(pred_sum)
             else:
                 self.neurosphero.y_prediction = -1
@@ -142,4 +140,6 @@ class NeuroSpheroManager(object):
     def disconnect(self):
         """Close the connection to neuro API and stop the recording."""
         self.running = False
-        self.ws.close()
+        self.sphero_thread.join()
+        self.ws_thread.join()
+        exit(0)

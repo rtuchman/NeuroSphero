@@ -121,7 +121,7 @@ class NeuroLearnANN(object):
         plt.xlabel('epochs')
         plt.ylabel('Accuracy')
         plt.title('Validation Accuracy={0:.4f}\nTraining Accuracy={1:.4f}'.format(self.history.history['val_categorical_accuracy'][-1],
-                                                                        self.history.history['categorical_accuracy'][-1]))
+                                                                                  self.history.history['categorical_accuracy'][-1]))
         plt.savefig('Accuracy')
         plt.close()
 
@@ -131,7 +131,7 @@ class NeuroLearnANN(object):
         plt.xlabel('epochs')
         plt.ylabel('Loss')
         plt.title('Validation Loss={0:.4f}\nTraining Loss={1:.4f}'.format(self.history.history['val_loss'][-1],
-                                                                self.history.history['loss'][-1]))
+                                                                          self.history.history['loss'][-1]))
         plt.savefig('Loss')
         plt.close()
 
