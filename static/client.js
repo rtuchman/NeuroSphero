@@ -5,6 +5,8 @@ class Client {
         $('#start-recording').click(this.onStartRecording);
         $('#stop-recording').click(this.onStopRecording);
         $('#reconnect-sphero').click(this.onReconnectSphero);
+        $('#predict').click(this.onPredict);
+
     }
 
     onStartRecording(event) { // $ represent an instance of jquery
@@ -33,6 +35,14 @@ class Client {
             url: '/reconnect-sphero/'
         }).done(function() {
             console.log('reconnected.')
+        })
+    }
+
+    onPredict(event) {
+        $.ajax({
+            url: '/predict/'
+        }).done(function() {
+            console.log('predict.')
         })
     }
 }

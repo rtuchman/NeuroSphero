@@ -4,7 +4,6 @@ import datetime as dt
 import json
 from main_sphero import NeuroSpheroManager
 
-
 app = Flask(__name__, static_url_path='')
 
 
@@ -23,7 +22,7 @@ def start_recording():
     description = json.loads(request.data)['description']
     description = '{} {:%d/%m/%y %H:%M}'.format(description,
                                                 dt.datetime.today())
-    neurosphero_manager.neuro.update_description(description=description)
+    neurosphero_manager.neurologin.update_description(description=description)
 
     return Response(status=200)
 
@@ -34,15 +33,6 @@ def stop_recording():
 
     try:
         neurosphero_manager.disconnect()
-    except Exception as e:
-        print(e)
-
-    return Response(status=200)
-
-@app.route('/predict/')
-def predict():
-    try:
-        neurosphero_manager.run()
     except Exception as e:
         print(e)
 
@@ -59,9 +49,20 @@ def reconnect_sphero():
     else:
         return Response(status=400)
 
+
+@app.route('/predict/')
+def predict():
+    try:
+        neurosphero_manager.run()
+    except Exception as e:
+        print(e)
+
+    return Response(status=200)
+
 if __name__ == '__main__':
     neurosphero_manager = NeuroSpheroManager()
 
+    print("Init state: Stopping recording")
     try:
         neurosphero_manager.disconnect()
     except Exception as e:

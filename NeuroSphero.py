@@ -130,7 +130,7 @@ class NeuroSphero:
                     self.colorFade((255, 0, 0), (50, 0, 0))
 
             if y == -3:  # training mode
-                for _ in range(2):
+                for _ in range(10):
                     self.colorFade((50, 50, 50), (255, 255, 255))
                     self.colorFade((255, 255, 255), (50, 50, 50))
 
