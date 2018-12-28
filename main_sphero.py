@@ -31,7 +31,7 @@ class NeuroSpheroManager(object):
 
         dir_path = os.path.dirname(os.path.realpath(__file__))
         self.neurosphero.y_prediction = -1
-        self.neurolearn = load_model(dir_path + r'\NeuroClassifier.h5')
+        self.neurolearn = load_model(dir_path + r'/NeuroClassifier.h5')
         self.neurolearn._make_predict_function()
         print('created neuro sphero manager')
 
