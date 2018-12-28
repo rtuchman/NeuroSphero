@@ -140,6 +140,5 @@ class NeuroSpheroManager(object):
     def disconnect(self):
         """Close the connection to neuro API and stop the recording."""
         self.running = False
-        self.sphero_thread.join()
-        self.ws_thread.join()
+        self.ws.close()
         exit(0)
