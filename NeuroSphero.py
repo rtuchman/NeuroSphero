@@ -1,8 +1,6 @@
 """Module for connecting to Sphero and using data from API to control it"""
 
 from spheropy.Sphero import Sphero
-import numpy as np
-import json
 from time import sleep
 import random
 from threading import Thread
@@ -50,12 +48,12 @@ class NeuroSphero:
                 sleep(sleep_time)
             self.sphero_ball.roll(0, 0)
 
-    def make_a_circle(self, steps=10):
-        speed = 0x20
+    def make_a_circle(self, steps=7):
+        speed = 0x30
         sleep_time = 0.3
         rotate_by = 360 // steps
         current_angle = 1
-        for _ in range(3):  # 5 circles
+        for _ in range(8):
             for _ in range(steps):
                 self.make_a_step(current_angle % 360, speed, sleep_time)
                 current_angle += rotate_by
@@ -76,10 +74,10 @@ class NeuroSphero:
             g += step_G
             b += step_B
 
-    def blink(self, wait_ms=4, steps=100):
+    def blink(self, wait_ms=3, steps=100):
         c1 = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
         self.colorFade((255, 255, 255), (c1[0], c1[1], c1[2]), wait_ms=wait_ms, steps=steps)
-        for _ in range(10):
+        for _ in range(5):
             c2 = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
             self.colorFade((c1[0], c1[1], c1[2]), (c2[0], c2[1], c2[2]), wait_ms=wait_ms, steps=steps)
             c1 = c2
@@ -113,10 +111,8 @@ class NeuroSphero:
             if y == 3:  # Happy music (dancing)
                 print('Happy music')
                 self.thread_circle = Thread(target=self.make_a_circle)
-                self.thread_blink = Thread(target=self.blink)
-                self.thread_blink.start()
                 self.thread_circle.start()
-                self.thread_blink.join()
+                self.blink()
                 self.thread_circle.join()
 
             if y == -1:  # No prediction\uncertain
