@@ -48,12 +48,12 @@ class NeuroSphero:
                 sleep(sleep_time)
             self.sphero_ball.roll(0, 0)
 
-    def make_a_circle(self, steps=7):
+    def make_a_circle(self, steps=8):
         speed = 0x30
         sleep_time = 0.3
         rotate_by = 360 // steps
         current_angle = 1
-        for _ in range(8):
+        for _ in range(2):
             for _ in range(steps):
                 self.make_a_step(current_angle % 360, speed, sleep_time)
                 current_angle += rotate_by
@@ -77,7 +77,7 @@ class NeuroSphero:
     def blink(self, wait_ms=3, steps=100):
         c1 = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
         self.colorFade((255, 255, 255), (c1[0], c1[1], c1[2]), wait_ms=wait_ms, steps=steps)
-        for _ in range(5):
+        for _ in range(3):
             c2 = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
             self.colorFade((c1[0], c1[1], c1[2]), (c2[0], c2[1], c2[2]), wait_ms=wait_ms, steps=steps)
             c1 = c2
@@ -88,7 +88,7 @@ class NeuroSphero:
 
             if y == 0:  # Memory game
                 print('Memory game')
-                for _ in range(10):
+                for _ in range(4):
                     self.sphero_ball.set_color(0, 0, 255)
                     sleep(0.25)
                     self.sphero_ball.set_color(149, 0, 179)
@@ -96,13 +96,13 @@ class NeuroSphero:
 
             if y == 1:  # Meditate
                 print('Meditate')
-                for _ in range(4):
+                for _ in range(2):
                     self.colorFade((0, 25, 0), (0, 255, 0))
                     self.colorFade((0, 255, 0), (0, 25, 0))
 
             if y == 2:  # Write with weak hand
                 print('Write with weak hand')
-                for _ in range(19):
+                for _ in range(4):
                     self.sphero_ball.set_color(255, 0, 255)
                     sleep(0.25)
                     self.sphero_ball.set_color(43, 0, 255)
@@ -116,7 +116,7 @@ class NeuroSphero:
                 self.thread_circle.join()
 
             if y == -1:  # No prediction\uncertain
-                for _ in range(19):
+                for _ in range(4):
                     self.sphero_ball.set_color(255, 255, 255)
                     sleep(0.5)
 
