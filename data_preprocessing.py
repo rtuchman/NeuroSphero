@@ -59,11 +59,12 @@ if __name__ == "__main__":
         for s in sessions.sessionName:
             t = threading.Thread(target=my.save_data_as_csv, args=('https://api.neurosteer.com', s, q, len(query_list),))
             t.start()
+            print('Saved: {} {}'.format(query_list[q], s))
             threads.append(t)
 
         for t in threads:
             t.join()  # wait for all threads to finish
-            print('Saved: {} {}'.format(query_list[q], s))
+
 
     my.dataset.to_csv(r'neuro_data.csv')
 
