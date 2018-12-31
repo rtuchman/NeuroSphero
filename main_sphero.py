@@ -4,6 +4,7 @@ from NeuroSphero import *
 from NeuroLogin import *
 from NeuroLogout import disconnect as disconnect_neuro
 from keras.models import load_model
+import numpy as np
 import os
 import warnings
 warnings.filterwarnings("ignore")

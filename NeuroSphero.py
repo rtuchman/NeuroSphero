@@ -96,7 +96,7 @@ class NeuroSphero:
 
             if y == 1:  # Meditate
                 print('Meditate')
-                for _ in range(2):
+                for _ in range(4):
                     self.colorFade((0, 25, 0), (0, 255, 0))
                     self.colorFade((0, 255, 0), (0, 25, 0))
 
