@@ -42,9 +42,10 @@ class Client {
         $.ajax({
             url: '/predict/'
         }).done(function() {
-            console.log('predict.')
+            alert('Predicting.')
         })
     }
+
 }
 
 

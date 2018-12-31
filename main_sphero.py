@@ -141,5 +141,5 @@ class NeuroSpheroManager(object):
         """Close the connection to neuro API and stop the recording."""
         self.running = False
         self.ws.close()
-        exit(0)
+
 
