@@ -6,14 +6,13 @@ from NeuroLogout import disconnect as disconnect_neuro
 from keras.models import load_model
 import numpy as np
 import os
-import warnings
-warnings.filterwarnings("ignore")
 
 EMAIL = 'matanron3@gmail.com'
 PASSWORD = 'Matan1234'
 
 SENSOR = '00a3b4810811'
 SPHERO_ID = '68:86:e7:01:fb:b2'
+
 
 class NeuroSpheroManager(object):
     """Neuro sphero manager in charge of managing the connections of neuro sensor and sphero ball.

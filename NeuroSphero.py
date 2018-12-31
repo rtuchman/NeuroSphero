@@ -5,6 +5,7 @@ from time import sleep
 import random
 from threading import Thread
 
+
 class NeuroSphero:
     """
     A class that receives data from Neurosteers's Api, sets up connection to the Sphero ball

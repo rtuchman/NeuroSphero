@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4a2ac0f9-de25-4662-91a0-e4db08160381" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NeuroSphero.py" beforeDir="false" afterPath="$PROJECT_DIR$/NeuroSphero.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main_sphero.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_sphero.py" afterDir="false" />
     </list>
@@ -26,20 +27,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main_sphero.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="102">
-              <caret line="6" selection-start-line="6" selection-end-line="6" selection-end-column="18" />
+              <caret line="12" column="23" lean-forward="true" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="23" />
+              <folding>
+                <element signature="e#0#28#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/NeuroSphero.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-68">
-              <caret line="98" column="32" selection-start-line="98" selection-start-column="32" selection-end-line="98" selection-end-column="32" />
+            <state relative-caret-position="119">
+              <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
               <folding>
                 <element signature="e#77#111#0" expanded="true" />
               </folding>
@@ -109,6 +113,7 @@
       <find>neurosphero_manager.login</find>
       <find>self.neuro</find>
       <find>neurologin</find>
+      <find>sys</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -123,12 +128,12 @@
         <option value="$PROJECT_DIR$/server.py" />
         <option value="$PROJECT_DIR$/static/client.js" />
         <option value="$PROJECT_DIR$/NeuroLearn.py" />
-        <option value="$PROJECT_DIR$/main_sphero.py" />
         <option value="$PROJECT_DIR$/NeuroSphero.py" />
+        <option value="$PROJECT_DIR$/main_sphero.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-236" />
     <option name="y" value="39" />
     <option name="width" value="697" />
@@ -327,12 +332,12 @@
       <workItem from="1545585438372" duration="91000" />
       <workItem from="1545585628383" duration="66174000" />
       <workItem from="1546168785884" duration="3975000" />
-      <workItem from="1546248861784" duration="1240000" />
+      <workItem from="1546248861784" duration="2433000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="193038000" />
+    <option name="totallyTimeSpent" value="194231000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -718,19 +723,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main_sphero.py">
+    <entry file="file://$PROJECT_DIR$/NeuroSphero.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" selection-start-line="6" selection-end-line="6" selection-end-column="18" />
+        <state relative-caret-position="119">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+          <folding>
+            <element signature="e#77#111#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/NeuroSphero.py">
+    <entry file="file://$PROJECT_DIR$/main_sphero.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-68">
-          <caret line="98" column="32" selection-start-line="98" selection-start-column="32" selection-end-line="98" selection-end-column="32" />
+        <state relative-caret-position="102">
+          <caret line="12" column="23" lean-forward="true" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="23" />
           <folding>
-            <element signature="e#77#111#0" expanded="true" />
+            <element signature="e#0#28#0" expanded="true" />
           </folding>
         </state>
       </provider>
