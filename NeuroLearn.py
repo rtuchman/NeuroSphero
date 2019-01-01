@@ -41,11 +41,16 @@ class NeuroLearnANN(object):
         self.classifier.compile(optimizer=sgd, loss='categorical_crossentropy', metrics=['categorical_accuracy'])
 
     def data_preprocessing(self):
-        # Importing the dataset
-        dataset = pd.read_csv(r'neuro_data.csv')
-        X = dataset.iloc[:, 1:122].values
-        y = dataset.iloc[:, 122:].values
+        # Importing the dataset and spliting  into train and hold-out
+        #dataset = pd.read_csv(r'neuro_data.csv')                                 # for spliting neuro_data.csv
+        #train, test = train_test_split(dataset, test_size=0.15, random_state=0)  # use these four line before you start
+        #train.to_csv('train_set.csv')                                            # training then use train set to train
+        #test.to_csv('test_set.csv')                                              # and test set o predict
 
+        dataset = pd.read_csv(r'train_set.csv')
+        X = dataset.iloc[:, 2:123].values
+        y = dataset.iloc[:, 123:].values
+        #
         # Splitting the dataset into the Training set and Test set
         self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(X, y, test_size=0.2, random_state=0)
 
@@ -66,10 +71,14 @@ class NeuroLearnANN(object):
 
     def predict(self):
         # Predicting the Test set results
-        self.y_pred = self.classifier.predict(self.X_test)
+        dataset = pd.read_csv(r'test_set.csv')
+        X = dataset.iloc[:, 2:123].values
+        y = dataset.iloc[:, 123:].values
+
+        self.y_pred = self.classifier.predict(X)
 
         # Making the Confusion Matrix
-        y_test_non_category = [np.argmax(t) for t in self.y_test]
+        y_test_non_category = [np.argmax(t) for t in y]
         y_predict_non_category = [np.argmax(t) for t in self.y_pred]
         self.cm = confusion_matrix(y_test_non_category, y_predict_non_category)
 
@@ -110,7 +119,7 @@ class NeuroLearnANN(object):
         plt.gcf().subplots_adjust(bottom=0.3)
         plt.ylabel('True label')
         plt.xlabel('Predicted label\naccuracy={:0.4f}; misclass={:0.4f}'.format(accuracy, misclass))
-        plt.savefig('Confusion Matrix_300_05.jpg')
+        plt.savefig(r'plots\Confusion Matrix_300_05.jpg')
 
 
     def save_graphs(self):
@@ -122,7 +131,7 @@ class NeuroLearnANN(object):
         plt.ylabel('Accuracy')
         plt.title('Validation Accuracy={0:.4f}\nTraining Accuracy={1:.4f}'.format(self.history.history['val_categorical_accuracy'][-1],
                                                                                   self.history.history['categorical_accuracy'][-1]))
-        plt.savefig('Accuracy_300_05.jpg')
+        plt.savefig(r'plots\Accuracy_300_05.jpg')
         plt.close()
 
         plt.plot(epochs, self.history.history['val_loss'], label='val_loss')
@@ -132,7 +141,7 @@ class NeuroLearnANN(object):
         plt.ylabel('Loss')
         plt.title('Validation Loss={0:.4f}\nTraining Loss={1:.4f}'.format(self.history.history['val_loss'][-1],
                                                                           self.history.history['loss'][-1]))
-        plt.savefig('Loss_300_05.jpg')
+        plt.savefig(r'plots\Loss_300_05.jpg')
         plt.close()
 
 
