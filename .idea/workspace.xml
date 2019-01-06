@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4a2ac0f9-de25-4662-91a0-e4db08160381" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/main_sphero.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_sphero.py" afterDir="false" />
-    </list>
+    <list default="true" id="4a2ac0f9-de25-4662-91a0-e4db08160381" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -328,12 +326,12 @@
       <workItem from="1546168785884" duration="3975000" />
       <workItem from="1546248861784" duration="13350000" />
       <workItem from="1546348940198" duration="4146000" />
-      <workItem from="1546784579772" duration="4534000" />
+      <workItem from="1546784579772" duration="4933000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="213828000" />
+    <option name="totallyTimeSpent" value="214227000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
