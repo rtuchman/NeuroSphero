@@ -90,10 +90,9 @@ class NeuroSphero:
             if y == 0:  # Memory game
                 print('Memory game')
                 for _ in range(4):
-                    self.sphero_ball.set_color(0, 0, 255)
-                    sleep(0.25)
-                    self.sphero_ball.set_color(149, 0, 179)
-                    sleep(0.25)
+                    self.colorFade((149, 0, 179), (0, 0, 255), 30)
+                    self.colorFade((0, 0, 255), (128, 255, 255), 30)
+                    self.colorFade((128, 255, 255), (149, 0, 179), 30)
 
             if y == 1:  # Meditate
                 print('Meditate')
@@ -104,10 +103,10 @@ class NeuroSphero:
             if y == 2:  # Write with weak hand
                 print('Write with weak hand')
                 for _ in range(4):
-                    self.sphero_ball.set_color(255, 0, 255)
-                    sleep(0.25)
-                    self.sphero_ball.set_color(43, 0, 255)
-                    sleep(0.25)
+                    self.colorFade((255, 128, 0), (255, 200, 0), 20)
+                    self.colorFade((255, 200, 0), (230, 0, 0), 20)
+                    self.colorFade((230, 0, 0), (255, 128, 0), 20)
+
 
             if y == 3:  # Happy music (dancing)
                 print('Happy music')

@@ -1,6 +1,5 @@
 import requests
 import json
-from dateutil.parser import parse
 import pandas as pd
 import numpy as np
 import zipfile
