@@ -90,9 +90,9 @@ class NeuroSphero:
             if y == 0:  # Memory game
                 print('Memory game')
                 for _ in range(4):
-                    self.colorFade((149, 0, 179), (0, 0, 255), 30)
-                    self.colorFade((0, 0, 255), (128, 255, 255), 30)
-                    self.colorFade((128, 255, 255), (149, 0, 179), 30)
+                    self.colorFade((149, 0, 179), (0, 0, 255), 20)
+                    self.colorFade((0, 0, 255), (0, 200, 200), 20)
+                    self.colorFade((0, 200, 200), (149, 0, 179), 20)
 
             if y == 1:  # Meditate
                 print('Meditate')
@@ -129,16 +129,3 @@ class NeuroSphero:
                 for _ in range(4):
                     self.colorFade((50, 50, 50), (255, 255, 255))
                     self.colorFade((255, 255, 255), (50, 50, 50))
-
-
-
-
-
-
-
-
-
-
-
-
-
