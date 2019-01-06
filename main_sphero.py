@@ -4,15 +4,18 @@ from NeuroSphero import *
 from NeuroLogin import *
 from NeuroLogout import disconnect as disconnect_neuro
 from keras.models import load_model
+import numpy as np
 import os
 import warnings
 warnings.filterwarnings("ignore")
+
 
 EMAIL = 'matanron3@gmail.com'
 PASSWORD = 'Matan1234'
 
 SENSOR = '00a3b4810811'
 SPHERO_ID = '68:86:e7:01:fb:b2'
+
 
 class NeuroSpheroManager(object):
     """Neuro sphero manager in charge of managing the connections of neuro sensor and sphero ball.
@@ -98,7 +101,13 @@ class NeuroSpheroManager(object):
                 pass
 
             if max(pred_sum) >= 0.5:  # more than 50% certainty of a prediction
-                self.neurosphero.y_prediction = np.argmax(pred_sum)
+                if np.argmax(pred_sum) == 3:  # higher threshold for happy music and dancing (movment can impact prediction)
+                    if max(pred_sum) > 0.85:
+                        self.neurosphero.y_prediction = np.argmax(pred_sum)
+                    else:
+                        self.neurosphero.y_prediction = -1
+                else:
+                    self.neurosphero.y_prediction = np.argmax(pred_sum)
             else:
                 self.neurosphero.y_prediction = -1
 

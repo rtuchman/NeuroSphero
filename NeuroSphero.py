@@ -5,6 +5,7 @@ from time import sleep
 import random
 from threading import Thread
 
+
 class NeuroSphero:
     """
     A class that receives data from Neurosteers's Api, sets up connection to the Sphero ball
@@ -59,7 +60,7 @@ class NeuroSphero:
                 current_angle += rotate_by
 
 
-    def colorFade(self, colorFrom, colorTo, wait_ms=4, steps=100):
+    def colorFade(self, colorFrom, colorTo, wait_ms=4, steps=50):
         step_R = (colorTo[0] - colorFrom[0]) / steps
         step_G = (colorTo[1] - colorFrom[1]) / steps
         step_B = (colorTo[2] - colorFrom[2]) / steps
@@ -74,10 +75,10 @@ class NeuroSphero:
             g += step_G
             b += step_B
 
-    def blink(self, wait_ms=3, steps=100):
+    def blink(self, wait_ms=5, steps=50):
         c1 = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
         self.colorFade((255, 255, 255), (c1[0], c1[1], c1[2]), wait_ms=wait_ms, steps=steps)
-        for _ in range(3):
+        for _ in range(4):
             c2 = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
             self.colorFade((c1[0], c1[1], c1[2]), (c2[0], c2[1], c2[2]), wait_ms=wait_ms, steps=steps)
             c1 = c2
@@ -89,24 +90,23 @@ class NeuroSphero:
             if y == 0:  # Memory game
                 print('Memory game')
                 for _ in range(4):
-                    self.sphero_ball.set_color(0, 0, 255)
-                    sleep(0.25)
-                    self.sphero_ball.set_color(149, 0, 179)
-                    sleep(0.25)
+                    self.colorFade((149, 0, 179), (0, 0, 255), 30)
+                    self.colorFade((0, 0, 255), (128, 255, 255), 30)
+                    self.colorFade((128, 255, 255), (149, 0, 179), 30)
 
             if y == 1:  # Meditate
                 print('Meditate')
-                for _ in range(2):
+                for _ in range(4):
                     self.colorFade((0, 25, 0), (0, 255, 0))
                     self.colorFade((0, 255, 0), (0, 25, 0))
 
             if y == 2:  # Write with weak hand
                 print('Write with weak hand')
                 for _ in range(4):
-                    self.sphero_ball.set_color(255, 0, 255)
-                    sleep(0.25)
-                    self.sphero_ball.set_color(43, 0, 255)
-                    sleep(0.25)
+                    self.colorFade((255, 128, 0), (255, 200, 0), 20)
+                    self.colorFade((255, 200, 0), (230, 0, 0), 20)
+                    self.colorFade((230, 0, 0), (255, 128, 0), 20)
+
 
             if y == 3:  # Happy music (dancing)
                 print('Happy music')
