@@ -6,7 +6,7 @@ import zipfile
 import io
 from NeuroLogin import *
 import threading
-
+from sklearn.model_selection import train_test_split
 
 class NeuroProcess():
 
@@ -66,4 +66,8 @@ if __name__ == "__main__":
 
 
     my.dataset.to_csv(r'neuro_data.csv')
+    dataset = pd.read_csv(r'neuro_data.csv')
+    train, test = train_test_split(dataset, test_size=0.15, random_state=0)
+    train.to_csv('train_set.csv')
+    test.to_csv('test_set.csv')
 
