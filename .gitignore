@@ -116,3 +116,6 @@ Graph/
 
 #CSV
 *.csv
+
+#Pycharm workspace
+.idea/
