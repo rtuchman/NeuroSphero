@@ -100,9 +100,9 @@ class NeuroSpheroManager(object):
             if self.neurosphero.y_prediction == np.argmax(pred_sum):
                 pass
 
-            if max(pred_sum) >= 0.5:  # more than 50% certainty of a prediction
+            if max(pred_sum) >= 0.6:  # more than 50% certainty of a prediction
                 if np.argmax(pred_sum) == 3:  # higher threshold for happy music and dancing (movment can impact prediction)
-                    if max(pred_sum) > 0.8:
+                    if max(pred_sum) > 0.7:
                         self.neurosphero.y_prediction = np.argmax(pred_sum)
                     else:
                         self.neurosphero.y_prediction = -1

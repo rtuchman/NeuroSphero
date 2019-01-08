@@ -89,20 +89,20 @@ class NeuroSphero:
 
             if y == 0:  # Memory game
                 print('Memory game')
-                for _ in range(4):
+                for _ in range(3):
                     self.colorFade((149, 0, 179), (0, 0, 255), 20)
                     self.colorFade((0, 0, 255), (0, 200, 200), 20)
                     self.colorFade((0, 200, 200), (149, 0, 179), 20)
 
             if y == 1:  # Meditate
                 print('Meditate')
-                for _ in range(4):
+                for _ in range(3):
                     self.colorFade((0, 25, 0), (0, 255, 0))
                     self.colorFade((0, 255, 0), (0, 25, 0))
 
             if y == 2:  # Write with weak hand
                 print('Write with weak hand')
-                for _ in range(4):
+                for _ in range(3):
                     self.colorFade((255, 128, 0), (255, 200, 0), 20)
                     self.colorFade((255, 200, 0), (230, 0, 0), 20)
                     self.colorFade((230, 0, 0), (255, 128, 0), 20)
@@ -116,7 +116,7 @@ class NeuroSphero:
                 self.thread_circle.join()
 
             if y == -1:  # No prediction\uncertain
-                for _ in range(4):
+                for _ in range(3):
                     self.sphero_ball.set_color(255, 255, 255)
                     sleep(0.5)
 
