@@ -18,7 +18,8 @@ warnings.filterwarnings("ignore")
 
 class NeuroLearnANN(object):
 
-    def __init__(self):        # Initialising the ANN
+    # Initialising the ANN
+    def __init__(self):
         self.classifier = Sequential()
 
         # Adding the input layer and the first hidden layer
@@ -41,19 +42,14 @@ class NeuroLearnANN(object):
         adam = optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999)  # faster
         self.classifier.compile(optimizer=sgd, loss='categorical_crossentropy', metrics=['categorical_accuracy'])
 
-    def data_preprocessing(self):
-        # Importing the dataset and spliting  into train and hold-out
-        #dataset = pd.read_csv(r'neuro_data.csv')                                 # for spliting neuro_data.csv
-        #train, test = train_test_split(dataset, test_size=0.15, random_state=0)  # use these four line before you start
-        #train.to_csv('train_set.csv')                                            # training then use train set to train
-        #test.to_csv('test_set.csv')                                              # and test set to predict
-
+    def load_data(self):
+        # Loading the dataset and spliting  into train and validation
         dataset = pd.read_csv(r'train_set.csv')
         X = dataset.iloc[:, 2:123].values
         y = dataset.iloc[:, 123:].values
         #
         # Splitting the dataset into the Training set and Test set
-        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+        self.X_train, self.X_validation, self.y_train, self.y_validation = train_test_split(X, y, test_size=0.2, random_state=0)
 
     def train(self):
 
@@ -66,8 +62,8 @@ class NeuroLearnANN(object):
 
         # Fitting the ANN to the Training set
         # you may use history to view accuracy
-        self.history = self.classifier.fit(self.X_train, self.y_train, validation_data=(self.X_test, self.y_test),
-                                           batch_size=10, nb_epoch=5000, shuffle=True, callbacks=[tbCallBack])
+        self.history = self.classifier.fit(self.X_train, self.y_train, validation_data=(self.X_validation, self.y_validation),
+                                           batch_size=10, nb_epoch=1000, shuffle=True, callbacks=[tbCallBack])
         self.save_graphs()
 
     def predict(self):
@@ -148,7 +144,7 @@ class NeuroLearnANN(object):
 
 if __name__ == "__main__":
     model = NeuroLearnANN()
-    model.data_preprocessing()
+    model.load_data()
     model.train()
     model.predict()
     model.plot_confusion_matrix(model.cm, ['Memory game', 'Meditate', 'Write with weak hand', 'Happy music (dancing)'])

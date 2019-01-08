@@ -9,10 +9,8 @@ import os
 import warnings
 warnings.filterwarnings("ignore")
 
-
 EMAIL = 'matanron3@gmail.com'
 PASSWORD = 'Matan1234'
-
 SENSOR = '00a3b4810811'
 SPHERO_ID = '68:86:e7:01:fb:b2'
 
@@ -52,8 +50,7 @@ class NeuroSpheroManager(object):
         self.sphero_thread.start()
         print('running neuro sphero')
 
-    # if running on python 3 erase ws argument from on_error, on_close and on_message
-
+    # if running on python 3 erase ws argument from on_error, on_close and on_message    
     def on_error(self, ws, error):
         print("ERROR: {0}".format(error))
 
@@ -100,9 +97,9 @@ class NeuroSpheroManager(object):
             if self.neurosphero.y_prediction == np.argmax(pred_sum):
                 pass
 
-            if max(pred_sum) >= 0.5:  # more than 50% certainty of a prediction
+            if max(pred_sum) >= 0.6:  # more than 50% certainty of a prediction
                 if np.argmax(pred_sum) == 3:  # higher threshold for happy music and dancing (movment can impact prediction)
-                    if max(pred_sum) > 0.85:
+                    if max(pred_sum) > 0.7:
                         self.neurosphero.y_prediction = np.argmax(pred_sum)
                     else:
                         self.neurosphero.y_prediction = -1
