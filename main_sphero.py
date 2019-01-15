@@ -10,7 +10,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 EMAIL = 'matanron3@gmail.com'
-PASSWORD = 'Matan1234'
+PASSWORD = 
 SENSOR = '00a3b4810811'
 SPHERO_ID = '68:86:e7:01:fb:b2'
 
