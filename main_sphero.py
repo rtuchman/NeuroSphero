@@ -9,16 +9,13 @@ import os
 import warnings
 warnings.filterwarnings("ignore")
 
-EMAIL = 'matanron3@gmail.com'
-PASSWORD = 
-SENSOR = '00a3b4810811'
-SPHERO_ID = '68:86:e7:01:fb:b2'
-
 
 class NeuroSpheroManager(object):
     """Neuro sphero manager in charge of managing the connections of neuro sensor and sphero ball.
        It is also in charge of loading the classifier and predicting the state of the patient."""
-    def __init__(self, email=EMAIL, password=PASSWORD, sensor=SENSOR, sphero_id=SPHERO_ID):
+    def __init__(self, email=EMAIL, password=PASSWORD, sensor=SENSOR, sphero_id=SPHERO_ID, url, url_key):
+		self.url = url
+		self.url_key = url_key
         self.email = email
         self.password = password
         self.sensor = sensor
@@ -128,8 +125,8 @@ class NeuroSpheroManager(object):
         print("connecting to cloud...")
 
         ws = websocket.WebSocketApp(
-            "wss://api.neurosteer.com/api/v1/features/" + self.sensor
-            + "/real-time/?all=true&access_token=" + self.neurologin.token,
+            self.url + self.sensor
+            + self.url_key + self.neurologin.token,
             on_message=self.on_message,
             on_error=self.on_error,
             on_close=self.on_close
