@@ -119,3 +119,7 @@ Graph/
 
 #Pycharm workspace
 .idea/
+
+#Files
+NeuroLogin.py
+data_preprocessing.py
