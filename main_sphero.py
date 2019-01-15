@@ -15,8 +15,8 @@ class NeuroSpheroManager(object):
        It is also in charge of loading the classifier and predicting the state of the patient."""
     def __init__(self, email=EMAIL, password=PASSWORD, sensor=SENSOR, sphero_id=SPHERO_ID, url, url_key):
 	
-		self.url = url
-		self.url_key = url_key
+	self.url = url
+	self.url_key = url_key
         self.email = email
         self.password = password
         self.sensor = sensor
