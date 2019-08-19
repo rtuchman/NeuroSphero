@@ -142,13 +142,3 @@ class NeuroLearnANN(object):
         plt.close()
 
 
-if __name__ == "__main__":
-    model = NeuroLearnANN()
-    model.load_data()
-    model.train()
-    model.predict()
-    model.plot_confusion_matrix(model.cm, ['Memory game', 'Meditate', 'Write with weak hand', 'Happy music (dancing)'])
-    model.classifier.save('NeuroClassifier.h5')
-
-    print('Done!')
-
